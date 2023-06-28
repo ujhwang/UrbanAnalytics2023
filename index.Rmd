@@ -1,7 +1,7 @@
 ---
 title: "Intro to Urban Analytics"
-author: "Bon Woo Koo & Subhrajit Guhathakurta"
-date: '2022-08-20'
+author: "Subhrajit Guhathakurta and Uijeong Hwang"
+date: '2023-08-21'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -24,8 +24,7 @@ library(kableExtra)
 **Class room:** Room 358 in Arch-West | TR 5PM - 6:15PM
 
 **Office hours**  
-* **Bon Woo Koo**: Wed 10AM - 12PM  
-* **Subhrajit Guhathakurta**: Tue 11AM-12PM  
+* **Subhrajit Guhathakurta**: Wednesday 11-noon or by appt.  
 * **Location**: The Center for Spatial Planning Analytics and Visualization (760 Spring St NW, suite 217).
 <br>
 <br>
