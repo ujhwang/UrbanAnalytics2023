@@ -25,7 +25,7 @@ library(kableExtra)
 
 **Office hours**  
 * **Subhro Guhathakurta**: Wednesday 11-noon or by appt.  
-* **Uijeong Hwang**: XXXX <br>
+* **Uijeong Hwang**: Thursday 2PM - 4PM <br>
 * **Location**: The Center for Spatial Planning Analytics and Visualization (760 Spring St NW, suite 217).
 <br>
 <br>
@@ -92,7 +92,7 @@ topic_col <- c(
   "Accessing data [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week1/Module1_Yelp_Census_Slide.html), <br> 
   Census & Yelp API [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week1/Module1_Yelp_Census.html), <br>Creating sf objects [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week1/Module1_Yelp_Census_Slide_additional.html)",# 3
   
-  "<b>Tidy data [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week2/Module1_Tidy_Yelp.html)",# 4
+  "Tidy data [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week2/Module1_Tidy_Yelp.html)",# 4
   
   "Deriving insights from your data <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> Hands-on [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week3/stats.html)",# 5
   
@@ -113,11 +113,11 @@ topic_col <- c(
   
   "Data ethics  <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureTWO.html#1)",# 13
   
-  "<b>Assistance with final project related issues</b>",# 14
+  "Assistance with final project related issues",# 14
   
   "<b>Student presentations of final projects</b>",# 15
   
-  "<b>Wrap up</b>"# 16
+  "Wrap up"# 16
 )
 
 reading_col <- c(
