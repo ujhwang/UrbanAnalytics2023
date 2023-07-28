@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The First Class of</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Subhro Guhathakurta &amp; Uijeong Hwang" />
+    <meta name="date" content="2023-08-22" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/nhsr.css" type="text/css" />
+    <link rel="stylesheet" href="css/nhsr-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide, left, bottom
+
+# The &lt;b&gt;First&lt;/b&gt; Class of
+----
+## **Introduction to Urban Analytics**
+### Subhro Guhathakurta &amp; Uijeong Hwang
+### August 22, 2023
+
+---
+class: inverse, middle, center
+
+## This is one of two required courses to complete 
+###(other than the Capstone)
+# the Master of Science in Urban Analytics degree
+
+---
+
+# What is Urban Analytics?
+
+--
+
+###Application of &lt;b&gt;Big data&lt;/b&gt; and &lt;b&gt;data science tools&lt;/b&gt; to understand, monitor, and control urban functions and processes
+
+--
+
+###Michael Goodchild defines it as a 'new kind of urban research, one that exploits the vast new sources that are becoming available from social media, crowd sourcing, and sensor networks...'
+
+--
+
+###'Urban analytics is fast emerging as the core set of tools employed to deal with problems of big data, urban simulation, and geodemographics' -- Michael Batty
+
+--
+
+##Analytics is the discovery, interpretation, and communication of meaningful patterns in data' --Wikipedia
+
+---
+# Introductions
+
+.mid[
+###Your Instructors for this class
+]
+.left-column[
+
+# ![](https://airmobility.gatech.edu/files/2019/06/Subhro-Guhathakurta-300x300.jpg)
+
+# ![](https://ujhwang.github.io/images/IDphoto_Hwang.jpg)
+]
+.right-column[
+&lt;b&gt;Dr. Subhro Guhathakurta&lt;/b&gt; joined Georgia Tech in 2011 as the director of the Center for Geographic Information Systems, which he re-branded in 2016 to be the Center for Spatial Planning Analytics and Visualization. He is the former chair of the School of City and Regional Planning, where he is also a professor. Dr. Guhathakurta is the Program Director of Master of Science in Urban Analytics.
+
+&lt;br&gt;
+&lt;b&gt;Uijeong Hwang&lt;/b&gt; is a PhD candidate in City and Regional Planning at Georgia Institute of Technology and a graduate research assistant at the Center for Spatial Planning Analytics and Visualization (CSPAV). His research interests center around people's travel behavior and choices, particularly the factors that make people choose more walking, biking, and public transit.
+]
+
+
+
+---
+#Class Introductions (continued..)
+###We would like to know
+* Your name
+* Where you are from (hometown)
+* Training (undergraduate degree, other degrees)
+* Anticipated timeline to complete this program
+---
+class: inverse, middle, center
+
+#Examples of Previous Urban Analytics projects at CSPAV
+---
+#Walk This Way!
+
+&lt;a href="http://geo.gatech.edu/"&gt;&lt;img src="img/Walkthisway.png" alt="Walk This Way" style="width:600px;height:400px;"&gt;&lt;/a&gt;
+
+---
+#Atlanta's Charming Neighborhoods
+&lt;a href="https://geospatial.gatech.edu/charm/"&gt;&lt;img src="img/Charm.png" alt="Charming Neighborhoods" style="width:600px;height:400px;"&gt;&lt;/a&gt;
+---
+#Dr. Koo's Research on Walkable Environments
+&lt;a href="https://geospatial.gatech.edu/charm/"&gt;&lt;img src="img/ComputerVision.png" alt="Walkable Environments" style="width:600px;height:400px;"&gt;&lt;/a&gt;
+---
+&lt;!-- #What is BIG data? --&gt;
+&lt;!-- ##The Four Vs of Big Data --&gt;
+&lt;!-- 1. Volume (or scale) --&gt;
+&lt;!-- 2. Velocity (Streaming) --&gt;
+&lt;!-- 3. Variety (Different forms: image, social media, census, etc.) --&gt;
+&lt;!-- 4. Veracity (Uncertainty, confidence in its findings) --&gt;
+
+&lt;!-- -- --&gt;
+&lt;!-- ##For Spatial Data We should also include --&gt;
+&lt;!-- 5. Granularity (spatial resolution) --&gt;
+&lt;!-- --- --&gt;
+#Common Sources of Data
+&lt;a href="https://geospatial.gatech.edu/charm/"&gt;&lt;img src="img/Surveys.png" alt="Types of Data" style="width:900px;height:550px;"&gt;&lt;/a&gt;
+---
+#Other Sources of Data
+* Transactions
+* Sensors (satellites, airborne, and terrestrial) 
+* Administrative data (budgets, plans)
+* Cell Phones (consumer data harvesting)
+* Others?
+___ 
+*  
+*  
+---
+class: inverse, left, top
+
+#The Plan for the Course
+
+##The course is divided into Six Modules
+.left-column[
+&lt;font color="yellow"&gt;Module 1&lt;/font&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;font color="yellow"&gt;Module 2&lt;/font&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;font color="yellow"&gt;Module 3&lt;/font&gt;
+
+]
+
+
+* Using APIs to capture data
+* Combining data from two sources to conduct analysis
+* Data wrangling and tidying
+&lt;br&gt;
+&lt;br&gt;
+* Interactive visualization
+* Telling stories with data / analysis
+&lt;br&gt;
+&lt;br&gt;
+* Using General Transit Feed Specification (API)
+* Network analysis with Open Street Maps
+---
+class: inverse, left, top
+&lt;br&gt;
+&lt;br&gt;
+.left-column[
+&lt;font color="yellow"&gt;Module 4&lt;/font&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;font color="yellow"&gt;Module 5&lt;/font&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;font color="yellow"&gt;Module 6&lt;/font&gt;
+]
+
+* Using Computer Vision to extract information from images 
+* Extracting information from Google Street View images
+&lt;br&gt;
+&lt;br&gt;
+* Unstructured data -- accessing Reddit data
+* Natural language processing
+* Sentiment analysis
+&lt;br&gt;
+&lt;br&gt;
+* Data ethics
+* Data privacy
+___
+---
+#Course Logistics
+
+###Platform
+* R-Studio (almost entirely)
+* Available as a "Container" in a Docker environment
+* All packages will be preinstalled (less worry about software / hardware glitches)
+
+###Communication (very impotant)
+* Canvas
+* Discussion Board on Canvas
+* emails (mostly through CANVAS)
+
+### Readings
+* Mostly Online!
+* Posted on CANVAS if not Online
+
+---
+
+###Assignments
+* Submission in RMarkdown documents (to RPubs or GitHub)
+* Post the link to this document ONLY
+* The best 3 scores of 4 minor and best 3 of 4 major assignments considered for final grades
+
+###Class presentations 
+* Three student presentations (by groups) for final project milestones
+* A survey will be administered to form the groups
+
+### Final Group Assignment
+* More details forthcoming
+
+##Any other questions?
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "googlecode",
+"highlightLines": true,
+"highlightLanguage": "r",
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<!--Hat-tip: https://www.garrickadenbuie.com/blog/xaringan-tip-logo-all-slides/-->
+<style>
+.logo {
+  background-image: url(img/CSPAVnewlogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 220px;
+  height: 256px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
