@@ -53,8 +53,8 @@ After successfully completing this course, students will:
 
 ```{r include=F}
 total_week = 16
-guha <- c(1,5,13,14) %>% as.character()
-koo <- c(2,3,4,6,7,8,9,10,11,12) %>% as.character()
+# guha <- c(1,5,13,14) %>% as.character()
+# koo <- c(2,3,4,6,7,8,9,10,11,12) %>% as.character()
 
 # Week df
 weeks <- tibble(
@@ -85,31 +85,31 @@ weeks$Week <- paste(weeks$Week, "<br><font size=2 color=gray>", day, "</font>")
 
 ```{r, echo=FALSE}
 topic_col <- c(
-  "Introduction: Class structure, format & expectations <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-1/LectureONE.html#1), <br> Intro to R - #1 [(Slide)](./Lab/module_0/w2_d1_Intro_to_R_1.html)",# 1
+  "Introduction: Class structure, format & expectations <font size=1 color='grey'>(GT only) </font> [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lecture_Slides/Lecture-1/LectureONE.html), <br> Intro to R - #1 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d1_Intro_to_R_1.html)",# 1
   
-  "Intro to R - #2 [(Slide)](./Lab/module_0/w2_d2_Intro_to_R_2.html) <br> R-Lab (RMD)",# 2
+  "Intro to R - #2 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d2_Intro_to_R_2.html) <br> R-Lab (RMD)",# 2
   
-  "Accessing data [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week1/Module1_Yelp_Census_Slide.html), <br> 
-  Census & Yelp API [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week1/Module1_Yelp_Census.html), <br>Creating sf objects [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week1/Module1_Yelp_Census_Slide_additional.html)",# 3
+  "Accessing data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide.html), <br> 
+  Census & Yelp API [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census.html), <br>Creating sf objects [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide_additional.html)",# 3
   
-  "Tidy data [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week2/Module1_Tidy_Yelp.html)",# 4
+  "Tidy data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.html)",# 4
   
-  "Deriving insights from your data <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> Hands-on [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week3/stats.html)",# 5
+  "Deriving insights from your data <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> Hands-on [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week3/stats.html)",# 5
   
-  "Storytelling with data [(slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_5/LectureStorytelling-w-data.html) <br> Interactive visualization 1 [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week4/interactive_visualization.html) <br>
-  Interactive visualization 2 [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week4/interactive_visualization_2.html)",# 6
+  "Storytelling with data [(slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/LectureStorytelling-w-data.html) <br> Interactive visualization 1 [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week4/interactive_visualization.html) <br>
+  Interactive visualization 2 [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week4/interactive_visualization_2.html)",# 6
   
-  "<b> Student presentation of final project idea and review of literature/ examples (Oct 3) </b> <br> General Transit Feed Specification [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_2/1_GTFS_v2.html)",# 7 # [GTFS and equity (RMD)](./Lab/module_2/1_GTFS.html)
+  "<b> Student presentation of final project idea and review of literature/ examples (Oct 3) </b> <br> General Transit Feed Specification [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/1_GTFS_v2.html)",# 7 # [GTFS and equity (RMD)](./Lab/module_2/1_GTFS.html)
   
-  "Open Street Map [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_2/2_OSM.html)",# 8 # [OSM as a graph (RMD)](./Lab/module_2/2_OSM.html)
+  "Open Street Map [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/2_OSM.html)",# 8 # [OSM as a graph (RMD)](./Lab/module_2/2_OSM.html)
   
-  "Urban images & computer vision [(Slide)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_3/Module3_computer_vision_Slide.html), <br> Computer vision in Colab ([1](https://colab.research.google.com/drive/1G9m85QNlMqAHNuw854qhZQTFAqetrnYG?usp=sharing), [2](https://colab.research.google.com/drive/16Da-YywiLVS5IY3NXlYWxQbH7TaKsoeW?usp=sharing))",# 9
+  "Urban images & computer vision [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/Module3_computer_vision_Slide.html), <br> Computer vision in Colab ([1](https://colab.research.google.com/drive/1G9m85QNlMqAHNuw854qhZQTFAqetrnYG?usp=sharing), [2](https://colab.research.google.com/drive/16Da-YywiLVS5IY3NXlYWxQbH7TaKsoeW?usp=sharing))",# 9
   
-  "Sampling & processing images [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_3/Module3_getting_GSV_images.html)",# 10
+  "Sampling & processing images [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/Module3_getting_GSV_images.html)",# 10
   
-  "Getting & Processing Twitter data in R [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_4/TwitterTextAnalysis_v2.html)",# 11
+  "Getting & Processing Twitter data in R [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/TwitterTextAnalysis_v2.html)",# 11
   
-  "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis [(RMD)](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_4/SentimentAnalysis.html)",# 12
+  "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/SentimentAnalysis.html)",# 12
   
   "Data ethics  <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureTWO.html#1)",# 13
   
@@ -126,7 +126,7 @@ reading_col <- c(
   "[T1](https://r4ds.had.co.nz/workflow-basics.html), [T2](https://r4ds.had.co.nz/transform.html) <br>
    [R1](https://geocompr.robinlovelace.net/spatial-class.html), [R2](https://geocompr.robinlovelace.net/attr.html), <br> [R3](https://geocompr.robinlovelace.net/spatial-operations.html), [R4](https://rmarkdown.rstudio.com/lesson-1.html)",# 2
   
-  "[1](https://dl.acm.org/doi/abs/10.1145/3152178.3152181?casa_token=TKWejCaCUvgAAAAA:B78bsMo0gT6t2GSsl1MQWAIsXs0BCG6usrW5fwpKPYhorO0lKTpXNHUmPQQ0y4xeJYC3U5CF08hjIA), [2](https://www.nber.org/system/files/working_papers/w24952/w24952.pdf), [3](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_1/week1/manuscript.pdf)",# 3
+  "[1](https://dl.acm.org/doi/abs/10.1145/3152178.3152181?casa_token=TKWejCaCUvgAAAAA:B78bsMo0gT6t2GSsl1MQWAIsXs0BCG6usrW5fwpKPYhorO0lKTpXNHUmPQQ0y4xeJYC3U5CF08hjIA), [2](https://www.nber.org/system/files/working_papers/w24952/w24952.pdf), [3](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/manuscript.pdf)",# 3
   "[1](https://www.researchgate.net/publication/215990669_Tidy_data), [2](https://r4ds.had.co.nz/tidy-data.html), [3]()",
   "[1](https://r4ds.had.co.nz/model-intro.html), [2](https://r4ds.had.co.nz/model-basics.html), [3](https://r4ds.had.co.nz/model-building.html), [4](https://r4ds.had.co.nz/many-models.html)",# 5
   "[1](https://r4ds.had.co.nz/data-visualisation.html), [2](https://r4ds.had.co.nz/graphics-for-communication.html)",# 6
@@ -154,19 +154,19 @@ reading_col <- c(
 assignment_col <- c(
   "[Survey](https://forms.gle/4BBtMfrvr5yJLebK9),<br>[Group](https://forms.gle/sGVfDgLR6yLLmb4S8)",# 1
   "",# 2
-  "[Mini 1](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/mini_1/mini_assignment_1.html) <br> (due Sep18)", # 3
+  "[Mini 1](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_1/mini_assignment_1.html) <br> (due Sep18)", # 3
   
-  "[Mini 2](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/mini_2/mini_assignment_2.html) <br> (due Sep25)",# 4 # add 
-  "[Mini 3](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/mini_3/mini_assignment_3.html) <br> (due Oct02)",# 5
-  "[Mini 4](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/mini_4/mini_assignment_4.html) <br> (due Oct11)",# 6
+  "[Mini 2](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_2/mini_assignment_2.html) <br> (due Sep25)",# 4 # add 
+  "[Mini 3](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_3/mini_assignment_3.html) <br> (due Oct02)",# 5
+  "[Mini 4](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_4/mini_assignment_4.html) <br> (due Oct11)",# 6
   "",# 7
-  "[Major 1](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/major_1/major_assignment_1.html) <br> (due Oct30)",# 8 
+  "[Major 1](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_1/major_assignment_1.html) <br> (due Oct30)",# 8 
         # Chicago GTFS feed http://www.transitchicago.com/downloads/sch_data/google_transit.zip
   "",# 9
-  "[Major 2](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/major_2/major_assignment_2.html) <br> (due Nov13)",# 10
+  "[Major 2](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_2/major_assignment_2.html) <br> (due Nov13)",# 10
   "",# 11
-  "[Major 3](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/major_3/major_assignment_3.html) <br> (due Nov20)",# 12
-  "[Major 4](https://bonwookoo.github.io/UrbanAnalytics2022/Lab/module_5/LectureStorytelling-w-data.html#28)<br> (due Nov27)",# 13
+  "[Major 3](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_3/major_assignment_3.html) <br> (due Nov20)",# 12
+  "[Major 4](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/LectureStorytelling-w-data.html#28)<br> (due Nov27)",# 13
   "",# 14
   "",# 15
   ""# 16
