@@ -1,0 +1,997 @@
+0:geom_node_point(color = "darkslategray4", size = 3) +
+0:geom_node_text(aes(label = name), vjust = 1.8, size = 2.5) +
+0:labs(title = "Figure 5: Word Network: Tweets using my hashtag",
+0:subtitle = "Text mining twitter data",
+0:x = "", y = "")
+0:plotly::ggplotly(a)
+0:# plot word network
+0:my_words_counts %>%
+0:filter(n >= 3) %>%
+0:graph_from_data_frame() %>%
+0:ggraph(layout = "fr") +
+0:geom_edge_link(aes(edge_alpha = .6, edge_width = n)) +
+0:geom_node_point(color = "darkslategray4", size = 3) +
+0:geom_node_text(aes(label = name), vjust = 1.8, size = 2.5) +
+0:labs(title = "Figure 5: Word Network: Tweets using my hashtag",
+0:subtitle = "Text mining twitter data",
+0:x = "", y = "")
+0:my_twts[1,] %>%
+0:mutate(text = str_replace_all(text, replace_reg, "")) %>%
+0:dplyr::select(text) %>%
+0:unnest_tokens(output = paired_words,
+0:input = text,
+0:token = "ngrams",
+0:n = 2)
+0:my_twts[1,'text']
+0:data.frame(text = c("The result of separating bigrams is helpful for exploratory analyses of the text."))
+0:data.frame(text = c("The result of separating bigrams is helpful for exploratory analyses of the text."))%>%
+0:mutate(text = str_replace_all(text, replace_reg, "")) %>%
+0:dplyr::select(text) %>%
+0:unnest_tokens(output = paired_words,
+0:input = text,
+0:token = "ngrams",
+0:n = 2)
+0:60*60*24
+0:60*60*24/8
+0:1800*6
+0:0.017/0.098
+0:0.098*0.17
+0:0.098*0.1734
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr")
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# Load the package
+0:require(sentiment.ai)
+0:require(SentimentAnalysis)
+0:require(sentimentr)
+0:install_sentiment.ai(envname = "r-sentiment-ai",
+0:method = "conda",
+0:python_version = "3.8.10")
+0:check_sentiment.ai()
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# From Sentiment Analysis
+0:sentimentAnalysis.score <- analyzeSentiment(text)$SentimentQDAP
+0:# From sentimentr
+0:sentimentr.score <- sentiment_by(get_sentences(text), 1:length(text))$ave_sentiment
+0:example <- data.frame(target = text,
+0:sentiment.ai = sentiment.ai.score,
+0:sentimentAnalysis = sentimentAnalysis.score,
+0:sentimentr = sentimentr.score)
+0:example
+0:example %>%
+0:kableExtra::kable()
+0:rownames(example) <- NULL
+0:example %>%
+0:kableExtra::kable()
+0:# whatever name you assigned to your created app
+0:appname <- "UrbanAnalytics_tutorial"
+0:# create token named "twitter_token"
+0:# the keys used should be replaced by your own keys obtained by creating the app
+0:twitter_token <- create_token(
+0:app = appname,
+0:consumer_key = Sys.getenv("twitter_key"),
+0:consumer_secret = Sys.getenv("twitter_key_secret"),
+0:access_token = Sys.getenv("twitter_access_token"),
+0:access_secret = Sys.getenv("twitter_access_token_secret"))
+0:# Get time lines
+0:obama <- rtweet::get_timeline("BarackObama", n = 3200)
+0:biden <- rtweet::get_timeline("JoeBiden", n=3200)
+0:# Add screen nam
+0:obama <- bind_cols(obama,
+0:users_data(obama) %>% select(screen_name, location))
+0:biden <- bind_cols(biden,
+0:users_data(biden) %>% select(screen_name, location))
+0:# Row-bind the two
+0:tweets <- bind_rows(
+0:obama %>% select(text, screen_name, created_at, retweet_count, favorite_count),
+0:biden %>% select(text, screen_name, created_at, retweet_count, favorite_count)
+0:)
+0:# Regex that matches URL-type string
+0:replace_reg <- "http[s]?://[A-Za-z\\d/\\.]+|&amp;|&lt;|&gt;"
+0:# Tidy the string
+0:tidy_tweets_words <- tweets %>%
+0:# Drop retweets
+0:filter(!str_detect(text, "^RT")) %>%
+0:# Drop URLs
+0:mutate(text = str_replace_all(text, replace_reg, ""),
+0:text = gsub("@", "", text)) %>%
+0:# Add id column
+0:mutate(id = row_number())
+0:tidy_tweets_words
+0:test_txt <- c("\n\n", "is there any different?", "is there \n\nany difference?")
+0:sentiment_score(text_txt)
+0:test_txt <- c("\n\n", "is there any different?", "is there \n\nany difference?")
+0:test_txt
+0:sentiment_score(text_txt)
+0:sentiment_score(test_txt)
+0:# Regex that matches URL-type string
+0:replace_reg <- "http[s]?://[A-Za-z\\d/\\.]+|&amp;|&lt;|&gt;"
+0:# Tidy the string
+0:tidy_tweets_words <- tweets %>%
+0:# Drop retweets
+0:filter(!str_detect(text, "^RT")) %>%
+0:# Drop URLs
+0:mutate(text = str_replace_all(text, replace_reg, ""),
+0:text = gsub("@", "", text),
+0:text = gsub("\n\n", "", text)) %>%
+0:# Add id column
+0:mutate(id = row_number())
+0:tidy_tweets_words
+0:sentiment.twt <- sentiment_score(tidy_tweets_words$text)
+0:tidy_tweets_words <- tidy_tweets_words %>%
+0:mutate(sentiment = sentiment_score(text))
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:favorite_count = log(mean(favorite_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = favorite_count), lwd = 1) +
+0:facet_wrap(~screen_name)
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate")
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:favorite_count = log(mean(favorite_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = favorite_count), lwd = 1) +
+0:facet_wrap(~screen_name)
+0:exp(14)
+0:exp(8)
+0:tidy_tweets_words
+0:tidy_tweets_words$retweet_count
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name)
+0:?ggplot2::lab
+0:?ggplot2::labs
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n-1 (negative) ~ +1 (positive)",
+0:title = "Sentiment Score of Tweets from US presidents")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:scale_color_gradient(low="blue", high="red") +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:scale_color_gradient(low="blue", high="red") +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:scale_color_gradient(low="red", high="green") +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:check_sentiment.ai()
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", "sentimentr")
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:check_sentiment.ai()
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", "sentimentr", 'here')
+0:example
+0:# From sentimentr
+0:sentimentr.score <- sentiment(get_sentences(text), 1:length(text))$ave_sentiment
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment(get_sentences(text), 1:length(text))$ave_sentiment
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment_by(get_sentences(text), 1:length(text))$ave_sentiment
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", "sentimentr", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment(get_sentences(text), 1:length(text))$ave_sentiment
+0:get_sentences(text)
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:get_sentences(text)
+0:get_sentences(text)
+0:SentimentAnalysis::analyzeSentiment(text)
+0:?sentiment
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment(
+0:get_sentences(text), 1:length(text)
+0:)$ave_sentiment
+0:sentimentr.score
+0:sentimentr::sentiment(
+0:get_sentences(text), 1:length(text)
+0:)
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment_by(
+0:get_sentences(text), 1:length(text)
+0:)$ave_sentiment
+0:sentimentr.score
+0:sentimentr.score <- sentimentr::sentiment_by(
+0:get_sentences(text), 1:length(text)
+0:)
+0:sentimentr.score
+0:?sentiment_by
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# install_sentiment.ai(envname = "r-sentiment-ai",
+0:#                      method = "conda",
+0:#                      python_version = "3.8.10")
+0:init_sentiment.ai()
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# From Sentiment Analysis
+0:sentimentAnalysis.score <- SentimentAnalysis::analyzeSentiment(text)$SentimentQDAP
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment_by(
+0:get_sentences(text), 1:length(text)
+0:)$ave_sentiment
+0:example <- data.frame(target = text,
+0:sentiment.ai = sentiment.ai.score,
+0:sentimentAnalysis = sentimentAnalysis.score)
+0:rownames(example) <- NULL
+0:example %>%
+0:kableExtra::kable()
+0:60*60*24
+0:60*60*24*12
+0:60*24*12
+0:17280/60
+0:288/60
+0:60*60*24
+0:60*60*24*12
+0:60*60*24*12/(60*60)
+0:sentiment_score(c("This installation process is so long!", "Only if it works in the end.", "But does it?"))
+0:sentiment_score(c("This installation process is so long!", "Only if it works in the end.", "But does it?", "It does work."))
+0:sentiment_score(c("This installation process is just so long!", "Only if it works in the end.", "But does it?", "It does work."))
+0:sentiment_score(c("This installation process is too complicated!", "Only if it works in the end.", "But does it?", "It does work."))
+0:sentiment_score(c("This installation process is too complicated!", "Only if it works in the end.", "But does it?", "It does work!"))
+0:# Example texts
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# Sentiment Analysis
+0:sentimentAnalysis.score <- SentimentAnalysis::analyzeSentiment(text)$SentimentQDAP
+0:example <- data.frame(target = text,
+0:sentiment.ai = sentiment.ai.score,
+0:sentimentAnalysis = sentimentAnalysis.score)
+0:rownames(example) <- NULL
+0:example %>%
+0:kableExtra::kable()
+0:?check_sentiment.ai
+0:# Test run
+0:init_sentiment.ai()
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# Test run
+0:init_sentiment.ai()
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# Test run
+0:init_sentiment.ai()
+0:sentiment_score(c("This installation process is too complicated!",
+0:"Only if it works in the end.",
+0:"But does it?",
+0:"It does work!"))
+0:?sentiment.ai::install_sentiment.ai
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:knitr::include_graphics("miniconda.JPG")
+0:# You need to run it only once.
+0:install_sentiment.ai(envname = "r-sentiment-ai",
+0:method = "conda",
+0:python_version = "3.8.10")
+0:install.packages('NHSRtheme')
+1691288589752:install.packages('nice_table')
+1691289912180:knitr::opts_chunk$set(echo = TRUE)
+1691289912846:tidycensus::census_api_key(Sys.getenv("census_api"))
+1691289915943:library(tidycensus)
+1691289916166:library(sf)
+1691289916244:library(tmap)
+1691289923234:library(jsonlite)
+1691289923280:library(tidyverse)
+1691289924102:library(httr)
+1691289924153:library(jsonlite)
+1691289924185:library(reshape2)
+1691289924246:library(here)
+1691289924329:library(yelpr)
+1691289924383:library(knitr)
+1691289927459:#### Tract polygons for the Yelp query
+1691289927661:tract <- suppressMessages(
+1691289927693:get_acs(geography = "tract", # or "block group", "county", "state" etc.
+1691289927727:state = "GA",
+1691289927760:county = c("Fulton", "Dekalb"),
+1691289927812:variables = c(hhincome = 'B19019_001',
+1691289927846:race.tot = "B02001_001",
+1691289927880:race.white = "B02001_002",
+1691289927911:race.black = 'B02001_003'
+1691289927940:),
+1691289927970:year = 2019,
+1691289928002:survey = "acs5", # American Community Survey 5-year estimate
+1691289928032:geometry = TRUE, # returns sf objects
+1691289928064:output = "wide") # wide vs. long
+1691289928095:)
+1691289934909:# View the data
+1691289935112:message(sprintf("nrow: %s, ncol: %s", nrow(tract), ncol(tract)))
+1691289935156:tract %>% head() %>% knitr::kable() # Ignore this kable() function. This function is for neatly displaying tables on HTML document.
+1691289940257:# Retaining only those I want.
+1691289940459:# Notice that select function can also change names when it selects columns.
+1691289940499:tract <- tract %>%
+1691289940531:select(GEOID,
+1691289940567:hhincome = hhincomeE, # New name = old name
+1691289940617:race.tot = race.totE,
+1691289940647:race.white = race.whiteE,
+1691289940678:race.black = race.blackE)
+1691289940795:tmap_mode("view")
+1691289940840:tm_shape(tract) + tm_borders()
+1691289964634:# Function: Get tract-wise radius
+1691289964869:get_r <- function(poly, epsg_id){
+1691289964904:#---------------------
+1691289964937:# Takes: a single POLYGON or LINESTRTING
+1691289964986:# Outputs: distance between the centroid of the boundingbox and a corner of the bounding box
+1691289965019:#---------------------
+1691289965086:# Get bounding box of a given polygon
+1691289965118:bb <- st_bbox(poly)
+1691289965151:# Get lat & long coordinates of any one corner of the bounding box.
+1691289965185:bb_corner <- st_point(c(bb[1], bb[2])) %>% st_sfc(crs = epsg_id)
+1691289965217:# Get centroid of the bb
+1691289965249:bb_center_x <- (bb[3]+bb[1])/2
+1691289965281:bb_center_y <- (bb[4]+bb[2])/2
+1691289965316:bb_center <- st_point(c(bb_center_x, bb_center_y)) %>% st_sfc(crs = epsg_id) %>% st_sf()
+1691289965375:# Get the distance between bb_p and c
+1691289965407:r <- st_distance(bb_corner, bb_center)
+1691289965443:# Multiply 1.1 to make the circle a bit larger than the Census Tract.
+1691289965474:# See the Yelp explanation of their radius parameter to see why we do this.
+1691289965507:bb_center$radius <- r*1.2
+1691289965539:return(bb_center)
+1691289965577:}
+1691289966768:## Using a loop -----------------------------------------------------------------
+1691289967028:# Creating an empty vector of NA.
+1691289967065:# Results will fill this vector
+1691289967123:epsg_id <- 4326 # Edit (9/8/2022): 4326 measures distance in meter. Before the edit, I used 26967.
+1691289967194:r4all_loop <- vector("list", nrow(tract))
+1691289967285:# Starting a for-loop
+1691289967347:for (i in 1:nrow(tract)){
+1691289967382:r4all_loop[[i]] <- tract %>%
+1691289967415:st_transform(crs = epsg_id) %>%
+1691289967449:st_geometry() %>%
+1691289967480:.[[i]] %>%
+1691289967514:get_r(epsg_id = epsg_id)
+1691289967547:}
+1691289978552:r4all_loop <- bind_rows(r4all_loop)
+1691289979889:# Using a functional -----------------------------------------------------------
+1691289979925:# We use a functional (sapply) to apply this custom function to each Census Tract.
+1691289979959:r4all_apply <- tract %>%
+1691289979993:st_geometry() %>%
+1691289980026:st_transform(crs = epsg_id) %>%
+1691289980061:lapply(., function(x) get_r(x, epsg_id = epsg_id))
+1691289984441:r4all_apply <- bind_rows(r4all_apply)
+1691289985647:# Are these two identical?
+1691289985683:identical(r4all_apply, r4all_loop)
+1691290054305:# Appending X Y coordinates as seprate columns
+1691290054519:ready_4_yelp <- r4all_apply %>%
+1691290054569:mutate(x = st_coordinates(.)[,1],
+1691290054599:y = st_coordinates(.)[,2])
+1691290056206:tmap_mode('view')
+1691290056475:# Select the first 10 rows
+1691290056537:ready_4_yelp[1:10,] %>%
+1691290056574:# Draw a buffer centered at the centroid of Tract polygons.
+1691290056609:# Radius of the buffer is the radius we just calculated using loop
+1691290056644:st_buffer(., dist = .$radius) %>%
+1691290056679:# Display this buffer in red
+1691290056712:tm_shape(.) + tm_polygons(alpha = 0.5, col = 'red') +
+1691290056743:# Display the original polygon in blue
+1691290056774:tm_shape(tract[1:10,]) + tm_borders(col= 'blue')
+1691290090344:# Get bb for two counties
+1691290090573:fulton_bb <- osmdata::getbb("Fulton County, GA")
+1691290091283:dekalb_bb <- osmdata::getbb("DeKalb County, GA")
+1691290091775:# Find coordinates for the four sides of the bb
+1691290091813:left_x <- min(c(fulton_bb[1,],dekalb_bb[1,])) # <<-- smaller , larger(i.e., closer to zero) -->>
+1691290091846:right_x <- max(c(fulton_bb[1,],dekalb_bb[1,]))
+1691290091882:bottom_y <- min(c(fulton_bb[2,],dekalb_bb[2,]))
+1691290091916:top_y <- max(c(fulton_bb[2,],dekalb_bb[2,]))
+1691290091976:# Break the bb into a grid
+1691290092017:fishnet_n <- 40
+1691290092053:steps <- abs(left_x - right_x)/fishnet_n
+1691290092145:# Fishnet points
+1691290092182:fish_x <- seq(from = left_x, to = right_x, by = steps)
+1691290092218:fish_y <- seq(from = bottom_y, to = top_y, by = steps)
+1691290092285:fishnet <- expand.grid(fish_x, fish_y) %>%
+1691290092319:rename(x = Var1, y = Var2) %>%
+1691290092351:st_as_sf(coords = c('x', 'y'), crs = 4326)
+1691290092431:# Visualize it
+1691290092467:tm_shape(fishnet %>%
+1691290092499:st_buffer(dist = units::set_units(steps, "degree"))) + tm_polygons(alpha = 0.2, col = 'red')
+1691290135149:# Function for formatting the url for API request
+1691290137785:url_format <- function(latitude = NULL, longitude = NULL,
+1691290137856:radius = NULL, categories = NULL, offset = NULL, limit = NULL){
+1691290138037:# Parameters
+1691290138235:base_url <- "https://api.yelp.com/v3/businesses/search?"
+1691290138289:latitude <- paste0("latitude=", latitude)
+1691290138324:longitude <- paste0("longitude=", longitude)
+1691290138359:radius <- paste0("radius=", radius)
+1691290138393:categories <- paste0("categories=", categories)
+1691290138427:offset <- paste0("offset=", offset)
+1691290138460:limit <- paste0("limit=", limit)
+1691290138529:# Out
+1691290138565:full_url <- paste0(c(base_url, latitude, longitude, radius, categories, offset, limit), collapse = "&")
+1691290138609:return(full_url)
+1691290138657:}
+1691290138728:# Run url_format function
+1691290138766:full_url <- url_format(latitude = 33.792479078196294, # This is Atlantic station
+1691290138801:longitude = -84.39676077444938, # This is Atlantic station
+1691290138837:radius=1000,
+1691290138872:categories="restaurants",
+1691290138913:offset = 0,
+1691290138962:limit = 50)
+1691290139048:# GET response
+1691290139090:resp <- httr::GET(full_url, add_headers(Authorization = paste("Bearer", Sys.getenv("yelp_api"))))
+1691290167097:# Parse the body of the response (json format)
+1691290167309:resp_parsed <- content(resp, as="text", encoding = "UTF-8")
+1691290167408:# Parse json into a list
+1691290167446:resp_parsed <- jsonlite::fromJSON(resp_parsed)
+1691290167605:resp_parsed$businesses %>% head %>% kable() # Ignore this kable() function. This function is for neatly displaying tables on HTML document.
+1691290171460:resp_raw <- content(resp, as = "raw")
+1691290171650:resp_raw
+1691290188128:which_tract <- 1
+1691290188211:test <- business_search(api_key = Sys.getenv('yelp_api'), # like we did for census, store your api key
+1691290188408:categories = 'restaurants', # return only restaurant businesses
+1691290188438:latitude = ready_4_yelp$y[which_tract],
+1691290188466:longitude = ready_4_yelp$x[which_tract],
+1691290188500:offset = 0, # 1st page, 1st obs
+1691290188547:radius = round(ready_4_yelp$radius[which_tract]), # radius requires integer value
+1691290188578:limit = 50) # how many business per page
+1691290189407:lapply(test, head)
+1691290194573:# See what's inside
+1691290194654:names(test)
+1691290194904:# Business
+1691290194943:paste0("is it a data.frame?: ", is.data.frame(test$businesses), ", ",
+1691290194996:" how many rows?: ", nrow(test$businesses), ", ",
+1691290195027:" how many columns?: ", ncol(test$businesses))
+1691290202574:# FUNCTION
+1691290202656:get_yelp <- function(tract, category){
+1691290202857:# ----------------------------------
+1691290202889:# Gets one row of tract information (1,) and category name (str),
+1691290202920:# Outputs a list of business data.frame
+1691290202956:Sys.sleep(5)
+1691290203004:n <- 1
+1691290203036:# First request --------------------------------------------------------------
+1691290203067:resp <- business_search(api_key = Sys.getenv("yelp_api"),
+1691290203097:categories = category,
+1691290203128:latitude = tract$y,
+1691290203159:longitude = tract$x,
+1691290203188:offset = (n - 1) * 50, # = 0 when n = 1
+1691290203217:radius = round(tract$radius),
+1691290203246:limit = 50)
+1691290203275:# Calculate how many requests are needed in total
+1691290203304:required_n <- ceiling(resp$total/50)
+1691290203360:# out is where the results will be appended to.
+1691290203392:out <- vector("list", required_n)
+1691290203448:# Store the business information to nth slot in out
+1691290203477:out[[n]] <- resp$businesses
+1691290203530:# Change the name of the elements to the total required_n
+1691290203560:# This is to know if there are more than 1000 businesses,
+1691290203590:# we know how many.
+1691290203619:names(out)[n] <- required_n
+1691290203676:# Throw error if more than 1000
+1691290203706:if (resp$total >= 1000)
+1691290203735:{
+1691290203765:# glue formats string by inserting {n} with what's currently stored in object n.
+1691290203794:print(glue::glue("{n}th row has >= 1000 businesses."))
+1691290203824:# Stop before going into the loop because we need to
+1691290203852:# break down Census Tract to something smaller.
+1691290203881:return(out)
+1691290203909:}
+1691290203939:else
+1691290203969:{
+1691290203998:# add 1 to n
+1691290204027:n <- n + 1
+1691290204081:# Now we know required_n -----------------------------------------------------
+1691290204110:# Starting a loop
+1691290204140:while(n <= required_n){
+1691290204172:resp <- business_search(api_key = Sys.getenv("yelp_api"),
+1691290204203:categories = category,
+1691290204233:latitude = tract$y,
+1691290204265:longitude = tract$x,
+1691290204295:offset = (n - 1) * 50,
+1691290204325:radius = round(tract$radius),
+1691290204355:limit = 50)
+1691290204415:out[[n]] <- resp$businesses
+1691290204468:n <- n + 1
+1691290204498:} #<< end of while loop
+1691290204551:# Merge all elements in the list into a single data frame
+1691290204583:out <- out %>% bind_rows()
+1691290204637:return(out)
+1691290204666:}
+1691290204695:}
+1691290214393:# Apply the function for the first Census Tract
+1691290214477:yelp_first_tract <- get_yelp(ready_4_yelp[1,], "restaurants") %>%
+1691290214674:as_tibble()
+1691290222178:# Print
+1691290222213:yelp_first_tract %>% print
+1691290294878:# Prepare a collector
+1691290294957:yelp_all_list <- vector("list", nrow(ready_4_yelp))
+1691290295203:# Looping through all Census Tracts
+1691290295234:for (row in 1:nrow(ready_4_yelp)){
+1691290295282:yelp_all_list[[row]] <- suppressMessages(get_yelp(ready_4_yelp[row,], "restaurants"))
+1691290295312:if (row %% 10 == 0){
+1691290295343:Sys.sleep(10)
+1691290295374:print(paste0("Current row: ", row))
+1691290295406:}
+1691290295436:}
+1691290312162:# Prepare a collector
+1691290312211:yelp_all_list <- vector("list", nrow(ready_4_yelp))
+1691290312303:# Looping through all Census Tracts
+1691290312349:for (row in 1:nrow(ready_4_yelp)){
+1691290312385:yelp_all_list[[row]] <- suppressMessages(get_yelp(ready_4_yelp[row,], "restaurants"))
+1691290312422:if (row %% 10 == 0){
+1691290312455:#Sys.sleep(10)
+1691290312491:print(paste0("Current row: ", row))
+1691290312522:}
+1691290312556:}
+1691290581180:# FUNCTION
+1691290581225:get_yelp <- function(tract, category){
+1691290581267:# ----------------------------------
+1691290581301:# Gets one row of tract information (1,) and category name (str),
+1691290581333:# Outputs a list of business data.frame
+1691290581409:Sys.sleep(2)
+1691290581451:n <- 1
+1691290581501:# First request --------------------------------------------------------------
+1691290581532:resp <- business_search(api_key = Sys.getenv("yelp_api"),
+1691290581563:categories = category,
+1691290581594:latitude = tract$y,
+1691290581623:longitude = tract$x,
+1691290581652:offset = (n - 1) * 50, # = 0 when n = 1
+1691290581682:radius = round(tract$radius),
+1691290581713:limit = 50)
+1691290581744:# Calculate how many requests are needed in total
+1691290581775:required_n <- ceiling(resp$total/50)
+1691290581828:# out is where the results will be appended to.
+1691290581859:out <- vector("list", required_n)
+1691290581914:# Store the business information to nth slot in out
+1691290581943:out[[n]] <- resp$businesses
+1691290581996:# Change the name of the elements to the total required_n
+1691290582027:# This is to know if there are more than 1000 businesses,
+1691290582056:# we know how many.
+1691290582085:names(out)[n] <- required_n
+1691290582138:# Throw error if more than 1000
+1691290582167:if (resp$total >= 1000)
+1691290582197:{
+1691290582229:# glue formats string by inserting {n} with what's currently stored in object n.
+1691290582261:print(glue::glue("{n}th row has >= 1000 businesses."))
+1691290582295:# Stop before going into the loop because we need to
+1691290582327:# break down Census Tract to something smaller.
+1691290582356:return(out)
+1691290582385:}
+1691290582418:else
+1691290582447:{
+1691290582477:# add 1 to n
+1691290582506:n <- n + 1
+1691290582559:# Now we know required_n -----------------------------------------------------
+1691290582588:# Starting a loop
+1691290582616:while(n <= required_n){
+1691290582646:resp <- business_search(api_key = Sys.getenv("yelp_api"),
+1691290582676:categories = category,
+1691290582706:latitude = tract$y,
+1691290582735:longitude = tract$x,
+1691290582765:offset = (n - 1) * 50,
+1691290582794:radius = round(tract$radius),
+1691290582824:limit = 50)
+1691290582879:out[[n]] <- resp$businesses
+1691290582938:n <- n + 1
+1691290582971:} #<< end of while loop
+1691290583028:# Merge all elements in the list into a single data frame
+1691290583062:out <- out %>% bind_rows()
+1691290583118:return(out)
+1691290583148:}
+1691290583177:}
+1691290595880:# Apply the function for the first Census Tract
+1691290595915:yelp_first_tract <- get_yelp(ready_4_yelp[1,], "restaurants") %>%
+1691290595967:as_tibble()
+1691290599963:# Print
+1691290599999:yelp_first_tract %>% print
+1691290605159:# Prepare a collector
+1691290605198:yelp_all_list <- vector("list", nrow(ready_4_yelp))
+1691290605296:# Looping through all Census Tracts
+1691290605330:for (row in 1:nrow(ready_4_yelp)){
+1691290605363:yelp_all_list[[row]] <- suppressMessages(get_yelp(ready_4_yelp[row,], "restaurants"))
+1691290605401:if (row %% 10 == 0){
+1691290605453:#Sys.sleep(10)
+1691290605489:print(paste0("Current row: ", row))
+1691290605524:}
+1691290605556:}
+1691291165296:install.packages('pbapply')
+1691295255853:# Download images
+1691295255929:edges_gt <- st_read(here("Lab", "module_3", "endp_atlantic_station.geojson"))
+1691295256356:# Loop!
+1691295256392:tic()
+1691295267002:# Download images
+1691295267032:edges_gt <- st_read(here("Lab", "module_3", "endp_atlantic_station.geojson"))
+1691295267263:# Loop!
+1691295267299:for (i in seq(1,nrow(edges_gt))){
+1691295267333:get_image(edges_gt[i,])
+1691295267365:}
+1691295276083:get_image <- function(iterrow){
+1691295276176:type = iterrow$type
+1691295276425:location <- paste0(iterrow$Y %>% round(4), ",", iterrow$X %>% round(4))
+1691295276468:heading <- iterrow$azi %>% round(1)
+1691295276525:edge_id <- iterrow$edge_id
+1691295276564:node_id <- iterrow$node_id
+1691295276600:highway <- iterrow$highway
+1691295276635:key <- Sys.getenv("google_api")
+1691295276695:furl <- glue::glue("https://maps.googleapis.com/maps/api/streetview?size=640x640&location={location}&heading={heading}&fov=90&pitch=0&key={key}")
+1691295276725:fname <- glue::glue("GSV-nid_{node_id}-eid_{edge_id}-type_{type}-Location_{location}-heading_{heading}-highway_{highway}.jpg")
+1691295276757:fpath <- here("Lab", "module_3", "downloaded_image", fname)
+1691295276789:download.file(furl, fpath, mode = 'wb')
+1691295276824:}
+1691295282163:# Download images
+1691295282199:edges_gt <- st_read(here("Lab", "module_3", "endp_atlantic_station.geojson"))
+1691295282471:# Loop!
+1691295282508:for (i in seq(1,nrow(edges_gt))){
+1691295282543:get_image(edges_gt[i,])
+1691295282575:}
+1691295632141:# Extract a curvy line
+1691295632227:z <- edges %>% filter(edge_id == test_edge)
+1691295638512:library(tidyverse)
+1691295638594:library(osmdata)
+1691295638829:library(sfnetworks)
+1691295638879:library(units)
+1691295638950:library(sf)
+1691295638987:library(tidygraph)
+1691295639074:library(tmap)
+1691295639109:library(here)
+1691295640273:# Bounding Box for Atlanta.
+1691295640350:bb_atl <- getbb("Atlanta,GA")
+1691295641106:# Get OSM data.
+1691295641143:osm_road <- opq(bbox = bb_atl) %>%
+1691295641180:add_osm_feature(key = 'highway',
+1691295641214:value = c("motorway", "trunk", "primary",
+1691295641252:"secondary", "tertiary", "unclassified",
+1691295641286:"residential")) %>%
+1691295641318:osmdata_sf() %>%
+1691295641350:osm_poly2line()
+1691295658561:# Convert the OSM line to sfnetworks and clean it.
+1691295658595:net <- osm_road$osm_lines %>%
+1691295658625:select(osm_id, highway) %>%
+1691295658657:sfnetworks::as_sfnetwork(directed = FALSE) %>%
+1691295658691:activate("edges") %>%
+1691295658725:filter(!edge_is_multiple()) %>%
+1691295658759:filter(!edge_is_loop()) %>%
+1691295658792:convert(., sfnetworks::to_spatial_subdivision) %>%
+1691295658826:convert(., sfnetworks::to_spatial_smooth) %>%
+1691295658858:mutate(legnth = edge_length())
+1691295787533:edges <- net %>%
+1691295787610:# Extract 'edges'
+1691295787668:st_as_sf("edges") %>%
+1691295787913:# Drop redundant columns
+1691295787946:select(osm_id, highway) %>%
+1691295787977:# Add length column
+1691295788009:mutate(length = st_length(.) %>% unclass()) %>%
+1691295788042:# Drop segments that are too short (100m)
+1691295788071:filter(length > 50) %>%
+1691295788099:# Add a unique ID for each edge
+1691295788129:mutate(edge_id = seq(1,nrow(.)))
+1691295788462:# nodes <- net %>%
+1691295788496:#   st_as_sf("nodes") %>%
+1691295788532:#   mutate(node_id = seq(1,nrow(.)))
+1691295790510:# Select an edge for demo
+1691295790741:test_edge = 23126
+1691295790796:e <- edges %>% filter(edge_id == test_edge)
+1691295790872:# View it
+1691295790906:tmap_mode('view')
+1691295790949:e %>% st_coordinates() %>%
+1691295790979:as.data.frame() %>%
+1691295791009:st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
+1691295791039:with(
+1691295791068:tm_shape(.) + tm_dots() +
+1691295791098:tm_shape(.[1,]) + tm_dots(col = "red") +  # Start = red
+1691295791127:tm_shape(.[nrow(.),]) + tm_dots(col = "yellow")  # End = yellow
+1691295791158:)
+1691295794363:# -----------------------------------------------------------
+1691295794448:# First intersection
+1691295794487:# First two points from a line
+1691295794746:start_p <- e %>%
+1691295794794:st_coordinates() %>%
+1691295794828:.[1:2,1:2]
+1691295794896:# Calculate the azimuth of the line connecting the two points
+1691295794930:start_azi <- atan2(start_p[2,"X"] - start_p[1, "X"],
+1691295794963:start_p[2,"Y"] - start_p[1, "Y"])*180/pi # 180/pi because trigonometry in R takes radians
+1691295795030:# -----------------------------------------------------------
+1691295795063:# The other intersection
+1691295795098:# Last two points from a line
+1691295795132:end_p <- e %>%
+1691295795164:st_coordinates() %>%
+1691295795194:.[(nrow(.)-1):nrow(.),1:2]
+1691295795261:# Calculate the azimuth of the line connecting the two points
+1691295795316:end_azi <- atan2(end_p[2,"X"] - end_p[1, "X"],
+1691295795348:end_p[2,"Y"] - end_p[1, "Y"])*180/pi
+1691295795416:# Flip the azimuth so that the camera would be looking back
+1691295795459:end_azi <- if (end_azi < 180) {end_azi + 180} else {end_azi - 180}
+1691295795527:# ----------------------------------------------------------
+1691295795559:# mid point
+1691295795591:mid_p <- e %>%
+1691295795626:st_geometry() %>%
+1691295795662:.[[1]] %>%
+1691295795699:st_line_sample(sample = c(0.45, 0.55)) %>%
+1691295795729:st_cast("POINT") %>%
+1691295795760:st_coordinates()
+1691295795829:mid_azi <- atan2(mid_p[2,"X"] - mid_p[1, "X"],
+1691295795861:mid_p[2,"Y"] - mid_p[1, "Y"])*180/pi
+1691295795933:mid_p <- e %>%
+1691295795966:st_geometry() %>%
+1691295795998:.[[1]] %>%
+1691295796028:st_line_sample(sample = 0.5) %>%
+1691295796063:st_coordinates() %>%
+1691295796098:.[1,1:2]
+1691295798075:get_azi <- function(line){
+1691295798157:# end point 1 ----------------------------------------------
+1691295798394:start_p <- line %>%
+1691295798427:st_coordinates() %>%
+1691295798459:.[1:2,1:2]
+1691295798533:start_azi <- atan2(start_p[2,"X"] - start_p[1, "X"],
+1691295798566:start_p[2,"Y"] - start_p[1, "Y"])*180/pi
+1691295798623:# end point 2 ----------------------------------------------
+1691295798655:end_p <- line %>%
+1691295798687:st_coordinates() %>%
+1691295798716:.[(nrow(.)-1):nrow(.),1:2]
+1691295798773:end_azi <- atan2(end_p[2,"X"] - end_p[1, "X"],
+1691295798803:end_p[2,"Y"] - end_p[1, "Y"])*180/pi
+1691295798858:end_azi <- if (end_azi < 180) {end_azi + 180} else {end_azi - 180}
+1691295798913:# mid point 1 ---------------------------------------------
+1691295798942:mid_p <- line %>%
+1691295798973:st_line_sample(sample = c(0.45, 0.55)) %>%
+1691295799003:st_cast("POINT") %>%
+1691295799036:st_coordinates()
+1691295799090:mid_azi <- atan2(mid_p[2,"X"] - mid_p[1, "X"],
+1691295799122:mid_p[2,"Y"] - mid_p[1, "Y"])*180/pi
+1691295799177:mid_p <- line %>%
+1691295799208:st_line_sample(sample = 0.5) %>%
+1691295799239:st_coordinates() %>%
+1691295799270:.[1,1:2]
+1691295799352:# return in data frame ------------------------------------
+1691295799382:return(tribble(
+1691295799413:~type,    ~X,            ~Y,             ~azi,
+1691295799443:"start",   start_p[1,"X"], start_p[1,"Y"], start_azi,
+1691295799473:"mid1",    mid_p["X"],   mid_p["Y"],   mid_azi,
+1691295799505:"mid2",    mid_p["X"],   mid_p["Y"],   ifelse(mid_azi < 180, mid_azi + 180, mid_azi - 180),
+1691295799535:"end",     end_p[2,"X"],   end_p[2,"Y"],   end_azi))
+1691295799569:}
+1691295802994:endp_azi <- edges %>%
+1691295803072:st_geometry() %>%
+1691295803109:map_df(get_azi)
+1691295873043:endp <- endp_azi %>%
+1691295873077:bind_cols(edges %>%
+1691295873112:st_drop_geometry() %>%
+1691295873145:slice(rep(1:nrow(edges),each=4))) %>%
+1691295873175:st_as_sf(coords = c("X", "Y"), crs = 4326, remove=FALSE) %>%
+1691295873206:mutate(node_id = seq(1, nrow(.)))
+1691295873340:endp
+1691295961971:print('hi')

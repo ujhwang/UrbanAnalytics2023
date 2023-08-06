@@ -1,0 +1,4 @@
+"0","# Appending X Y coordinates as seprate columns"
+"0","ready_4_yelp <- r4all_apply %>% "
+"0","  mutate(x = st_coordinates(.)[,1],"
+"0","         y = st_coordinates(.)[,2])"

@@ -1,0 +1,12 @@
+"0","tmap_mode('view')"
+"2","tmap mode set to interactive viewing
+"
+"0","# Select the first 10 rows"
+"0","ready_4_yelp[1:10,] %>% "
+"0","  # Draw a buffer centered at the centroid of Tract polygons."
+"0","  # Radius of the buffer is the radius we just calculated using loop"
+"0","  st_buffer(., dist = .$radius) %>% "
+"0","  # Display this buffer in red"
+"0","  tm_shape(.) + tm_polygons(alpha = 0.5, col = 'red') +"
+"0","  # Display the original polygon in blue"
+"0","  tm_shape(tract[1:10,]) + tm_borders(col= 'blue')"

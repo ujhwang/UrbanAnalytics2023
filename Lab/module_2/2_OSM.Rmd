@@ -136,7 +136,7 @@ my_bb_sf <- my_bb %>% t %>% data.frame() %>%
   st_as_sfc()
 
 # Extract a smaller network for exercise purpose
-osm_small <- osm_road$osm_lines[my_bb_sf,]
+osm_small <- osm_road$osm_lines[my_bb_sf,] %>% select(osm_id, highway)
 
 ## Plot--
 tmap_mode('view')
@@ -153,7 +153,7 @@ In the print out, you can see that there are two parts in `net` object: Node Dat
 
 ```{r}
 # Converting the line component of OSM data into a network
-net <- sfnetworks::as_sfnetwork(osm_small, directed = FALSE) 
+net <- sfnetworks::as_sfnetwork(osm_small, directed = FALSE)
 print(net)
 ```
 
@@ -415,6 +415,7 @@ Now, we need a OSM network for the city (because we have been working with a sma
 ```{r}
 # Using the full network file 
 atl_net <- osm_road$osm_lines %>%
+  select(osm_id, highway) %>% 
   sfnetworks::as_sfnetwork(directed = FALSE) %>% 
   activate("edges") %>%
   filter(!edge_is_multiple()) %>%

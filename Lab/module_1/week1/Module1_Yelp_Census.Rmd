@@ -420,7 +420,7 @@ get_yelp <- function(tract, category){
   # ----------------------------------
   # Gets one row of tract information (1,) and category name (str),
   # Outputs a list of business data.frame
-  Sys.sleep(5)
+  Sys.sleep(2)
   n <- 1
   # First request --------------------------------------------------------------
   resp <- business_search(api_key = Sys.getenv("yelp_api"), 
@@ -506,7 +506,7 @@ yelp_all_list <- vector("list", nrow(ready_4_yelp))
 for (row in 1:nrow(ready_4_yelp)){
   yelp_all_list[[row]] <- suppressMessages(get_yelp(ready_4_yelp[row,], "restaurants"))
   if (row %% 10 == 0){
-    Sys.sleep(10)
+    #Sys.sleep(10)
     print(paste0("Current row: ", row))
   }
 }

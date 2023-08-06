@@ -1,0 +1,11 @@
+"0","# Apply the function for the first Census Tract"
+"0","yelp_first_tract <- get_yelp(ready_4_yelp[1,], ""restaurants"") %>% "
+"0","  as_tibble()"
+"2","No encoding supplied: defaulting to UTF-8.
+"
+"2","No encoding supplied: defaulting to UTF-8.
+"
+"2","No encoding supplied: defaulting to UTF-8.
+"
+"0","# Print"
+"0","yelp_first_tract %>% print"

@@ -50,7 +50,9 @@ osm_road <- opq(bbox = bb_atl) %>%
   osm_poly2line()
 
 # Convert the OSM line to sfnetworks and clean it.
-net <- sfnetworks::as_sfnetwork(osm_road$osm_lines ,directed = FALSE) %>% 
+net <- osm_road$osm_lines %>% 
+  select(osm_id, highway) %>% 
+  sfnetworks::as_sfnetwork(directed = FALSE) %>% 
   activate("edges") %>%
   filter(!edge_is_multiple()) %>%
   filter(!edge_is_loop()) %>% 
@@ -234,18 +236,16 @@ get_image <- function(iterrow){
 }
 ```
 
-To reduce the number of images you'd be downloading, I pre-filtered the points so that it includes only Georgia Tech & Atlantic Station. Download endp_gt.geojson from [here](https://raw.githubusercontent.com/BonwooKoo/UrbanAnalytics2022/main/Lab/module_3/endp_gt.geojson). 
+To reduce the number of images you'd be downloading, I pre-filtered the points so that it includes only Georgia Tech & Atlantic Station. Download endp_gt.geojson from [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_3/endp_gt.geojson). 
 
-```{r, eval=FALSE}
+```{r}
 # Download images 
 edges_gt <- st_read(here("Lab", "module_3", "endp_atlantic_station.geojson"))
 
 # Loop!
-tic()
 for (i in seq(1,nrow(edges_gt))){
   get_image(edges_gt[i,])
 } 
-toc()
 ```
 
 
