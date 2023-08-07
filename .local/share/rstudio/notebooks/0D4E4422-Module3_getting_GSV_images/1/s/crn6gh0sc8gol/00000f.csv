@@ -1,4 +1,0 @@
-"0","# Extract a curvy line"
-"0","z <- edges %>% filter(edge_id == test_edge)"
-"2","Error: object 'edges' not found
-"

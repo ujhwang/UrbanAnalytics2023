@@ -1,3 +1,0 @@
-"0","endp_azi <- edges %>% "
-"0","  st_geometry() %>% "
-"0","  map_df(get_azi) "

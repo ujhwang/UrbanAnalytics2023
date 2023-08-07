@@ -1,5 +1,0 @@
-"0","# View the data"
-"0","message(sprintf(""nrow: %s, ncol: %s"", nrow(tract), ncol(tract)))"
-"2","nrow: 349, ncol: 11
-"
-"0","tract %>% head() %>% knitr::kable() # Ignore this kable() function. This function is for neatly displaying tables on HTML document."
