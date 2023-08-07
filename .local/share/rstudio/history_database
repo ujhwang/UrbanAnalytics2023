@@ -995,3 +995,4 @@
 1691295873206:mutate(node_id = seq(1, nrow(.)))
 1691295873340:endp
 1691295961971:print('hi')
+1691297996839:sort(row.names(installed.packages()))
