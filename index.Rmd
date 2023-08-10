@@ -153,7 +153,7 @@ reading_col <- c(
 # devtools::install_github(repo="haozhu233/kableExtra", ref="a6af5c0")
 
 assignment_col <- c(
-  "[Survey](https://forms.gle/4BBtMfrvr5yJLebK9),<br>[Group](https://forms.gle/sGVfDgLR6yLLmb4S8)",# 1
+  "[Survey](https://forms.gle/wvZGkSJupRjsuJdS7),<br>[Group](https://forms.gle/sGVfDgLR6yLLmb4S8)",# 1
   "",# 2
   "[Mini 1](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_1/mini_assignment_1.html) <br> (due Sep18)", # 3
   
