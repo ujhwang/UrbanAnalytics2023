@@ -85,7 +85,8 @@ weeks$Week <- paste(weeks$Week, "<br><font size=2 color=gray>", day, "</font>")
 
 ```{r, echo=FALSE}
 topic_col <- c(
-  "Introduction: Class structure, format & expectations <font size=1 color='grey'>(GT only) </font> [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lecture_Slides/Lecture-1/LectureONE.html), <br> Intro to R - #1 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w1_d2_Intro_to_R_1.html)",# 1
+  "Introduction: Class structure, format & expectations [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lecture_Slides/Lecture-1/LectureONE.html), <br> 
+  Intro to R - #1 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w1_d2_Intro_to_R_1.html)",# 1
   
   "Intro to R - #2 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d1_Intro_to_R_2.html) <br> 
   Data for Urban Analytics [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d2_modern_data.html)",# 2
@@ -95,7 +96,7 @@ topic_col <- c(
   
   "Tidy data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.html)",# 4
   
-  "Deriving insights from your data <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> Hands-on [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week3/stats.html)",# 5
+  "Deriving insights from your data [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> Hands-on [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week3/stats.html)",# 5
   
   "Storytelling with data [(slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/LectureStorytelling-w-data.html) <br> Interactive visualization 1 [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week4/interactive_visualization.html) <br>
   Interactive visualization 2 [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week4/interactive_visualization_2.html)",# 6
@@ -112,7 +113,7 @@ topic_col <- c(
   
   "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/SentimentAnalysis.html)",# 12
   
-  "Data ethics  <font size=1 color='grey'>(GT only) </font> [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureTWO.html#1)",# 13
+  "Data ethics [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureTWO.html#1)",# 13
   
   "Assistance with final project related issues",# 14
   
