@@ -85,9 +85,10 @@ weeks$Week <- paste(weeks$Week, "<br><font size=2 color=gray>", day, "</font>")
 
 ```{r, echo=FALSE}
 topic_col <- c(
-  "Introduction: Class structure, format & expectations <font size=1 color='grey'>(GT only) </font> [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lecture_Slides/Lecture-1/LectureONE.html), <br> Intro to R - #1 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d1_Intro_to_R_1.html)",# 1
+  "Introduction: Class structure, format & expectations <font size=1 color='grey'>(GT only) </font> [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lecture_Slides/Lecture-1/LectureONE.html), <br> Intro to R - #1 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w1_d2_Intro_to_R_1.html)",# 1
   
-  "Intro to R - #2 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d2_Intro_to_R_2.html) <br> R-Lab (RMD)",# 2
+  "Intro to R - #2 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d1_Intro_to_R_2.html) <br> 
+  Data for Urban Analytics [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d2_modern_data.html)",# 2
   
   "Accessing data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide.html), <br> 
   Census & Yelp API [(RMD)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census.html), <br>Creating sf objects [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide_additional.html)",# 3
