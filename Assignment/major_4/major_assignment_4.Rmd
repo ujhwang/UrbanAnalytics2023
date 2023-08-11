@@ -25,7 +25,7 @@ This assignment provides a code template (download it from [here](https://ujhwan
 2. Use the Knit button in R Studio to render it as a HTML document.
 3. Publish the rendered document to RPubs.
 4. <font color="pink">Submit the URL of the RPubs document through Canvas by **11/30/2023 Thursday midnight (11:59 PM on Thursday).** </font>
-5. To submit, go to Canvas > Assignments > Major assignment 3.
+5. To submit, go to Canvas > Assignments > Major assignment 4.
 6. Grades and feedback will be posted through Canvas.
 
 
