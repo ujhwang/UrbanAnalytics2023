@@ -88,42 +88,58 @@ topic_col <- c(
   "Introduction: Class structure, format & expectations [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lecture_Slides/Lecture-1/LectureONE.html), <br> 
   Intro to R - #1 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w1_d2_Intro_to_R_1.html)",# 1
   
+  
   "Intro to R - #2 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d1_Intro_to_R_2.html) <br> 
   Data for Urban Analytics [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d2_modern_data.html)",# 2
+  
   
   "Accessing data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide.html), <br> 
   Census & Yelp API ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census.Rmd), 
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census.html)),
   <br>Creating sf objects [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide_additional.html)",# 3
   
-  "Tidy data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.html))",# 4
   
-  "Deriving insights from your data [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> Hands-on ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/stats.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/stats.html))",# 5
+  "Tidy data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/uc.jpg), <br> 
+  Data wrangling ([RMD](),
+  [html]())",# 4
   
-  "Storytelling with data [(slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/LectureStorytelling-w-data.html) <br> Interactive visualization 1 ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/interactive_visualization.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/interactive_visualization.html))<br>
-  Interactive visualization 2 
-  ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/interactive_visualization_2.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/interactive_visualization_2.html))",# 6
   
-  "<b> Student presentation of final project idea and review of literature/ examples (Oct 3) </b> <br> General Transit Feed Specification ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/1_GTFS_v2.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/1_GTFS_v2.html))",# 7 # [GTFS and equity (RMD)](./Lab/module_2/1_GTFS.html)
+  "Deriving insights from your data [(Slide)](), <br> 
+  Hands-on ([RMD](),
+  [html]())",# 5
   
-  "Open Street Map ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/2_OSM.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/2_OSM.html))",# 8 # [OSM as a graph (RMD)](./Lab/module_2/2_OSM.html)
   
-  "Urban images & computer vision [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision_Slide.html), <br> Computer vision in Colab ([1](https://colab.research.google.com/drive/1G9m85QNlMqAHNuw854qhZQTFAqetrnYG?usp=sharing), [2](https://colab.research.google.com/drive/16Da-YywiLVS5IY3NXlYWxQbH7TaKsoeW?usp=sharing))",# 9
+  "Storytelling with data [(slide)]() <br> 
+  Interactive visualization 1 ([RMD](),
+  [html]())<br>
+  Interactive visualization 2 ([RMD](),
+  [html]())",# 6
   
-  "Sampling & processing images ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_getting_GSV_images.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_getting_GSV_images.html))",# 10
   
-  "Getting & Processing Reddit data in R ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/TwitterTextAnalysis_v2.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/TwitterTextAnalysis_v2.html))",# 11
+  "<b> Student presentation of final project idea and review of literature/ examples (Oct 3) </b> <br> 
+  General Transit Feed Specification ([RMD](),
+  [html]())",# 7 # [GTFS and equity (RMD)](./Lab/module_2/1_GTFS.html)
   
-  "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/SentimentAnalysis.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/SentimentAnalysis.html))",# 12
+  
+  "Open Street Map ([RMD](),
+  [html]())",# 8 # [OSM as a graph (RMD)](./Lab/module_2/2_OSM.html)
+  
+  
+  "Urban images & computer vision [(Slide)](), <br> 
+  Computer vision in Colab ([1](), [2]())",# 9
+  
+  
+  "Sampling & processing images ([RMD](),
+  [html]())",# 10
+  
+  
+  "Getting & Processing Reddit data in R ([RMD](),
+  [html]())",# 11
+  
+  
+  "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis ([RMD](),
+  [html]())",# 12
+  
   
   "Data ethics [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureTWO.html#1)",# 13
   
