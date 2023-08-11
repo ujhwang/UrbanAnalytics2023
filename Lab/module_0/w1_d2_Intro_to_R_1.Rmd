@@ -114,7 +114,7 @@ exclude: true
     * **Isolation**: A Docker container is an isolated environment for your code.
     * **Popularity**: The most-used developer tool in [Stack Overflow 2023 survey](https://survey.stackoverflow.co/2023/#section-most-popular-technologies-other-tools).
     
-    ![:scale 80%](img/docker_popular.PNG)
+    ![:scale 80%](img/docker_popular.png)
     ]
 
 ---
