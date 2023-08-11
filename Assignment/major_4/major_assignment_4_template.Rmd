@@ -1,7 +1,7 @@
 ---
-title: "Major Assignment 3"
-author: "Bonwoo Koo & Subhrajit Guhathakurta"
-date: '2022-11-13'
+title: "Major Assignment 4"
+author: "Subhrajit Guhathakurta & Uijeong Hwang"
+date: '2022-11-16'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -47,7 +47,7 @@ subset_car <- # **YOUR CODE HERE..**
 # //TASK //////////////////////////////////////////////////////////////////////
 ```
 
-I expect you to repalce where it says `# **YOUR CODE HERE..**` with your answer, like below.
+I expect you to replace where it says `# **YOUR CODE HERE..**` with your answer, like below.
 ```{r}
 # TASK ////////////////////////////////////////////////////////////////////////
 # 1. Using mtcars object, extract rows where cyl equals 4
@@ -63,7 +63,7 @@ subset_car <- mtcars %>%
 
 There will also be multiple 'NO MODIFICATION ZONE'. Do not modify code in the No Modification Zone.
 
-> You will need to knit it, publish it on Rpubs, and submit the link. If there is any question about this template, do not hesitate to reach out to Bonwoo.
+> You will need to knit it, publish it on Rpubs, and submit the link. If there is any question about this template, do not hesitate to reach out to UJ.
 
 # Introduction
 

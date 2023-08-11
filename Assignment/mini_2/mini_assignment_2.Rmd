@@ -1,7 +1,7 @@
 ---
 title: "Mini-Assignment 2"
-author: "Bon Woo Koo & Subhrajit Guhathakurta"
-date: '2022-15-08'
+author: "Subhrajit Guhathakurta & Uijeong Hwang"
+date: '2023-09-14'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -39,7 +39,7 @@ The purpose of this mini assignment 2 is to provide you with an opportunity to d
 1. Write your report and R code in a R Markdown document. 
 2. Use the Knit button in R Studio to render it as a HTML document.
 3. Publish the rendered document to RPubs.
-4. <font color="pink">Submit the URL of the RPubs document through Canvas by **9/23/2022 Friday midnight (11:59 PM on Friday).** </font>
+4. <font color="pink">Submit the URL of the RPubs document through Canvas by **9/21/2023 Thursday midnight (11:59 PM on Thursday).** </font>
 5. To submit, go to Canvas > Assignments > Mini assignment 2.
 6. Grades and feedback will be posted through Canvas.
 

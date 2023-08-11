@@ -1,7 +1,7 @@
 ---
-title: "Major-Assignment 3"
-author: "Bon Woo Koo & Subhrajit Guhathakurta"
-date: '2022-11-13'
+title: "Major-Assignment 4"
+author: "Subhrajit Guhathakurta & Uijeong Hwang"
+date: '2023-11-16'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -16,15 +16,15 @@ output:
 
 # Instructions
 
-User-generated text has a possibility of allowing us to 'hear' in a large scale what people have to say abour various topics. In this assignment, you will download Tweets using Twitter API to analyze what people are saying about different neighborhoods in Atlanta. 
+User-generated text has a possibility of allowing us to 'hear' in a large scale what people have to say about various topics. In this assignment, you will download Tweets using Twitter API to analyze what people are saying about different neighborhoods in Atlanta. 
 
-This assignment provides a code template (download it from [here](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/major_3/major_assignment_3_template.Rmd)). The template will explain how to use the template, what tasks you will be performing, and detailed steps. There can be many unpredictable obstacles that need troubleshooting (e.g., with regards to API calls, free credits on Google Cloud Console, etc), so **start early**.
+This assignment provides a code template (download it from [here](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_4/major_assignment_4_template.Rmd)). The template will explain how to use the template, what tasks you will be performing, and detailed steps. There can be many unpredictable obstacles that need troubleshooting (e.g., with regards to API calls, free credits on Google Cloud Console, etc), so **start early**.
 
 # Logistics
 1. Write your report and R code in a R Markdown document. 
 2. Use the Knit button in R Studio to render it as a HTML document.
 3. Publish the rendered document to RPubs.
-4. <font color="pink">Submit the URL of the RPubs document through Canvas by **11/27/2022 Sunday midnight (11:59 PM on Sunday).** </font>
+4. <font color="pink">Submit the URL of the RPubs document through Canvas by **11/30/2023 Thursday midnight (11:59 PM on Thursday).** </font>
 5. To submit, go to Canvas > Assignments > Major assignment 3.
 6. Grades and feedback will be posted through Canvas.
 

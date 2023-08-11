@@ -1,7 +1,7 @@
 ---
-title: "Major-Assignment 2"
-author: "Bon Woo Koo & Subhrajit Guhathakurta"
-date: '2022-10-30'
+title: "Major-Assignment 3"
+author: "Subhrajit Guhathakurta & Uijeong Hwang"
+date: '2023-11-02'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -18,13 +18,13 @@ output:
 
 With the advent of widespread street view services and computer vision technology, automatically quantifying the streetscapes at street-level has become possible. 
 
-As one of early adopters of this new technological advance, you are tasked to utilize OSM, GSV, and computer vision to gain insights about what built enviornmental characteristics create walkable neighborhoods. This assignment provides a code template (download it from [here](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/major_2/major_assignment_2_template.Rmd)). The template will explain how to use the template, what tasks you will be performing, and detailed steps. There can be many unpredictable obstacles that need troubleshooting (e.g., with regards to API calls, free credits on Google Cloud Console, etc), so **start early**.
+As one of early adopters of this new technological advance, you are tasked to utilize OSM, GSV, and computer vision to gain insights about what built environmental characteristics create walkable neighborhoods. This assignment provides a code template (download it from [here](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_3/major_assignment_3_template.Rmd)). The template will explain how to use the template, what tasks you will be performing, and detailed steps. There can be many unpredictable obstacles that need troubleshooting (e.g., with regards to API calls, free credits on Google Cloud Console, etc), so **start early**.
 
 # Logistics
 1. Write your report and R code in a R Markdown document. 
 2. Use the Knit button in R Studio to render it as a HTML document.
 3. Publish the rendered document to RPubs.
-4. <font color="pink">Submit the URL of the RPubs document through Canvas by **11/13/2022 Sunday midnight (11:59 PM on Sunday).** </font>
+4. <font color="pink">Submit the URL of the RPubs document through Canvas by **11/16/2023 Thursday midnight (11:59 PM on Thursday).** </font>
 5. To submit, go to Canvas > Assignments > Major assignment 2.
 6. Grades and feedback will be posted through Canvas.
 

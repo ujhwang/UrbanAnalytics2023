@@ -1,7 +1,7 @@
 ---
 title: "Mini-Assignment 4"
-author: "Bon Woo Koo & Subhrajit Guhathakurta"
-date: '2022-10-1'
+author: "Subhrajit Guhathakurta & Uijeong Hwang"
+date: '2023-09-28'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -30,7 +30,7 @@ However, attractive POIs may not be distributed evenly across different neighbor
 
 **To complete this assignment, follow the directions below:**
 
-1. Download the data prepared for this assignment from [here](https://bonwookoo.github.io/UrbanAnalytics2022/Assignment/mini_4/coffee.csv). This data was prepared using the following steps:
+1. Download the data prepared for this assignment from [here](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_4/coffee.csv). This data was prepared using the following steps:
     * Yelp data was downloaded for categories = 'coffee'. This data covers Fulton, DeKalb, Clayton, Cobb, and Gwinnett counties. 
     * American Community Survey 5-Year Estimate for 2019 was downloaded for the counties specified above. It contains 
         (1) median annual household income (hhincome)
@@ -76,7 +76,7 @@ Variables used - pct_pov_log, hhincome, pct_white, race.tot, review_count_log, c
 1. Write your report and R code in a R Markdown document. 
 2. Use the Knit button in R Studio to render it as a HTML document.
 3. Publish the rendered document to RPubs.
-4. <font color="pink">Submit the URL of the RPubs document through Canvas by **10/10/2022 Monday midnight (11:59 PM on Monday).** </font>
+4. <font color="pink">Submit the URL of the RPubs document through Canvas by **10/05/2023 Thursday midnight (11:59 PM on Thursday).** </font>
 5. To submit, go to Canvas > Assignments > Mini assignment 4.
 6. Grades and feedback will be posted through Canvas.
 

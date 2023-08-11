@@ -1,7 +1,7 @@
 ---
-title: "Major Assignment 2 - Template"
-author: "Bonwoo Koo & Subhrajit Guhathakurta"
-date: '2022-10-30'
+title: "Major Assignment 3 - Template"
+author: "Subhrajit Guhathakurta & Uijeong Hwang"
+date: '2022-11-02'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -63,7 +63,7 @@ subset_car <- mtcars %>%
 
 There will also be multiple 'NO MODIFICATION ZONE'. Do not modify code in the No Modification Zone.
 
-> You will need to knit it, publish it on Rpubs, and submit the link. If there is any question about this template, do not hesitate to reach out to Bonwoo.
+> You will need to knit it, publish it on Rpubs, and submit the link. If there is any question about this template, do not hesitate to reach out to UJ.
 
 # Introduction to the assignment
 
@@ -191,8 +191,9 @@ edges_1 <- net1 %>%
   # Extract 'edges'
   st_as_sf("edges") %>% 
   # Drop redundant columns 
-  select(osm_id, highway) %>% 
+  select(osm_id, highway, length) %>% 
   # Drop segments that are too short (100m)
+  mutate(length = as.vector(length)) %>% 
   filter(length > 50) %>% 
   # Add a unique ID for each edge
   mutate(edge_id = seq(1,nrow(.)),
@@ -203,8 +204,9 @@ edges_2 <- net2 %>%
   # Extract 'edges'
   st_as_sf("edges") %>% 
   # Drop redundant columns 
-  select(osm_id, highway) %>% 
+  select(osm_id, highway, length) %>% 
   # Drop segments that are too short (100m)
+  mutate(length = as.vector(length)) %>% 
   filter(length > 50) %>% 
   # Add a unique ID for each edge
   mutate(edge_id = seq(1,nrow(.)),
