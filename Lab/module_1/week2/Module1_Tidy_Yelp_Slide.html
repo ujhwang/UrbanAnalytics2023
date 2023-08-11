@@ -3,8 +3,8 @@
   <head>
     <title>Tidy Data</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Bon Woo Koo &amp; Subhro Guhathakurta" />
-    <script src="libs/header-attrs-2.15/header-attrs.js"></script>
+    <meta name="author" content="Subhro Guhathakurta &amp; Uijeong Hwang" />
+    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
@@ -19,9 +19,9 @@ class: middle, inverse
 # Tidy Data
 
 .font100[
-Bon Woo Koo &amp; Subhro Guhathakurta
+Subhro Guhathakurta &amp; Uijeong Hwang
 
-9/13/2022
+9/12/2023
 ]
 
 
@@ -251,8 +251,7 @@ longer
 ##  8 13121010123 Census Tract 101.23, Fulton County, Georgia race.totM    716
 ##  9 13121010211 Census Tract 102.11, Fulton County, Georgia hhincomeE 142750
 ## 10 13121010211 Census Tract 102.11, Fulton County, Georgia hhincomeM  22560
-## # … with 806 more rows
-## # ℹ Use `print(n = ...)` to see more rows
+## # ℹ 806 more rows
 ```
 ]
 ---
@@ -270,21 +269,19 @@ wider
 
 ```
 ## # A tibble: 204 × 6
-##    GEOID       NAME                              hhinc…¹ hhinc…² race.…³ race.…⁴
-##    &lt;chr&gt;       &lt;chr&gt;                               &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 13121010122 Census Tract 101.22, Fulton Coun…   90586   14002    6383     650
-##  2 13121010123 Census Tract 101.23, Fulton Coun…   77969    7510    5081     716
-##  3 13121010211 Census Tract 102.11, Fulton Coun…  142750   22560    2864     347
-##  4 13121007602 Census Tract 76.02, Fulton Count…   32500    5264    2570     310
-##  5 13121001700 Census Tract 17, Fulton County, …   94750   19507    4911     403
-##  6 13121007802 Census Tract 78.02, Fulton Count…   51388    7637   10961    1177
-##  7 13121007805 Census Tract 78.05, Fulton Count…   31174    5355    3397     633
-##  8 13121009700 Census Tract 97, Fulton County, …  208750   66170    3846     316
-##  9 13121010206 Census Tract 102.06, Fulton Coun…  192375   49707    5618     361
-## 10 13121011303 Census Tract 113.03, Fulton Coun…   45942    4865    9543     666
-## # … with 194 more rows, and abbreviated variable names ¹​hhincomeE, ²​hhincomeM,
-## #   ³​race.totE, ⁴​race.totM
-## # ℹ Use `print(n = ...)` to see more rows
+##    GEOID       NAME                      hhincomeE hhincomeM race.totE race.totM
+##    &lt;chr&gt;       &lt;chr&gt;                         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 13121010122 Census Tract 101.22, Ful…     90586     14002      6383       650
+##  2 13121010123 Census Tract 101.23, Ful…     77969      7510      5081       716
+##  3 13121010211 Census Tract 102.11, Ful…    142750     22560      2864       347
+##  4 13121007602 Census Tract 76.02, Fult…     32500      5264      2570       310
+##  5 13121001700 Census Tract 17, Fulton …     94750     19507      4911       403
+##  6 13121007802 Census Tract 78.02, Fult…     51388      7637     10961      1177
+##  7 13121007805 Census Tract 78.05, Fult…     31174      5355      3397       633
+##  8 13121009700 Census Tract 97, Fulton …    208750     66170      3846       316
+##  9 13121010206 Census Tract 102.06, Ful…    192375     49707      5618       361
+## 10 13121011303 Census Tract 113.03, Ful…     45942      4865      9543       666
+## # ℹ 194 more rows
 ```
 ]
 

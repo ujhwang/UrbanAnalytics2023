@@ -1,7 +1,7 @@
 ---
 title: "Mini-Assignment 2"
 author: "Subhrajit Guhathakurta & Uijeong Hwang"
-date: '2023-09-14'
+date: '2023-09-12'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
