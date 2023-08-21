@@ -277,6 +277,32 @@ city
 ```
 
 ---
+## Naming conventions
+* **camelCase**
+* PascalCase
+* **snake_case**
+* kebab-case
+* period.case
+* flatcase
+* Train-Case
+* camel_Snake_Case
+* Pascal_Snake_Case
+* SCREAMING_SNAKE_CASE
+* SCREAMING-KEBAB-CASE
+
+
+---
+## Data type and structure
+* Data types
+  * logical (True, False)
+  * character ('a', 'b', 'c', 'abc')
+  * numeric (1, 5.5, 10.7)
+  * integer (1L, 5L, 10L)
+
+* Data structures
+<img src="http://venus.ifca.unican.es/Rintro/_images/dataStructuresNew.png" height="300">
+
+---
 ## Vector
 .footnotesize[
 * Vector is a 1-dimensional array that can contain elements of logical, integer, double, complex, character or raw. It can contain only the same data type.
@@ -308,8 +334,10 @@ my_vec
 
 # 2nd element
 my_vec[2]
-# 1,3,5th element
+# 1st, 3rd, and 5th elements
 my_vec[c(1,3,5)]
+# 2nd to 4th elements
+my_vec[2:4]
 # using conditional statement
 my_vec[my_vec>2]
 ```
