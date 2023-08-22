@@ -21,12 +21,12 @@ library(tidyverse)
 library(kableExtra)
 ```
 <br>
-**Class room:** Room 358 in Arch-West | TR 5PM - 6:15PM
 
-**Office hours**  
-* **Subhro Guhathakurta**: Wednesday 11-noon or by appt.  
-* **Uijeong Hwang**: Thursday 2PM - 4PM <br>
-* **Location**: The Center for Spatial Planning Analytics and Visualization (760 Spring St NW, suite 217).
+* **Class room**: Room 358 in Arch-West | TR 5PM - 6:15PM
+* **Office hours**
+  * **Subhro Guhathakurta**: Wednesday 11-noon or by appt.
+  * **Uijeong Hwang**: Thursday 2PM - 4PM ([link](https://ujhwang.youcanbook.me/))
+  * **Location**: The Center for Spatial Planning Analytics and Visualization (760 Spring St NW, suite 217).
 <br>
 <br>
 
@@ -34,7 +34,8 @@ This course aims to introduce students to the field of urban analytics, an emerg
 
 
 # Prerequisites
-There are no prerequisites to this course, but the followings are encouraged.  
+There are no prerequisites to this course, but the followings are encouraged:
+
 * Basic understanding of geographic information systems (GIS) and applied statistics  
 * Working knowledge of any programming language, preferably the R (or Python)
 
