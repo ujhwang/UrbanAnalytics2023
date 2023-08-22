@@ -113,14 +113,16 @@ class: inverse, middle, center
 ---
 #Modeling Atlanta's Growth
 
-<a href="https://geospatial.gatech.edu/AtlantaCityDesign/"><img src="img/AtlantaGrowth.png" alt="Walk This Way" style="width:600px;height:400px;"></a>
+<a href="https://geospatial.gatech.edu/AtlantaCityDesign/"><img src="img/AtlantaGrowth.png" alt="Walk This Way" style="width:800px;height:500px;"></a>
 
 ---
-#Atlanta's Charming Neighborhoods
-<a href="https://geospatial.gatech.edu/charm/"><img src="img/Charm.png" alt="Charming Neighborhoods" style="width:600px;height:400px;"></a>
+#Transit Equity Dashboard
+<a href="https://ujhwang.github.io/transit_equity"><img src="img/transit-equity.gif"></a>
+
 ---
-#Dr. Koo's Research on Walkable Environments
-<a href="https://geospatial.gatech.edu/charm/"><img src="img/ComputerVision.png" alt="Walkable Environments" style="width:600px;height:400px;"></a>
+#UJ's MSUA Capstone: Covid-19 & eating habit
+<a href="https://ujhwang.github.io/covid-19-eating-habit"><img src="img/covid-19-eating-habit_merge.gif"></a>
+
 ---
 <!-- #What is BIG data? -->
 <!-- ##The Four Vs of Big Data -->
@@ -134,7 +136,7 @@ class: inverse, middle, center
 <!-- 5. Granularity (spatial resolution) -->
 <!-- --- -->
 #Common Sources of Data
-<a href="https://geospatial.gatech.edu/charm/"><img src="img/Surveys.png" alt="Types of Data" style="width:900px;height:550px;"></a>
+<img src="img/Surveys.png" alt="Types of Data" style="width:900px;height:550px;">
 ---
 #Other Sources of Data
 * Transactions
