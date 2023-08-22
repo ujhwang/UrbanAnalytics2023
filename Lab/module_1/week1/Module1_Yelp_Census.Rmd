@@ -1,7 +1,7 @@
 ---
 title: "Census & Yelp API"
-author: "Bonwoo Koo & Subhrajit Guhathakurta"
-date: '2022-09-06'
+author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
+date: '2023-09-05'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -128,6 +128,7 @@ library(reshape2)
 library(here)
 library(yelpr)
 library(knitr)
+library(tigris)
 ```
 
 ```{r results='hide'}
@@ -146,6 +147,11 @@ tract <- suppressMessages(
           geometry = TRUE, # returns sf objects
           output = "wide") # wide vs. long
 )
+
+atlanta <- places('GA') %>% 
+  filter(NAME == 'Atlanta') 
+
+tract <- tract[atlanta,]
 ```
 
 <br>
@@ -169,7 +175,7 @@ tract <- tract %>%
          race.black = race.blackE)
 
 tmap_mode("view")
-tm_shape(tract) + tm_borders()
+tm_shape(tract) + tm_borders() + tm_shape(atlanta) + tm_borders(col = 'red')
 ```
 
 ## Using Census Tract Boundary for Yelp API
@@ -286,23 +292,22 @@ Can you read the code below and explain what is being done here?
 
 ```{r eval=FALSE}
 # Get bb for two counties
-fulton_bb <- osmdata::getbb("Fulton County, GA")
-dekalb_bb <- osmdata::getbb("DeKalb County, GA")
+atlanta_bb <- osmdata::getbb("City of Atlanta, GA")
 
 # Find coordinates for the four sides of the bb
-left_x <- min(c(fulton_bb[1,],dekalb_bb[1,])) # <<-- smaller , larger(i.e., closer to zero) -->>
-right_x <- max(c(fulton_bb[1,],dekalb_bb[1,]))
-bottom_y <- min(c(fulton_bb[2,],dekalb_bb[2,]))
-top_y <- max(c(fulton_bb[2,],dekalb_bb[2,]))
+west <- atlanta_bb[1]
+east <- atlanta_bb[3]
+south <- atlanta_bb[2]
+north <- atlanta_bb[4]
 
 # Break the bb into a grid
-fishnet_n <- 40
-steps <- abs(left_x - right_x)/fishnet_n
+fishnet_n <- 20
+steps <- abs(west - east)/fishnet_n
 
 
 # Fishnet points
-fish_x <- seq(from = left_x, to = right_x, by = steps)
-fish_y <- seq(from = bottom_y, to = top_y, by = steps)
+fish_x <- seq(from = west, to = east, by = steps)
+fish_y <- seq(from = south, to = north, by = steps)
 
 fishnet <- expand.grid(fish_x, fish_y) %>% 
   rename(x = Var1, y = Var2) %>% 
@@ -420,7 +425,7 @@ get_yelp <- function(tract, category){
   # ----------------------------------
   # Gets one row of tract information (1,) and category name (str),
   # Outputs a list of business data.frame
-  Sys.sleep(2)
+  Sys.sleep(1)
   n <- 1
   # First request --------------------------------------------------------------
   resp <- business_search(api_key = Sys.getenv("yelp_api"), 
@@ -506,7 +511,6 @@ yelp_all_list <- vector("list", nrow(ready_4_yelp))
 for (row in 1:nrow(ready_4_yelp)){
   yelp_all_list[[row]] <- suppressMessages(get_yelp(ready_4_yelp[row,], "restaurants"))
   if (row %% 10 == 0){
-    #Sys.sleep(10)
     print(paste0("Current row: ", row))
   }
 }

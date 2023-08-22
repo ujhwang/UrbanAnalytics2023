@@ -1,7 +1,7 @@
 ---
 title: "Tidying Yelp and Census Data"
-author: "Bonwoo Koo & Subhrajit Guhathakurta"
-date: '2022-09-13'
+author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
+date: '2023-09-12'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -323,7 +323,7 @@ The last plot in the last week's R Markdown document was a map of the downloaded
 
 ```{r}
 # census boundary
-census <- st_read("https://raw.githubusercontent.com/BonwooKoo/UrbanAnalytics2022/main/Lab/module_0/testdata.geojson") 
+census <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.geojson") 
 
 # Converting yelp_dropna2 into a sf object
 yelp_sf <- yelp_dropna2 %>% 

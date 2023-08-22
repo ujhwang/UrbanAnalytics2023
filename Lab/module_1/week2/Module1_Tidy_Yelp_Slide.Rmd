@@ -1,9 +1,8 @@
 ---
 title: "Tidy Data"
-subtitle: ""
-author: "Bon Woo Koo & Subhro Guhathakurta"
+author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
 institute: "Georgia Institute of Technology"
-date: "2022/9/13"
+date: "2023/9/12"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -20,9 +19,9 @@ class: middle, inverse
 # Tidy Data
 
 .font100[
-Bon Woo Koo & Subhro Guhathakurta
+Subhro Guhathakurta & Uijeong Hwang
 
-9/13/2022
+9/12/2023
 ]
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
