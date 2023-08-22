@@ -111,9 +111,9 @@ class: inverse, middle, center
 
 #Examples of Previous Urban Analytics projects at CSPAV
 ---
-#Walk This Way!
+#Modeling Atlanta's Growth
 
-<a href="http://geo.gatech.edu/"><img src="img/Walkthisway.png" alt="Walk This Way" style="width:600px;height:400px;"></a>
+<a href="https://geospatial.gatech.edu/AtlantaCityDesign/"><img src="img/AtlantaGrowth.png" alt="Walk This Way" style="width:600px;height:400px;"></a>
 
 ---
 #Atlanta's Charming Neighborhoods

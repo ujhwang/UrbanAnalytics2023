@@ -1,0 +1,512 @@
+0:geom_node_point(color = "darkslategray4", size = 3) +
+0:geom_node_text(aes(label = name), vjust = 1.8, size = 2.5) +
+0:labs(title = "Figure 5: Word Network: Tweets using my hashtag",
+0:subtitle = "Text mining twitter data",
+0:x = "", y = "")
+0:plotly::ggplotly(a)
+0:# plot word network
+0:my_words_counts %>%
+0:filter(n >= 3) %>%
+0:graph_from_data_frame() %>%
+0:ggraph(layout = "fr") +
+0:geom_edge_link(aes(edge_alpha = .6, edge_width = n)) +
+0:geom_node_point(color = "darkslategray4", size = 3) +
+0:geom_node_text(aes(label = name), vjust = 1.8, size = 2.5) +
+0:labs(title = "Figure 5: Word Network: Tweets using my hashtag",
+0:subtitle = "Text mining twitter data",
+0:x = "", y = "")
+0:my_twts[1,] %>%
+0:mutate(text = str_replace_all(text, replace_reg, "")) %>%
+0:dplyr::select(text) %>%
+0:unnest_tokens(output = paired_words,
+0:input = text,
+0:token = "ngrams",
+0:n = 2)
+0:my_twts[1,'text']
+0:data.frame(text = c("The result of separating bigrams is helpful for exploratory analyses of the text."))
+0:data.frame(text = c("The result of separating bigrams is helpful for exploratory analyses of the text."))%>%
+0:mutate(text = str_replace_all(text, replace_reg, "")) %>%
+0:dplyr::select(text) %>%
+0:unnest_tokens(output = paired_words,
+0:input = text,
+0:token = "ngrams",
+0:n = 2)
+0:60*60*24
+0:60*60*24/8
+0:1800*6
+0:0.017/0.098
+0:0.098*0.17
+0:0.098*0.1734
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr")
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# Load the package
+0:require(sentiment.ai)
+0:require(SentimentAnalysis)
+0:require(sentimentr)
+0:install_sentiment.ai(envname = "r-sentiment-ai",
+0:method = "conda",
+0:python_version = "3.8.10")
+0:check_sentiment.ai()
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# From Sentiment Analysis
+0:sentimentAnalysis.score <- analyzeSentiment(text)$SentimentQDAP
+0:# From sentimentr
+0:sentimentr.score <- sentiment_by(get_sentences(text), 1:length(text))$ave_sentiment
+0:example <- data.frame(target = text,
+0:sentiment.ai = sentiment.ai.score,
+0:sentimentAnalysis = sentimentAnalysis.score,
+0:sentimentr = sentimentr.score)
+0:example
+0:example %>%
+0:kableExtra::kable()
+0:rownames(example) <- NULL
+0:example %>%
+0:kableExtra::kable()
+0:# whatever name you assigned to your created app
+0:appname <- "UrbanAnalytics_tutorial"
+0:# create token named "twitter_token"
+0:# the keys used should be replaced by your own keys obtained by creating the app
+0:twitter_token <- create_token(
+0:app = appname,
+0:consumer_key = Sys.getenv("twitter_key"),
+0:consumer_secret = Sys.getenv("twitter_key_secret"),
+0:access_token = Sys.getenv("twitter_access_token"),
+0:access_secret = Sys.getenv("twitter_access_token_secret"))
+0:# Get time lines
+0:obama <- rtweet::get_timeline("BarackObama", n = 3200)
+0:biden <- rtweet::get_timeline("JoeBiden", n=3200)
+0:# Add screen nam
+0:obama <- bind_cols(obama,
+0:users_data(obama) %>% select(screen_name, location))
+0:biden <- bind_cols(biden,
+0:users_data(biden) %>% select(screen_name, location))
+0:# Row-bind the two
+0:tweets <- bind_rows(
+0:obama %>% select(text, screen_name, created_at, retweet_count, favorite_count),
+0:biden %>% select(text, screen_name, created_at, retweet_count, favorite_count)
+0:)
+0:# Regex that matches URL-type string
+0:replace_reg <- "http[s]?://[A-Za-z\\d/\\.]+|&amp;|&lt;|&gt;"
+0:# Tidy the string
+0:tidy_tweets_words <- tweets %>%
+0:# Drop retweets
+0:filter(!str_detect(text, "^RT")) %>%
+0:# Drop URLs
+0:mutate(text = str_replace_all(text, replace_reg, ""),
+0:text = gsub("@", "", text)) %>%
+0:# Add id column
+0:mutate(id = row_number())
+0:tidy_tweets_words
+0:test_txt <- c("\n\n", "is there any different?", "is there \n\nany difference?")
+0:sentiment_score(text_txt)
+0:test_txt <- c("\n\n", "is there any different?", "is there \n\nany difference?")
+0:test_txt
+0:sentiment_score(text_txt)
+0:sentiment_score(test_txt)
+0:# Regex that matches URL-type string
+0:replace_reg <- "http[s]?://[A-Za-z\\d/\\.]+|&amp;|&lt;|&gt;"
+0:# Tidy the string
+0:tidy_tweets_words <- tweets %>%
+0:# Drop retweets
+0:filter(!str_detect(text, "^RT")) %>%
+0:# Drop URLs
+0:mutate(text = str_replace_all(text, replace_reg, ""),
+0:text = gsub("@", "", text),
+0:text = gsub("\n\n", "", text)) %>%
+0:# Add id column
+0:mutate(id = row_number())
+0:tidy_tweets_words
+0:sentiment.twt <- sentiment_score(tidy_tweets_words$text)
+0:tidy_tweets_words <- tidy_tweets_words %>%
+0:mutate(sentiment = sentiment_score(text))
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:favorite_count = log(mean(favorite_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = favorite_count), lwd = 1) +
+0:facet_wrap(~screen_name)
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate")
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:favorite_count = log(mean(favorite_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = favorite_count), lwd = 1) +
+0:facet_wrap(~screen_name)
+0:exp(14)
+0:exp(8)
+0:tidy_tweets_words
+0:tidy_tweets_words$retweet_count
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name)
+0:?ggplot2::lab
+0:?ggplot2::labs
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n-1 (negative) ~ +1 (positive)",
+0:title = "Sentiment Score of Tweets from US presidents")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:scale_color_gradient(low="blue", high="red") +
+0:facet_wrap(~screen_name) +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:scale_color_gradient(low="blue", high="red") +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:tidy_tweets_words %>%
+0:mutate(ym = format(created_at, "%Y-%m")) %>%
+0:group_by(screen_name, ym) %>%
+0:summarise(sentiment = mean(sentiment),
+0:retweet_count = log(mean(retweet_count))) %>%
+0:mutate(ym = ym(ym)) %>%
+0:ggplot(data = .) +
+0:geom_line(mapping = aes(x = ym, y = sentiment, color = retweet_count), lwd = 1) +
+0:facet_wrap(~screen_name) +
+0:scale_color_gradient(low="red", high="green") +
+0:labs(x = "Time Line",
+0:y = "Sentiment Score \n",
+0:title = "Sentiment Score of Tweets from US presidents",
+0:subtitle = "Sentiment Score: -1 (negative) ~ +1 (positive)",
+0:color = "Retweet count (logged)")
+0:check_sentiment.ai()
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", "sentimentr")
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:check_sentiment.ai()
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", "sentimentr", 'here')
+0:example
+0:# From sentimentr
+0:sentimentr.score <- sentiment(get_sentences(text), 1:length(text))$ave_sentiment
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment(get_sentences(text), 1:length(text))$ave_sentiment
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment_by(get_sentences(text), 1:length(text))$ave_sentiment
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", "sentimentr", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment(get_sentences(text), 1:length(text))$ave_sentiment
+0:get_sentences(text)
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:get_sentences(text)
+0:get_sentences(text)
+0:SentimentAnalysis::analyzeSentiment(text)
+0:?sentiment
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment(
+0:get_sentences(text), 1:length(text)
+0:)$ave_sentiment
+0:sentimentr.score
+0:sentimentr::sentiment(
+0:get_sentences(text), 1:length(text)
+0:)
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment_by(
+0:get_sentences(text), 1:length(text)
+0:)$ave_sentiment
+0:sentimentr.score
+0:sentimentr.score <- sentimentr::sentiment_by(
+0:get_sentences(text), 1:length(text)
+0:)
+0:sentimentr.score
+0:?sentiment_by
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# install_sentiment.ai(envname = "r-sentiment-ai",
+0:#                      method = "conda",
+0:#                      python_version = "3.8.10")
+0:init_sentiment.ai()
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# From Sentiment Analysis
+0:sentimentAnalysis.score <- SentimentAnalysis::analyzeSentiment(text)$SentimentQDAP
+0:# From sentimentr
+0:sentimentr.score <- sentimentr::sentiment_by(
+0:get_sentences(text), 1:length(text)
+0:)$ave_sentiment
+0:example <- data.frame(target = text,
+0:sentiment.ai = sentiment.ai.score,
+0:sentimentAnalysis = sentimentAnalysis.score)
+0:rownames(example) <- NULL
+0:example %>%
+0:kableExtra::kable()
+0:60*60*24
+0:60*60*24*12
+0:60*24*12
+0:17280/60
+0:288/60
+0:60*60*24
+0:60*60*24*12
+0:60*60*24*12/(60*60)
+0:sentiment_score(c("This installation process is so long!", "Only if it works in the end.", "But does it?"))
+0:sentiment_score(c("This installation process is so long!", "Only if it works in the end.", "But does it?", "It does work."))
+0:sentiment_score(c("This installation process is just so long!", "Only if it works in the end.", "But does it?", "It does work."))
+0:sentiment_score(c("This installation process is too complicated!", "Only if it works in the end.", "But does it?", "It does work."))
+0:sentiment_score(c("This installation process is too complicated!", "Only if it works in the end.", "But does it?", "It does work!"))
+0:# Example texts
+0:text <- c(
+0:"What a great car. It stopped working after a week.",
+0:"Steve Irwin working to save endangered species",
+0:"Bob Ross teaching people how to paint",
+0:"I saw Adolf Hitler on my vacation in Argentina...",
+0:"the resturant served human flesh",
+0:"the resturant is my favorite!",
+0:"the resturant is my favourite!",
+0:"this restront is my FAVRIT innit!",
+0:"the resturant was my absolute favorite until they gave me food poisoning",
+0:"This fantastic app freezes all the time!",
+0:"I learned so much on my trip to Hiroshima museum last year!",
+0:"What happened to the people of Hiroshima in 1945",
+0:"I had a blast on my trip to Nagasaki",
+0:"The blast in Nagasaki",
+0:"I love watching scary horror movies",
+0:"This package offers so much more nuance to sentiment analysis!",
+0:"you remind me of the babe. What babe? The babe with the power! What power? The power of voodoo. Who do? You do. Do what? Remind me of the babe!"
+0:)
+0:# sentiment.ai
+0:sentiment.ai.score <- sentiment_score(text)
+0:# Sentiment Analysis
+0:sentimentAnalysis.score <- SentimentAnalysis::analyzeSentiment(text)$SentimentQDAP
+0:example <- data.frame(target = text,
+0:sentiment.ai = sentiment.ai.score,
+0:sentimentAnalysis = sentimentAnalysis.score)
+0:rownames(example) <- NULL
+0:example %>%
+0:kableExtra::kable()
+0:?check_sentiment.ai
+0:# Test run
+0:init_sentiment.ai()
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# Test run
+0:init_sentiment.ai()
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:# Test run
+0:init_sentiment.ai()
+0:sentiment_score(c("This installation process is too complicated!",
+0:"Only if it works in the end.",
+0:"But does it?",
+0:"It does work!"))
+0:?sentiment.ai::install_sentiment.ai
+0:# Package names
+0:packages <- c("rtweet", "tidytext", "tidyverse", "wordcloud2", "textdata", "sentiment.ai", "SentimentAnalysis", "sentimentr", "lubridate", "sentiment.ai", "SentimentAnalysis", 'here')
+0:# Install packages not yet installed
+0:installed_packages <- packages %in% rownames(installed.packages())
+0:if (any(installed_packages == FALSE)) {
+0:install.packages(packages[!installed_packages])
+0:}
+0:# Load packages
+0:invisible(lapply(packages, library, character.only = TRUE))
+0:knitr::include_graphics("miniconda.JPG")
+0:# You need to run it only once.
+0:install_sentiment.ai(envname = "r-sentiment-ai",
+0:method = "conda",
+0:python_version = "3.8.10")
+0:install.packages('NHSRtheme')
