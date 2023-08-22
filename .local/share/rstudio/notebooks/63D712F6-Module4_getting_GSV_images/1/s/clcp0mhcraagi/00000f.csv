@@ -1,3 +1,0 @@
-"0","# Extract a curvy line"
-"0","z <- edges %>% filter(edge_id == test_edge)"
-"0","tm_shape(z) + tm_lines()"

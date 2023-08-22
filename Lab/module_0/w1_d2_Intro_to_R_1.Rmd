@@ -113,9 +113,12 @@ exclude: true
     * **Consistency**: Everyone gets the same R version and packages.
     * **Isolation**: A Docker container is an isolated environment for your code.
     * **Popularity**: The most-used developer tool in [Stack Overflow 2023 survey](https://survey.stackoverflow.co/2023/#section-most-popular-technologies-other-tools).
-    
-    ![:scale 80%](img/docker_popular.png)
-    ]
+]
+
+```{r echo=FALSE, out.width='70%'}
+knitr::include_graphics("img/docker_popular.png")
+```
+
 
 ---
 ## Setting up a Docker container for this course
@@ -300,7 +303,10 @@ city
   * integer (1L, 5L, 10L)
 
 * Data structures
-<img src="http://venus.ifca.unican.es/Rintro/_images/dataStructuresNew.png" height="300">
+
+```{r echo=F, out.width='70%'}
+knitr::include_graphics("img/data_structures.png")
+```
 
 ---
 ## Vector
