@@ -375,7 +375,7 @@ my_matrix[c(1,2), 3]
 .scriptsize[
 ```{r}
 # Read data
-my_df <- read.csv("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.csv") # or
+my_df <- read.csv("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.csv")
 my_df %>% head() %>% print()
 
 # Subset
@@ -483,7 +483,7 @@ We need different packages to import these data formats.
 
 * CSV: .tiny[https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.csv]
 
-* SHP: .tiny[https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.geojson]
+* GEOJSON: .tiny[https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.geojson]
 
 * JSON: .tiny[https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.json]
 
@@ -510,7 +510,7 @@ df <- jsonlite::fromJSON("file-name.json") %>% as.data.frame()
 ```{r, message=F}
 # Need data first...
 my_df <- read_csv("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.csv")
-my_df %>% nice_table("200px")
+my_df %>% nice_table("200px") # ignore this nice_table()
 ```
 
 ---
@@ -528,10 +528,13 @@ All verbs work similarly: <font size=2px, color='grey'>(Wickham & Grolemund (201
 
 e.g., `filter()` picks observations (i.e., rows of a DF) by their values.
 
-```{r}
+```{r eval=F}
 filter(my_df, # specifies which data.frame
-       county == "DeKalb County") %>%  # conditional statement  
-  nice_table() # ignore this nice_table() for now.
+       county == "DeKalb County") # conditional statement
+```
+which is equivalent to
+```{r eval=F}
+my_df[my_df$county == "Dekalb County", ]
 ```
 
 ---
@@ -543,15 +546,17 @@ inserts it as **the first argument** of the following function.
 ]]
 
 ```{r eval=F}
-filter(my_df, county == "DeKalb County") %>%  
-  nice_table("150px")
+print(head(filter(filter(my_df, county == 'DeKalb County'), hhincome > 100000), 3))
 ```
 
-is equivalent to
+which is equivalent to
 
 ```{r}
-my_df %>% filter(county == "DeKalb County") %>% 
-  nice_table("150px")
+my_df %>% 
+  filter(county == "DeKalb County") %>% 
+  filter(hhincome > 100000) %>% 
+  head(3) %>% 
+  print()
 ```
 
 ---
@@ -575,12 +580,6 @@ my_df %>%
   arrange(race.white) %>% #<<
   nice_table()
 ```
-
-.center[
-**Notice that %>% connects multiple dplyr verbs down the line.**
-
-**This is why pipe is so useful!**
-]
 ]
 
 ---
@@ -668,7 +667,7 @@ js <- jsonlite::fromJSON("https://raw.githubusercontent.com/ujhwang/UrbanAnalyti
 ```
 
 ```{r}
-shp %>% nice_table()
+shp %>% select(GEOID, tract) %>% head() %>% print()
 ```
 
 ---
