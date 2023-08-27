@@ -48,7 +48,8 @@ library(kableExtra)
 ## Content
 
 * Rpubs & R Markdown
-* Loops and functionals
+* Custom function
+* Loops
 * geospatial data in R
 
 ---
@@ -96,8 +97,7 @@ To create a R Markdown file, go to **file > R Markdown.**
 
 * Press Knit button or Control + Alt + k to render it as HTML (or other formats).
 
-* Wrap text with \*\*\*\* to make it bold, or \*\* to make it italic.
-
+* Wrap text with \*\*[text]\*\* to make it bold, \*[text]\* to make it italic, or \*\*\*[text]\*\*\* for both.
 * \[text\]\(url\) to make text a hyperlink.
 
 * \!\[caption\]\(url or file\) to embed an image.
@@ -119,38 +119,284 @@ http://rpubs.com/BonWooKoo/this_will_your_link
 
 ---
 class: inverse, middle, center
-# Loops
+# Custom Function
 
 ---
-## For-Loops
-Loops are used to repeat a specific task. Ones that I commonly use include for loop, while loop, and apply.
+## Function
+.small[
+* We have learned functions provided by R as built-in functions or by someone else as a package.
+  * sum(); dplyr::filter()
+* Now we will learn how to define our own functions.
+```{r eval=F}
+functionName <- function(argument){
+  something <- doSomething(argument)
+  what_i_need <- doAnotherThing(something)
+  return(what_i_need)
+}
+```
+* Why custom functions?
+  * Code reusability and maintainability
+  > Rule of Three: If you're copying and pasting a block of code more than two times, it might be worth creating a function
+  * Cleaner environment: functions don't leave byproducts
+]
+
+---
+## Function example
+.small[
+.pull-left[
+```{r eval=F}
+summary1 <- df1 %>% 
+  filter(a > 100) %>% 
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary2 <- df2 %>% 
+  filter(a > 100) %>% 
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary3 <- df3 %>% 
+  filter(a > 100) %>% 
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+```
+]
+]
+
+---
+## Function example
+.small[
+.pull-left[
+```{r eval=F}
+summary1 <- df1 %>% 
+  filter(a > 100) %>% 
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary2 <- df2 %>% 
+  filter(a > 100) %>% 
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary3 <- df3 %>% 
+  filter(a > 100) %>% 
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+```
+]
+.pull-right[
+```{r eval=F}
+createSummary <- function(df){
+  summary <- df %>% 
+    filter(a > 100) %>% 
+    group_by(b) %>% 
+    summarize(c = sum(c), 
+              d = sum(d)) %>%
+    mutate(e = round(c/d, 2))
+  return(summary)
+}
+
+summary1 <- createSummary(df1)
+summary2 <- createSummary(df2)
+summary3 <- createSummary(df3)
+```
+]
+]
+
+---
+## Function example
+.small[
+.pull-left[
+```{r eval=F}
+summary1 <- df1 %>% 
+  filter(co_lumn > 100) %>% #<< 
+  group_by(b) %>% 
+  summarize(c = sum(c),
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary2 <- df2 %>% 
+  filter(col_umn > 100) %>% #<<
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary3 <- df3 %>% 
+  filter(colum_n > 100) %>% #<<
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+```
+]
+]
+
+---
+## Function example
+.small[
+.pull-left[
+```{r eval=F}
+summary1 <- df1 %>% 
+  filter(co_lumn > 100) %>% #<< 
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary2 <- df2 %>% 
+  filter(col_umn > 100) %>% #<<
+  group_by(b) %>% 
+  summarize(c = sum(c),
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+
+summary3 <- df3 %>% 
+  filter(colum_n > 100) %>% #<<
+  group_by(b) %>% 
+  summarize(c = sum(c), 
+            d = sum(d)) %>%
+  mutate(e = round(c/d, 2))
+```
+]
+.pull-right[
+```{r eval=F}
+createSummary <- function(df, a){
+  summary <- df %>% 
+    filter(a > 100) %>% 
+    group_by(b) %>% 
+    summarize(c = sum(c), 
+              d = sum(d)) %>%
+    mutate(e = round(c/d, 2))
+  return(summary)
+}
+
+summary1 <- createSummary(df1, 'co_lumn')
+summary2 <- createSummary(df2, 'col_umn')
+summary3 <- createSummary(df3, 'colum_n')
+```
+* but, why quotation marks?
+]
+]
+
+---
+## More on indexing
+.small[
+```{r}
+df <- data.frame(column1 = c(1,2,3,4), column2 = c('a','b','c','d'))
+```
 
 .pull-left[
-**A for loop** iterates over a vector.
 ```{r}
-for (i in 1:3){
-  print(i)
-}
+df$column1
 ```
 
 ```{r}
-for (i in 1:3){
-  print(i + 2)
-}
+df$'column1'
+```
+
+```{r}
+df[,'column1']
+```
+
+```{r}
+df[['column1']]
+```
+
+```{r eval=F}
+# not working
+df[, column1]
+df[[column1]]
 ```
 ]
 
 .pull-right[
 ```{r}
-a <- letters[1:5]
-for (letter in a){
-  print(letter)
+df %>% select(column1)
+```
+
+```{r}
+df %>% select('column1')
+```
+]
+]
+
+
+---
+## Create a function: Timestamp Day Converter
+***Create your own function that tells which day the given Unix time is.*** <br><br>
+
+Unix time <font size="-1">(a.k.a Unix epoch, Unix timestamp, or POSIX time)</font> is the number of seconds that have elapsed since **midnight 01/01/1970 (Thursday)**. Assume that the time zone of the function user is GMT/UTC+0 (in other words, do not worry about the time zone).
+
+* Test your function:
+> Which day is Unix time **1693103227**?
+
+.footnotesize[
+*hint: modulus (%%) and integer division (%/%) will be useful.
+<br><br>
+<p style="color:#ffffff">
+getDayFromTimestamp <- function(t){
+  d <- 60*60*24
+  day_index <- t%/%d%%7 + 1
+  days <- c('Thurs','Fri','Satur','Sun','Mon','Tues','Wednes')
+  paste0('Unix Timestamp ', t, ' is [', days[day_index], 'day]')  
+}
+</p>
+]
+
+
+---
+class: inverse, middle, center
+# Loops
+
+---
+## For-Loops
+* Loops are used to repeat a specific task. Ones that I commonly use include for-loop, while-loop, and apply.
+
+**For-loop** iterates over a vector.
+```{r}
+for (i in 1:3){
+  print(i + 2)
 }
 ```
 
+---
+## For-Loops
+* Loops are used to repeat a specific task. Ones that I commonly use include for-loop, while-loop, and apply.
+
+**For-loop** iterates over a vector.
+
+.pull-left[
+```{r}
+abcde <- letters[1:5]
+for (letter in abcde){
+  print(letter)
+}
+```
+]
+.pull-right[
+```{r}
+abcde <- letters[1:5]
+for (i in 1:length(abcde)){
+  print(abcde[i])
+}
+```
 ]
 
 ---
+## For-loop example
 .footnotesize[
 ```{r}
 my_df <- read_csv("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.csv")
@@ -194,50 +440,61 @@ For example, you'd want to keep calculating some stuff (e.g., stochastic gradien
 ---
 ## Apply
 
-.footnotesize[
+Another way to perform a similar task is to use apply family or its variants. The most commonly used ones would be **apply**, **sapply**, and **lapply**.
+
+**sapply** and **lapply** are the same except that one returns a vector and the other returns a list.
+```{r}
+add_one <- function(x) x+1
+sapply(1:3, add_one)
+```
+
+```{r}
+lapply(1:3, add_one)
+```
+
+---
+## Apply 
+Apply takes matrix or data.frame and returns a list. Because matrix and data.frame has two dimensions, apply takes an additional argument that specifies the dimension to which the function should be applied.
 .pull-left[
 ```{r}
-# Loop
-for (i in 1:3){
-  print(i+1)
-}
+# Example matrix
+mat <- matrix(c(rep(1,3),
+                rep(2,3), 
+                rep(3,3)), 
+              nrow=3)
+print(mat)
 ```
 ]
 
 .pull-right[
 ```{r}
-add_one <- function(x) x+1
-print(sapply(1:3, add_one))
-```
-<br><br>
-]]
+# Apply function over rows
+print(apply(mat, 1, mean))
 
-
-
-.footnotesize[
-Another way to perform a similar task is to use apply family or its variants. The most commonly used ones would be **sapply**, **lapply**, and **apply.**
-
-**sapply** and **lapply** are the same except that one returns a vector and the other returns a list.
-```{r}
-add_one <- function(x) x+1
-lapply(1:3, add_one)
+# Apply function over columns
+print(apply(mat, 2, mean))
 ```
 ]
 
 ---
-## Apply 
-Apply takes matrix or data.frame and outputs a list. Because matrix and data.frame has two dimensions, apply takes an additional argument that specifies the dimension to which the function should be applied.
+## For-loop vs. Apply
+***Which one is faster?***
+```{r eval=F}
+# Using for-loop
+vec <- 1:100000
+result_forloop <- numeric(length(vec))
 
-```{r}
-# Example data.frame
-ex <- data.frame(matrix(c(rep(1,3),rep(2,3), rep(3,3)), nrow=3))
-# Apply function across column
-print(apply(ex, 1, mean))
+system.time({
+  for(i in vec) {
+    result_forloop[i] <- factorial(i)
+  }
+})
 
-# Apply function across rows
-print(apply(ex, 2, mean))
+# Using sapply
+system.time({
+  result_sapply <- sapply(vec, function(x) factorial(x))
+})
 ```
-
 
 ---
 class: inverse, middle, center
