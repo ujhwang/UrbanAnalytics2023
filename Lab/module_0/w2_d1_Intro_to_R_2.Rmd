@@ -47,7 +47,7 @@ library(kableExtra)
 ---
 ## Content
 
-* Rpubs & R Markdown
+* R Markdown & Rpubs
 * Custom function
 * Loops
 * geospatial data in R
@@ -55,28 +55,18 @@ library(kableExtra)
 ---
 class: inverse, center, middle
 
-# Rpubs & R Markdown
+# R Markdown & Rpubs
 
 ---
-## Rpubs
-RPubs is an open platform by R Studio (the company) for publishing R Markdown documents and presentations. 
-* It's free. 
-* Everything you upload there is open to public.
-* **DO NOT** upload anything you need to protect (e.g., API keys, personal info etc.).
+## R Markdown
 
-To create an account, [**click here**](https://rpubs.com/).
-
----
-## R Markdown 
-**Markdown** is a markup language that adds formatting elements to plaintext text documents.
-
-**R Markdown** is a markdown that contains chunks of embedded R code.
-
-* Our syllabus is a R Markdown document in which all tables are written in R code. <br>
+* **R Markdown** is a markdown that contains chunks of embedded R code.
+* **Markdown** is a markup language that adds formatting elements to plain text documents.
+* **Markup language examples**: Markdown, HTML, and LaTeX.
+* These presentation slides are made by R Markdown.
+* [Our syllabus](https://ujhwang.github.io/UrbanAnalytics2023) is also an R Markdown document in which all tables are written in R code. <br>
 * A cooler example is [this](http://timelyportfolio.github.io/rCharts_nyt_home_price/).
-
-To create a R Markdown file, go to **file > R Markdown.**
-![](img/markdown_init.JPG)
+* To create an R Markdown file, go to **file > R Markdown.**
 
 ---
 ## Basics
@@ -84,10 +74,8 @@ To create a R Markdown file, go to **file > R Markdown.**
 * Hash tags for headings.
 # # Heading 1 (h1)
 ## ## Heading 2 (h2)
-
 * Nothing for plain text. End the line with two spaces at the end starts a new line.
-
-* Control + Alt + i to create a R code chunk.
+* `Control + Alt + i` to create an R code chunk.
 ```{r}
 0.1 + 0.2 == 0.3
 ```
@@ -95,7 +83,7 @@ To create a R Markdown file, go to **file > R Markdown.**
 ---
 ## Basics
 
-* Press Knit button or Control + Alt + k to render it as HTML (or other formats).
+* Press Knit button or `Control + Alt + k` to render it as HTML (or other formats).
 
 * Wrap text with \*\*[text]\*\* to make it bold, \*[text]\* to make it italic, or \*\*\*[text]\*\*\* for both.
 * \[text\]\(url\) to make text a hyperlink.
@@ -111,8 +99,17 @@ To create a R Markdown file, go to **file > R Markdown.**
 **Go to Help > Cheat Sheets > R Markdown Cheat Sheets** to see more options.
 
 ---
+## Rpubs
+RPubs is an open platform by R Studio (the company) for publishing R Markdown documents and presentations. 
+* It's free. 
+* Everything you upload there is open to public.
+* **DO NOT** upload anything you need to protect (e.g., API keys, personal info etc.).
+
+To create an account, [**click here**](https://rpubs.com/).
+
+---
 ## Publishing on Rpubs
-![](img/rpubs_process.png)
+![](img/Rpubs_process.png)
 
 For your assignment, you can submit the link, which in this case would be:
 http://rpubs.com/BonWooKoo/this_will_your_link
@@ -350,7 +347,7 @@ Unix time <font size="-1">(a.k.a Unix epoch, Unix timestamp, or POSIX time)</fon
 > Which day is Unix time **1693103227**?
 
 .footnotesize[
-*hint: modulus (%%) and integer division (%/%) will be useful.
+*hint: modulus (`%%`) and integer division (`%/%`) will be useful.
 <br><br>
 <p style="color:#ffffff">
 getDayFromTimestamp <- function(t){
@@ -446,9 +443,9 @@ For example, you'd want to keep calculating some stuff (e.g., stochastic gradien
 ---
 ## Apply
 
-Another way to perform a similar task is to use apply family or its variants. The most commonly used ones would be **apply**, **sapply**, and **lapply**.
+Another way to perform a similar task is to use apply family or its variants. The most commonly used ones would be `apply`, `sapply`, and `lapply`.
 
-**sapply** and **lapply** are the same except that one returns a vector and the other returns a list.
+`sapply` and `lapply` are the same except that one returns a vector and the other returns a list.
 ```{r}
 add_one <- function(x) x+1
 sapply(1:3, add_one)
@@ -460,7 +457,7 @@ lapply(1:3, add_one)
 
 ---
 ## Apply 
-Apply takes matrix or data.frame and returns a list. Because matrix and data.frame has two dimensions, apply takes an additional argument that specifies the dimension to which the function should be applied.
+`apply` takes matrix or data.frame and returns a list. Because matrix and data.frame has two dimensions, apply takes an additional argument that specifies the dimension to which the function should be applied.
 .pull-left[
 ```{r}
 # Example matrix
@@ -502,6 +499,47 @@ system.time({
 })
 ```
 
+---
+## For-loop vs. Apply
+***How about this case?***
+```{r eval=F}
+vec <- 1:80
+
+# Using for-loop
+system.time({
+  for(i in vec) {
+    Sys.sleep(0.1)
+  }
+})
+
+# Using sapply
+system.time({
+  sapply(vec, function(x) Sys.sleep(0.1))
+})
+
+```
+
+---
+## Parallelization
+```{r eval=F}
+vec <- 1:80
+
+# Using sapply with parallelization
+library(parallel)
+cl <- makeCluster(2)
+
+system.time({
+  parSapply(cl, vec, function(x) Sys.sleep(0.1))
+})
+stopCluster(cl)
+
+cl <- makeCluster(4)
+
+system.time({
+  parSapply(cl, vec, function(x) Sys.sleep(0.1))
+})
+stopCluster(cl)
+```
 
 ---
 ## Let's practice loops
@@ -585,7 +623,7 @@ class: center, middle
 
 * Fast reading and writing of data (but not necessarily plotting)
 * sf objects can be treated as data.frames
-* Works smoothly with dplyr verbs as well as %>%.
+* Works smoothly with dplyr verbs as well as `%>%`.
 * I personally do not use ArcGIS at all. 99% of my GIS works are done in R using sf package.
 
 ![](https://r-spatial.github.io/sf/articles/sf_xfig.png)
@@ -629,18 +667,26 @@ census %>% st_coordinates()
 
 ---
 ## CRS: Coordinate reference system
+.small[
 The way in which spatial data that represent the earth's surface are drawn on a two-dimensional surface.
 * Two types of CRS:
   * Geographic coordinate system (GCS): angular units (lon/lat)
   * Projected coordinate system (PCS): linear units (meter or foot)
 
+.pull-left[
 * CRS you will use in this class:
-  * GCS: EPSG 4326
-  * PCS: EPSG 32616 (WGS 84/[UTM zone 16N](https://upload.wikimedia.org/wikipedia/commons/8/8d/Utm-zones-USA.svg))
+  * GCS: EPSG 4326 (WGS 84)
+  * PCS: EPSG 32616  
+    (WGS 84/[UTM zone 16N](https://upload.wikimedia.org/wikipedia/commons/8/8d/Utm-zones-USA.svg))
+]
+.pull-right[
+![](img/gcs_pcs.png)
+]
+]
 
 ---
 ## Projection
-Changing from one coordinate system to another
+Changing from one coordinate system to another.
 
 .small[
 .scroll-box-12[
@@ -655,6 +701,22 @@ census %>% st_transform(32616) %>% st_crs()
 ]
 ]
 
+---
+## Projection
+See how the geometric unit changes after projection.
+
+.small[
+.scroll-box-12[
+```{r}
+census %>% st_geometry()
+```
+]
+.scroll-box-12[
+```{r}
+census %>% st_transform(32616) %>% st_geometry()
+```
+]
+]
 
 ---
 ## Interactive Mapping - tmap package
@@ -685,7 +747,7 @@ census_group
 
 ---
 
-The **group_by() + summarise()** combination modifies the geometry too. 
+The `group_by()` + `summarise()` combination modifies the geometry too. 
 ```{r out.width="100%"}
 tm_shape(census_group) + tm_polygons(col = "med.income")
 ```
@@ -756,7 +818,7 @@ tm_shape(census.subset) + tm_polygons() +
 .font80[
 In GIS, "**predicates are Boolean functions** that return TRUE if a comparison meets the functions criteria; otherwise, they return FALSE (f), to determine if a specific relationship exists between a pair of geometries." ([ESRI](https://help.arcgis.com/en/geodatabase/10.0/sdk/arcsde/concepts/geometry/shapes/spatial_relations/predicates.htm)).
 
-Try **?st_intersects** in your console.
+Try `?st_intersects` in your console.
 ]
 
 ![](img/predicates.jpg)
@@ -893,8 +955,8 @@ marta.line
 ]
 ---
 ## Plotting them together
-
-```{r out.width="100%", out.height="50%"}
+.small[
+```{r out.width="100%", out.height="40%"}
 library(leaflet)
 marta.point2 <- marta.point %>% group_by(L1) %>% slice(1)
 pal <- colorNumeric(palette = "Reds", domain = marta.point2$L1)
@@ -908,6 +970,7 @@ leaflet() %>%
              stroke = F, radius = 500,
              popup=paste0("Row ID: ", marta.point2$L1)) # Adding marta.point #<<
 ```
+]
 
 ---
 ## Why this is useful
