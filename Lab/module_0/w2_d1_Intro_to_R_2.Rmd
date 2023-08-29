@@ -109,10 +109,11 @@ To create an account, [**click here**](https://rpubs.com/).
 
 ---
 ## Publishing on Rpubs
-![](img/Rpubs_process.png)
+![](img/rpubs_1.png)
+---
+## Publishing on Rpubs
+![](img/rpubs_2.png)
 
-For your assignment, you can submit the link, which in this case would be:
-http://rpubs.com/BonWooKoo/this_will_your_link
 
 ---
 class: inverse, middle, center
@@ -483,8 +484,9 @@ print(apply(mat, 2, mean))
 ## For-loop vs. Apply
 ***Which one is faster?***
 ```{r eval=F}
-# Using for-loop
 vec <- 1:100000
+
+# Using for-loop
 result_forloop <- numeric(length(vec))
 
 system.time({
