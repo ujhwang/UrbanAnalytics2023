@@ -109,10 +109,10 @@ To create an account, [**click here**](https://rpubs.com/).
 
 ---
 ## Publishing on Rpubs
-![](img/rpubs_1.png)
+![](img/rpubs_1.PNG)
 ---
 ## Publishing on Rpubs
-![](img/rpubs_2.png)
+![](img/rpubs_2.PNG)
 
 
 ---
