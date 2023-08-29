@@ -862,7 +862,7 @@ In GIS, "**predicates are Boolean functions** that return TRUE if a comparison m
 Try `?st_intersects` in your console.
 ]
 
-![](img/predicates.jpg)
+![](img/predicates.JPG)
  
 ---
 
@@ -889,6 +889,7 @@ b <- leaflet() %>%
 leafsync::sync(a,b)
 ```
 ]
+
 ---
 ## Predicates
 
