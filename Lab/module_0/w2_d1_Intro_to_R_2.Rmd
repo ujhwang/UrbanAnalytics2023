@@ -353,7 +353,7 @@ Unix time <font size="-1">(a.k.a Unix epoch, Unix timestamp, or POSIX time)</fon
 getDayFromTimestamp <- function(t){
   d <- 60*60*24
   day_index <- t%/%d%%7 + 1
-  days <- c('Thurs','Fri','Satur','Sun','Mon','Tues','Wednes')
+  days <- c('Thurs','Fri','Satur','#Sun','Mon','Tues','Wednes')
   paste0('Unix Timestamp ', t, ' is [', days[day_index], 'day]')  
 }
 </p>
@@ -752,6 +752,26 @@ The `group_by()` + `summarise()` combination modifies the geometry too.
 tm_shape(census_group) + tm_polygons(col = "med.income")
 ```
 
+---
+## Data manipulation
+Mind that `group_by` + `summarize` on sf data is geospatial computation.
+```{r eval=F}
+system.time(
+  census %>% 
+    group_by(county) %>% 
+    summarise(med.income = median(hhincome, na.rm = TRUE)) %>% 
+    print()
+)
+
+system.time(
+  census %>%
+    st_set_geometry(NULL) %>% #<<
+    group_by(county) %>% 
+    summarise(med.income = median(hhincome, na.rm = TRUE)) %>% 
+    print()
+)
+```
+
 
 ---
 ## Subsetting by location
@@ -801,7 +821,7 @@ The magic syntax is:
 .small[
 ```{r}
 # Subsetting
-census.subset <- census[five_point, , op = st_intersects] 
+census.subset <- census[five_point, , op = st_within] 
 ```
 ]
 
@@ -809,6 +829,27 @@ census.subset <- census[five_point, , op = st_intersects]
 ```{r, out.width="100%", out.height="300px"}
 # Visualization
 tm_shape(census.subset) + tm_polygons() +
+  tm_shape(five_point) + tm_borders(col = "blue")
+```
+]
+
+---
+## Subsetting
+The magic syntax is: 
+
+.center[.red[sf-obj-1][.blue[sf-obj-2], , .green[operation]]]
+
+.small[
+```{r}
+# Subsetting
+census.subset2 <- census[five_point, ] # by default, op = st_intersects
+```
+]
+
+.scriptsize[
+```{r, out.width="100%", out.height="300px"}
+# Visualization
+tm_shape(census.subset2) + tm_polygons() +
   tm_shape(five_point) + tm_borders(col = "blue")
 ```
 ]
@@ -955,8 +996,9 @@ marta.line
 ]
 ---
 ## Plotting them together
+
 .small[
-```{r out.width="100%", out.height="40%"}
+```{r, out.width="100%"}
 library(leaflet)
 marta.point2 <- marta.point %>% group_by(L1) %>% slice(1)
 pal <- colorNumeric(palette = "Reds", domain = marta.point2$L1)
