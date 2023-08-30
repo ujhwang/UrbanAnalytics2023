@@ -550,8 +550,7 @@ stopCluster(cl)
 ```{r eval=F}
 prime_vec <- c(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
 ```
-
-```{r echo=F}
+<!--
 prime_vec <- c(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
 n_vec <- numeric(length = length(prime_vec))
 
@@ -564,7 +563,7 @@ for (i in 1:length(prime_vec)){
   }
   n_vec[i] <- n
 }
-```
+-->
 
 
 .footnotesize[
