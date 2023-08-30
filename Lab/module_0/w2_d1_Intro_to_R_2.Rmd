@@ -670,20 +670,17 @@ census %>% st_coordinates()
 ## CRS: Coordinate reference system
 .small[
 The way in which spatial data that represent the earth's surface are drawn on a two-dimensional surface.
+]
+.font75[
 * Two types of CRS:
   * Geographic coordinate system (GCS): angular units (lon/lat)
   * Projected coordinate system (PCS): linear units (meter or foot)
-
-.pull-left[
 * CRS you will use in this class:
   * GCS: EPSG 4326 (WGS 84)
-  * PCS: EPSG 32616  
-    (WGS 84/[UTM zone 16N](https://upload.wikimedia.org/wikipedia/commons/8/8d/Utm-zones-USA.svg))
+  * PCS: EPSG 32616 (WGS 84/[UTM zone 16N](https://upload.wikimedia.org/wikipedia/commons/8/8d/Utm-zones-USA.svg));  EPSG 26967 (NAD 83/[Georgia West](https://geodesy.noaa.gov/SPCS/images/spcs83_conus_final.png))  
 ]
-.pull-right[
 ![](img/gcs_pcs.png)
-]
-]
+
 
 ---
 ## Projection
@@ -740,27 +737,27 @@ census_group <- census %>%
   select(county, hhincome) %>% 
   filter(county %in% c("Clayton County", "Fulton County")) %>% 
   group_by(county) %>% 
-  summarise(count = n(),
+  summarize(count = n(),
             med.income = median(hhincome, na.rm = TRUE))
 census_group
 ```
 ]]
 
 ---
-
-The `group_by()` + `summarise()` combination modifies the geometry too. 
+## Data manipulation
+The `group_by()` + `summarize()` combination modifies the geometry too. 
 ```{r out.width="100%"}
 tm_shape(census_group) + tm_polygons(col = "med.income")
 ```
 
 ---
 ## Data manipulation
-Mind that `group_by` + `summarize` on sf data is geospatial computation.
+Keep in mind that `group_by()` + `summarize()` on sf data is geospatial computation.
 ```{r eval=F}
 system.time(
   census %>% 
     group_by(county) %>% 
-    summarise(med.income = median(hhincome, na.rm = TRUE)) %>% 
+    summarize(med.income = median(hhincome, na.rm = TRUE)) %>% 
     print()
 )
 
@@ -768,7 +765,7 @@ system.time(
   census %>%
     st_set_geometry(NULL) %>% #<<
     group_by(county) %>% 
-    summarise(med.income = median(hhincome, na.rm = TRUE)) %>% 
+    summarize(med.income = median(hhincome, na.rm = TRUE)) %>% 
     print()
 )
 ```
@@ -916,6 +913,24 @@ tm_shape(census) + tm_polygons(col = "gray") +
 ]
 
 ---
+## Let's practice
+
+.font80[
+1. Calculate the average household income of Census Tracts within 2 miles of the MARTA rail network in Fulton and DeKalb.
+2. Calculate the average household income of Census Tracts whose ***centroids*** are within 2 miles of the MARTA rail network in Fulton and DeKalb.
+3. Using the method from 2., compare the average household income of Census Tracts within 2 miles of the MARTA rail network to those beyond 2 miles in Fulton and DeKalb counties.
+4. Compare the average household income of Census Tracts within 2 miles of RED/GOLD lines to those within 2 miles of BLUE lines in Fulton and DeKalb counties. Ignore Census Tracts within 2 miles of both RED/GOLD and BLUE lines.
+]
+  
+.font70[
+* Data provided:
+  - `census`: Census Tracts (polygon) in three counties (Fulton, DeKalb, and Cobb).
+  - `marta`: three lines (Red, Gold, and Blue) of the Marta rail system.
+* Packages required: `tidyverse`, `sf`, and `tmap`.
+* Functions/operators you may find useful: `head()`, `st_buffer()`, `mean(x, na.rm = T)`, `st_centroid()`, `st_within()`, `filter()`, `str_detect()`, `st_set_geometry(NULL)`, `%in%`
+]
+
+---
 class: inverse, center, middle
 
 #If we have time left..
@@ -1038,8 +1053,8 @@ marta.line.cut <- marta.line %>%
   st_coordinates() %>% as.data.frame() %>% 
   mutate(break.point = c(rep("South",closest.pnt), rep("North",nrow(.)-closest.pnt))) %>% 
   st_as_sf(coords=c("X", "Y"), crs = 4326) %>% 
-  group_by(break.point, L1) %>% summarise(do_union=FALSE) %>% st_cast("LINESTRING") %>% 
-  group_by(break.point) %>% summarise(do_union=FALSE) %>% st_cast("MULTILINESTRING")
+  group_by(break.point, L1) %>% summarize(do_union=FALSE) %>% st_cast("LINESTRING") %>% 
+  group_by(break.point) %>% summarize(do_union=FALSE) %>% st_cast("MULTILINESTRING")
 
 marta.line.cut
 ```
