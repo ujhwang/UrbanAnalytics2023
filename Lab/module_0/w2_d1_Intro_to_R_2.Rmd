@@ -25,6 +25,9 @@ Subhro Guhathakurta & Uijeong Hwang
 
 8/29/2022
 ]
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE) 
+```
 
 ```{r include=FALSE, warning=FALSE}
 nice_table <- function(df, height="150px"){
@@ -610,6 +613,34 @@ class: center, middle
 ![](sf/sf-09.jpg)
 
 ---
+## Polygon & Multipolygon
+
+.small[
+.pull-left[
+```{r results='hide', message=F, out.width="100%"}
+atlanta <- tigris::places('GA') %>% 
+  filter(NAME == 'Atlanta')
+ggplot(atlanta) + geom_sf()
+```
+]
+.pull-right[
+.scroll-box-12[
+```{r out.width = "100%"}
+# multipolygon
+head(atlanta)
+```
+]
+.scroll-box-12[
+```{r out.width = "100%"}
+# polygon
+atlanta_polygon <- atlanta %>% 
+  st_cast('POLYGON')
+head(atlanta_polygon)
+```
+]
+]
+]
+---
 class: center, middle
 ![](sf/sf-10.jpg)
 
@@ -631,13 +662,13 @@ class: center, middle
 .footnote[image source: https://r-spatial.github.io/sf/articles/sf1.html]
 
 ---
-## Let's do some coding
+## Import sf data to play with
 
 ```{r, eval=F}
 library(sf)
-census <- sf::st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.geojson")
-marta <- sf::st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/MARTA_Routes.geojson")
-five_point <- sf::st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/five_point.geojson") 
+census <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/testdata.geojson")
+marta <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/MARTA_Routes.geojson")
+five_point <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_0/five_point.geojson") 
 ```
 
 ```{r message=F, include=F}
@@ -656,7 +687,7 @@ census %>% print()
 .footnotesize[
 .scroll-box-10[
 ```{r}
-census %>% st_geometry()
+census %>% st_geometry() # which is same as census$geometry
 ```
 ]
 ]
@@ -676,7 +707,7 @@ The way in which spatial data that represent the earth's surface are drawn on a 
   * Geographic coordinate system (GCS): angular units (lon/lat)
   * Projected coordinate system (PCS): linear units (meter or foot)
 * CRS you will use in this class:
-  * GCS: EPSG 4326 (WGS 84)
+  * GCS: EPSG 4326 (WGS 84); EPSG 4269 (NAD 83)
   * PCS: EPSG 32616 (WGS 84/[UTM zone 16N](https://upload.wikimedia.org/wikipedia/commons/8/8d/Utm-zones-USA.svg));  EPSG 26967 (NAD 83/[Georgia West](https://geodesy.noaa.gov/SPCS/images/spcs83_conus_final.png))  
 ]
 ![](img/gcs_pcs.png)
@@ -717,12 +748,43 @@ census %>% st_transform(32616) %>% st_geometry()
 ]
 
 ---
+## Static Mapping
+.pull-left[
+```{r}
+# using plot (base r function)
+plot(census$geometry)
+```
+]
+.pull-right[
+```{r}
+# using ggplot2 (tidyverse)
+library(tidyverse)
+ggplot(census) + 
+  geom_sf(aes(fill = census$hhincome))
+```
+]
+
+---
 ## Interactive Mapping - tmap package
+.pull-left[
 ```{r, out.width="100%", out.height="300px"}
 library(tmap)
-tmap_mode('view') # or use ttm() to switch between static and interactive views
-tm_shape(census) + tm_polygons(col="hhincome")
+tm_shape(census) + 
+  tm_polygons(col="hhincome")
 ```
+]
+.pull-right[
+```{r, out.width="100%", out.height="300px"}
+tmap_mode('view') # or use ttm()
+tm_shape(census) + 
+  tm_polygons(col="hhincome")
+```
+]
+.font70[
+* point: tm_dots()
+* line: tm_lines()
+* polygon: tm_polygons(); tm_borders()
+]
 
 ---
 ## Data manipulation
@@ -916,10 +978,10 @@ tm_shape(census) + tm_polygons(col = "gray") +
 ## Let's practice
 
 .font80[
-1. Calculate the average household income of Census Tracts within 2 miles of the MARTA rail network in Fulton and DeKalb.
-2. Calculate the average household income of Census Tracts whose ***centroids*** are within 2 miles of the MARTA rail network in Fulton and DeKalb.
-3. Using the method from 2., compare the average household income of Census Tracts within 2 miles of the MARTA rail network to those beyond 2 miles in Fulton and DeKalb counties.
-4. Compare the average household income of Census Tracts within 2 miles of RED/GOLD lines to those within 2 miles of BLUE lines in Fulton and DeKalb counties. Ignore Census Tracts within 2 miles of both RED/GOLD and BLUE lines.
+1. **Calculate the average household income of Census Tracts within 2 miles (or 3,219 meters) of the MARTA rail network in Fulton and DeKalb.**
+2. **Calculate the average household income of Census Tracts whose** ***centroids*** **are within 2 miles of the MARTA rail network in Fulton and DeKalb.**
+3. **Using the method from 2., compare the average household income of Census Tracts within 2 miles of the MARTA rail network to those beyond 2 miles in Fulton and DeKalb counties.**
+4. **Compare the average household income of Census Tracts within 2 miles of RED lines to those within 2 miles of BLUE lines in Fulton and DeKalb counties. Ignore Census Tracts within 2 miles of both RED and BLUE lines.**
 ]
   
 .font70[
