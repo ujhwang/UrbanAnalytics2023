@@ -68,9 +68,9 @@ This JSON format can be reformatted into a data.frame format using e.g., **jsonl
 
 
 # Understanding Yelp Business Search
-All APIs are different. Being familiar with Yelp Fusion API does not tell you anything about how Google Street View API is structured. So the first thing you need to do is to [**READ THE DOCUMENTATION OF YELP FUSION API**](https://www.yelp.com/developers/documentation/v3/get_started).
+All APIs are different. Being familiar with Yelp Fusion API does not tell you anything about how Google Street View API is structured. So the first thing you need to do is to [**READ THE DOCUMENTATION OF YELP FUSION API**](https://docs.developer.yelp.com/docs/fusion-intro).
 
-Yelp Fusion API has various endpoints: Business Search, Phone Search, Transaction Search, Business Details etc. You will notice that for everyting except **Business Search**, you need to have some information about the business you are looking for (e.g., business id, phone number, exact location, etc). Business Search allows us to search business by keywords (e.g., Ray's), catergories (e.g., cafe), location (e.g., coordinates), etc. **This is what we need.** Let's look at the related parameters of [Business Search](https://www.yelp.com/developers/documentation/v3/business_search).
+Yelp Fusion API has various endpoints: Business Search, Phone Search, Transaction Search, Business Details etc. You will notice that for everyting except **Business Search**, you need to have some information about the business you are looking for (e.g., business id, phone number, exact location, etc). Business Search allows us to search business by keywords (e.g., Ray's), catergories (e.g., cafe), location (e.g., coordinates), etc. **This is what we need.** Let's look at the related parameters of [Business Search](https://docs.developer.yelp.com/reference/v3_business_search).
 
 1. The Business Search takes various input parameters, some optional and others required. Most importantly, we need to provide **geographic information** in which we want to do a search. We can provide it through one of the following ways: 
 
@@ -113,7 +113,7 @@ To use `get_acs()`, we first need to understand what arguments are needed for th
 ![](get_acs.JPG)
 
 We will specify the following argument and leave the rest as default: geography, state, county, variables, year, survey, geometry, and output. 
-Notice that we can also specify **variables** argument. You can provide variable ID to specify the variables you want to download. You can (1) use **load_variables()** function to see all variable ID, (2) go to Census Bureau [website](https://data.census.gov/cedsci/) to see the variable ID, or (3) some other sources. I recommend [NHGIS](https://www.nhgis.org/) for its highly intuitive filtering system.
+Notice that we can also specify **variables** argument. You can provide variable ID to specify the variables you want to download. You can (1) use **load_variables()** function to see all variable ID, (2) go to Census Bureau [website](https://data.census.gov/cedsci/) to see the variable ID, or (3) some other sources. I recommend [NHGIS](https://www.nhgis.org/) for its intuitive filtering system.
 
 
 ```{r message=F}
@@ -229,7 +229,7 @@ We can apply this function to each polygon using a loop and a functional. At the
 ## Using a loop -----------------------------------------------------------------
 # Creating an empty vector of NA. 
 # Results will fill this vector
-epsg_id <- 4326 # Edit (9/8/2022): 4326 measures distance in meter. Before the edit, I used 26967.
+epsg_id <- 4326
 
 r4all_loop <- vector("list", nrow(tract))
 
@@ -326,7 +326,7 @@ tm_shape(fishnet %>%
 # Accessing Yelp API
 
 ## Getting Yelp API key
-Just like we did for the Census data, we need to get an API key for Yelp data. Go to [https://www.yelp.com/developers/documentation/v3/business_search](https://www.yelp.com/developers/documentation/v3/business_search) and sign up and log in. Then, click Introduction on the left panel to open up more menus. You will see **Authentication** (see the image below if you can't find it). It will direct you to **Create App**. Go ahead and fill out required information. Once you're done with the form and email verification process, we will have your API key displayed on the webpage. **KEEP THE KEY TO YOURSELF and DO NOT POST IT ANYWHERE PUBLIC.** I recommend storing it in as the environment variable.
+Just like we did for the Census data, we need to get an API key for Yelp data. Go to [https://docs.developer.yelp.com/reference/v3_business_search](https://docs.developer.yelp.com/reference/v3_business_search) and sign up and log in. Then, click Introduction on the left panel to open up more menus. You will see **Authentication** (see the image below if you can't find it). It will direct you to **Create App**. Go ahead and fill out required information. Once you're done with the form and email verification process, we will have your API key displayed on the webpage. **KEEP THE KEY TO YOURSELF and DO NOT POST IT ANYWHERE PUBLIC.** I recommend storing it in as the environment variable.
 
 ![](yelp_auth.JPG)
 

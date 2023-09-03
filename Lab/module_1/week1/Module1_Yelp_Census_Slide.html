@@ -3,7 +3,7 @@
   <head>
     <title>Accessing Data Through API</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Subhro Guhathakurta &amp; Uijeong Hwang" />
+    <meta name="author" content="Originally written by Bon Woo Koo &amp; Subhro Guhathakurta; modified by Uijeong Hwang" />
     <meta name="date" content="2023-09-05" />
     <script src="libs/header-attrs-2.23/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
@@ -31,11 +31,28 @@ Subhro Guhathakurta &amp; Uijeong Hwang
 ## Content
 * Yelp API Key
 * Census API Key
-* NHGIS
-* Defining Function
 * Using Environment Variable
+* Tidycensus
 * Yelp Business Search and Pagination
-* Using Tracts to Break Down the Break
+* sfg, sfc, and sf
+
+
+---
+## Yelp API Key
+
+.pull-left[
+.footnotesize[
+* Just like Census, we need an API key to make API request to Yelp server. Click **[here](https://fusion.yelp.com/)**.
+  1. Sign up.
+  2. Then go [here](https://www.yelp.com/developers/v3/manage_app) to Create New App.
+  3. Fill out form.
+  4. You will get an email from Yelp. Once you confirm, the webpage will refresh and your key will be there.
+  5. (You might need to fill out the form again, but will not have to do the email verification).
+]]
+
+.pull-right[
+&lt;img src="img/get_yelp_api.png" width="400px" /&gt;
+]
 
 ---
 ## Census API Key
@@ -43,123 +60,142 @@ Subhro Guhathakurta &amp; Uijeong Hwang
 * We will be using Census data frequently throughout this course.
 * Census data will accessed within R through Census API.
 * You need a key, which can be acquired from **[here](https://api.census.gov/data/key_signup.html).**
-
-![](census_api_key.JPG)
-
----
-## Census &amp; NHGIS
-* We need to specify which variable we'd like to download. 
-  * For example, median household income = Table ID B19013.
-* These codes are can be found in all websites that provide Census data.
-* I recommend [National Historical GIS (NHGIS)](https://www.nhgis.org/).
-* There can be multiple variable IDs within one table ID.
-  * E.g., there are 10 variables for Table ID B19013, broken down by race (e.g., B19013A_001)
-  * This variable codes can be found in **`tidycensus::load_variables()`**.
+* Information required: organization name &amp; email address
 
 ---
-E.g.,for median household income,
-
-![](nhgis.JPG)&lt;!-- --&gt;
-
----
-## Defining function
-* We have been using various functions, mean(), filter(), st_coordinates, etc.
-* We can write our own functions to simpler and more maintainable code.
-
-.red[my_function] &lt;- .blue[function](arg1, arg2, ... )
-{  
-  .green[some operation using arg1, arg2, and so on]  
-}
-
-
-```r
-# Converting F to C
-f_to_c &lt;- function(x)
-{
-  z &lt;- (x - 32)*(5/9)
-  return(z)
-}
-
-f_to_c(100)
-```
-
-```
-## [1] 37.77778
-```
-
----
-## Yelp API Key
-
-.pull-left[
-.footnotesize[
-* Just like Census, we need an API key to make API request to Yelp server. Click **[here](https://www.yelp.com/developers/documentation/v3/authentication)**.
-  1. Sign up.
-  2. Then go [here](https://www.yelp.com/developers/v3/manage_app) to Create New App.
-  3. Fill out form.
-  4. You will have an email from Yelp. Once you confirm, the webpage will refresh and your key will be there.
-  5. You might need to fill out the form again (but won't have to do the email verification).
-]]
-
-.pull-right[
-&lt;img src="yelp_create_app.JPG" width="400px" /&gt;
-]
-
----
-## Using Environment Variables
+## System Environment Variables
 * API services are often **not** free.
 * If someone uses your API key, you will be charged.
 * **PROTECT IT.**
-
-
 * Everything on Rpubs is public.
-* You shouldn't type your API key in your code.
-* Instead use environment variable.
+* You should not type your API key in your code.
+* Instead, use environment variable.
 
 
 ```r
-a &lt;- Sys.getenv("census_api")
+Sys.getenv("census_api")
 ```
+
+---
+## How to set up system environment variable: using Docker
+.pull-left[
+* Create a new container with api keys as environment variables.
+]
+.pull-right[
+![](img/env_var_docker.png)
+]
+
+---
+## How to set up system environment variable: in Windows
+.small[
+* Press Windows key and search 'edit the system environment variables'.  
+  (Or, go to Control panel - System - Advanced system settings - 'Advanced' tab)
+* Click 'Environment Variables' and add the environment variables.
+]
+![](img/env_var_windows.png)
+
+---
+## How to set up system environment variable: in MacOS
+.small[
+1. Open the terminal.
+2. Run `echo $SHELL` and check the path:
+  - if the path is `/bin/zsh`, go to 3.1.
+  - if the path is `/bin/bash`, go to 3.2.
+3. Run one of the following commands to open the file in text editor:
+  1. `nano ~/.bash_profile`
+  2. `nano ~/.zshrc`
+4. Add environment variables by adding the following line(s):  
+  `export [variable_name]=[variable_value]`
+5. Save and close the file by pressing `Ctrl + O` and then `Ctrl + x`.
+6. Run RStudio and see if the system environment variable is working:  
+  `Sys.getenv('your_sys_env_var_name')`
+]
+
+---
+## Tidycensus
+* `tidycensus` allows r users to download Census data (via the Census API) in **data frame** or **sf** formats.
+* To retrieve Census data using an R script, we need to know the code of the variable we want to access.
+  - For example, the code for median household income is B19013.
+* One quick way to search for the variable code is by using [National Historical GIS (NHGIS)](https://www.nhgis.org/).
+* Another method is to use a function within `tidycensus`.
+  - **`tidycensus::load_variables()`** provides a list of variables and their descriptions.
+
+---
+## NHGIS data finder
+![](img/nhgis.JPG)&lt;!-- --&gt;
 
 ---
 ## Yelp Business Search 
 
-* "[Business search] endpoint returns up to 1000 businesses based on the provided search criteria." 
-  * Search is done with (1) a lng/lat coordinate and (2) search radius.
-* We can't get info on all restaurants in Atlanta in one API request if there are more than 1000
-* We need to make sure **one search criteria returns &lt; 1000 hits**.
+* "[Business search] endpoint returns **up to 1000 businesses** based on the provided search criteria." 
+  * Search input: (1) a lng/lat coordinate and (2) search radius.
+* We need to make sure **each search returns &lt; 1000 results**.
 * Atlanta should be broken down to **smaller bits**.
-* We will use **Census Tracts as the bits**
-  * We will download Yelp data for each Census Tract and combine them.
+* We will download Yelp data for each **Census Tract** and merge them.
 
 ---
 ## Pagination
 
-* Even if we have &lt; 1000 hits, we still can get up to 50 business information per one request.
-* E.g., there is 254 businesses in a given Census Tract. We need to make **ceiling(254/50)** requests to collect 254 business information.
+* Even if we have less than 1000 results, we cannot get all their information in one API request.
+* we can only get **up to 50 business information** per request.
+  - If there are 130 results, for example, we need to request 3 times: 1-50, 51-100, and 101-130.
 * In the first request, we set **offset=0**. After collecting the first 50 business information, we set **offset=50** in the next request, and so on until we collect all of them.
 
 .center[
-&lt;img src="pagination.png" width="400px" /&gt;
+&lt;img src="img/pagination.png" width="400px" /&gt;
 ]
 
 ---
-## Using Tracts to Break Down the Search
+## Using Tracts to break down the search
 
+.small[
 1. Generate a **bounding box** of a given Census Tract.
 2. Find the **centroid** of the bounding box.
 3. Find the **radius** of search area from the centroid such that *the circle defined by the centroid and radius entirely contains the polygon*.
 4. Centroid = lat/lng for Yelp search. Radius = distance.
 5. Send API request to Yelp server to get a response.
+6. We can repeat this process for all Census Tracts
+]
 
 .center[
-&lt;img src="radius.png" width="300px" /&gt;
+&lt;img src="img/radius.png" width="300px" /&gt;
 ]
----
-## Using Tracts to Break Down the Search
 
-* We can repeat this process for all Census Tracts,
-* which will generate n separate responses, where n = number of Census Tracts.
-* These responses will be combined together.
+---
+## sfg, sfc, and sf
+
+### How simple features in R are organized:
+* **Simple feature geometry.**
+  * `my_point &lt;- st_point(c(-84.388, 33.749))`.
+  * **my_point** is a point on an arbitrary plane.
+  * It cannot be mapped on Earth.
+* **Simple feature geometry list-column.**
+  * `my_sfc &lt;- st_sfc(my_point, crs = 4326)`.
+  * It adds **crs** information to sfg object.
+  * With CRS defined, now R knows where that point is on Earth.
+  * **CRS** must match the coordinates used to create sfg object.
+  * The geometry column you see in sf objects = sfc
+
+---
+* **Simple feature** 
+  * `my_sf &lt;- st_sf(my_sfc)`
+  * This is the combination of a **data frame** and **sfc** object.
+  * e.g., dplyr verbs don't work for sfc, but they work for sf.
+
+&lt;br&gt;
+
+
+&lt;img src="img/sf_structure.png" width="100%" /&gt;
+
+---
+To create (POINT) sf object from a pair of lng/lat coordinates, you need to do it in **sfg &amp;rarr; sfc &amp;rarr; sf**, in this order.
+.footnotesize[
+1. Create an .red[**sfg**] using coordinates. **my_sfg &lt;- st_point(c(-84.388, 33.749))**.
+2. Convert the .red[**sfg**] object into .blue[**sfc**] object with CRS info. **my_sfc &lt;- my_sfg %&gt;% st_sfc(crs = 4326)**.
+3. Convert the .blue[**sfc**] object into .green[**sf**] object using **my_sf &lt;- st_sf(my_sfc)**.
+]
+&lt;br&gt;
+&lt;img src="img/sf_structure.png" width="100%" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

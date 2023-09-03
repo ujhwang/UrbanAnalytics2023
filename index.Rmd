@@ -92,15 +92,15 @@ topic_col <- c(
   "Intro to R - #2 [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d1_Intro_to_R_2.html) <br> 
   Data for Urban Analytics [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_0/w2_d2_modern_data.html)",# 2
   
-  "Accessing data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide.html), <br> 
+  "Accessing data via API [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide.html), <br> 
   Census & Yelp API ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census.Rmd), 
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census.html)),
-  <br>Creating sf objects [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census_Slide_additional.html)",# 3
+  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/Module1_Yelp_Census.html))",# 3
   
   "Tidy data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.html))",# 4
   
-  "Deriving insights from your data [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> Hands-on ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/stats.Rmd),
+  "Deriving insights from your data [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> 
+  Hands-on ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/stats.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/stats.html))",# 5
   
   "Storytelling with data [(slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/LectureStorytelling-w-data.html) <br> Interactive visualization 1 ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/interactive_visualization.Rmd),
