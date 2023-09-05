@@ -56,7 +56,7 @@ library(kableExtra)
 * Each module includes:
   - **Rmd**: Hands-on materials.
   - **HTML**: Knitted output from the Rmd file.
-  - **Slides**: Prerequisite information for the hands-on experience.
+  - **Slides**: Prerequisite information for the hands-on materials.
 * After covering the slides, you will work on the materials at your own pace.
 * You follow the materials in both the Rmd file and HTML document simultaneously.
 * You run each r code chunk in the Rmd file and digest what it does/means.
