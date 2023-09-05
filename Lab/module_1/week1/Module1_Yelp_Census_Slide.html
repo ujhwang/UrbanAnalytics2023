@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Originally written by Bon Woo Koo &amp; Subhro Guhathakurta; modified by Uijeong Hwang" />
     <meta name="date" content="2023-09-05" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.24/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/sydney-fonts.css" type="text/css" />
     <link rel="stylesheet" href="assets/sydney.css" type="text/css" />
@@ -26,37 +26,53 @@ Subhro Guhathakurta &amp; Uijeong Hwang
 
 
 
+
 ---
-#What is an API?
+## Class Module Logistics
+* Each module includes:
+  - **Rmd**: Hands-on materials.
+  - **HTML**: Knitted output from the Rmd file.
+  - **Slides**: Prerequisite information for the hands-on experience.
+* After covering the slides, you will work on the materials at your own pace.
+* You follow the materials in both the Rmd file and HTML document simultaneously.
+* You run each r code chunk in the Rmd file and digest what it does/means.
+* Ask questions as many as possible!
+
+---
+## What is an API?
 
 --
-## Application Programming Interface
+### Application Programming Interface
 A mechanism for two computing interfaces (often a client and a server) to talk to each other using a set of definitions and protocols.
 
 --
-## Examples:
+### Examples:
 * Getting data from Census (we will do this!)
 * Getting data from third parties who give us access (Yelp, Google, etc.)
 * Weather information on your phone
 * Crime stats from Police Crime Servers
 * Others?
+
 ---
-#Types of APIs
+## Types of APIs
 * SOAP API: Simple Object Protocol that exchanges information using XML (less used now)
 * RPC API: Remote Procedure Calls - Client runs software in the server and sends back the result to itself
 * Websocket APIs: API that sues JSON objects to pass data. It supports two-way communication and "connected" clients
 * &lt;font color="blue"&gt;REST APIs: Representational State Transfer, the most popular and flexible API. The client sends request as data, which runs some internal functions in the server and returns data back. The main feature of REST is "statelessness" -- that is, servers do not save client data between requests -- similar to web URLs.&lt;/font&gt;
 
 ---
-# How Do APIs Work?
+## How Do APIs Work?
 &lt;font size="-1"&gt;Let's just look at REST API's for simplicity..&lt;/font&gt;
-
+.small[
 While there are different ways REST API's can be configured, a general request-response cycle looks something like:
 - Request - The client computer sends a request using HTTP method using commands such as GET, PUT, POST, DELETE etc., (GET new data, PUT/POST update/Create, etc.)
 - Route - The server maps the request to a specific endpoint, a URL that corresponds to a specific resource or action (one endpoint is usually associated with one resource)
 - Process - The server performs the requested action and generates a response
 - Response - The server sends the response back to the client. The response includes the information / data that the client was requesting
 - Client Processing - the client receiveds the response and processes it (such as formatted for display or input for another application)
+]
+
+
 &lt;!-- --- --&gt;
 &lt;!-- ## Content --&gt;
 &lt;!-- * Yelp API Key --&gt;
@@ -147,10 +163,26 @@ Sys.getenv("census_api")
   2. `nano ~/.zshrc`
 4. Add environment variables by adding the following line(s):  
   `export [variable_name]=[variable_value]`
-5. Save and close the file by pressing `Ctrl + O` and then `Ctrl + x`.
+5. Save and close the file by pressing `Ctrl + o` and then `Ctrl + x`.
 6. Run RStudio and see if the system environment variable is working:  
   `Sys.getenv('your_sys_env_var_name')`
 ]
+
+---
+## How to set up system environment variable: R-specific method
+.small[
+1. Check your home directory.
+  - Open RStudio and run `getwd()`. The output is the home directory.
+2. Create '.Renviron' file in your home directory.
+  - Open a text editor.
+  - save a blank file as '.Renviron' in the home directory.
+3. Add your environment variables to the file.
+  - [variable_name]=[variable_value]
+  - e.g., `census_api=your_census_api_key`
+4. Restart RStudio and check the variables you added.
+  - `Sys.getenv()`
+]
+
 ---
 ## Yelp Business Search 
 
