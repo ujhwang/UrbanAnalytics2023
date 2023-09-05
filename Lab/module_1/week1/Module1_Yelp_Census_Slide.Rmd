@@ -69,18 +69,49 @@ A mechanism for two computing interfaces (often a client and a server) to talk t
 * SOAP API: Simple Object Protocol that exchanges information using XML (less used now)
 * RPC API: Remote Procedure Calls - Client runs software in the server and sends back the result to itself
 * Websocket APIs: API that sues JSON objects to pass data. It supports two-way communication and "connected" clients
-* REST APIs: Representational State Transfer, the most popular and flexible API. The client sends request as data, which runs some internal functions in the server and returns data back. The main feature of REST is "statelessness" -- that is, servers do not save client data between requests -- similar to web URLs.
-
+* <font color="blue">REST APIs: Representational State Transfer, the most popular and flexible API. The client sends request as data, which runs some internal functions in the server and returns data back. The main feature of REST is "statelessness" -- that is, servers do not save client data between requests -- similar to web URLs.</font>
 
 ---
-## Content
-* Yelp API Key
-* Census API Key
-* Using Environment Variable
-* Tidycensus
-* Yelp Business Search and Pagination
-* sfg, sfc, and sf
+# How Do APIs Work?
+<font size="-1">Let's just look at REST API's for simplicity..</font>
 
+While there are different ways REST API's can be configured, a general request-response cycle looks something like:
+- Request - The client computer sends a request using HTTP method using commands such as GET, PUT, POST, DELETE etc., (GET new data, PUT/POST update/Create, etc.)
+- Route - The server maps the request to a specific endpoint, a URL that corresponds to a specific resource or action (one endpoint is usually associated with one resource)
+- Process - The server performs the requested action and generates a response
+- Response - The server sends the response back to the client. The response includes the information / data that the client was requesting
+- Client Processing - the client receiveds the response and processes it (such as formatted for display or input for another application)
+<!-- --- -->
+<!-- ## Content -->
+<!-- * Yelp API Key -->
+<!-- * Census API Key -->
+<!-- * Using Environment Variable -->
+<!-- * Tidycensus -->
+<!-- * Yelp Business Search and Pagination -->
+<!-- * sfg, sfc, and sf -->
+
+---
+## Census API Key
+
+* We will be using Census data frequently throughout this course.
+* Census data will accessed within R through Census API.
+* You need a key, which can be acquired from **[here](https://api.census.gov/data/key_signup.html).**
+* Information required: organization name & email address
+
+---
+## Tidycensus
+* `tidycensus` allows r users to download Census data (via the Census API) in **data frame** or **sf** formats.
+* To retrieve Census data using an R script, we need to know the code of the variable we want to access.
+  - For example, the code for median household income is B19013.
+* One quick way to search for the variable code is by using [National Historical GIS (NHGIS)](https://www.nhgis.org/).
+* Another method is to use a function within `tidycensus`.
+  - **`tidycensus::load_variables()`** provides a list of variables and their descriptions.
+
+---
+## NHGIS data finder
+```{r echo=F}
+knitr::include_graphics("img/nhgis.JPG")
+```
 
 ---
 ## Yelp API Key
@@ -101,15 +132,6 @@ knitr::include_graphics("img/get_yelp_api.png")
 ```
 ]
 
----
-## Census API Key
-
-* We will be using Census data frequently throughout this course.
-* Census data will accessed within R through Census API.
-* You need a key, which can be acquired from **[here](https://api.census.gov/data/key_signup.html).**
-* Information required: organization name & email address
-
----
 ## System Environment Variables
 * API services are often **not** free.
 * If someone uses your API key, you will be charged.
@@ -156,22 +178,6 @@ Sys.getenv("census_api")
 6. Run RStudio and see if the system environment variable is working:  
   `Sys.getenv('your_sys_env_var_name')`
 ]
-
----
-## Tidycensus
-* `tidycensus` allows r users to download Census data (via the Census API) in **data frame** or **sf** formats.
-* To retrieve Census data using an R script, we need to know the code of the variable we want to access.
-  - For example, the code for median household income is B19013.
-* One quick way to search for the variable code is by using [National Historical GIS (NHGIS)](https://www.nhgis.org/).
-* Another method is to use a function within `tidycensus`.
-  - **`tidycensus::load_variables()`** provides a list of variables and their descriptions.
-
----
-## NHGIS data finder
-```{r echo=F}
-knitr::include_graphics("img/nhgis.JPG")
-```
-
 ---
 ## Yelp Business Search 
 
