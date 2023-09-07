@@ -3,8 +3,8 @@
   <head>
     <title>Tidy Data</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Subhro Guhathakurta &amp; Uijeong Hwang" />
-    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
+    <meta name="author" content="Originally written by Bon Woo Koo &amp; Subhro Guhathakurta; modified by Uijeong Hwang" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
@@ -29,59 +29,9 @@ Subhro Guhathakurta &amp; Uijeong Hwang
 
 
 ---
-## Content
-* Final project proposal
-* Categories
-* Wide vs. Long forms
-* Saving files
-* Anonymous function
-* Converting existing data frame into a sf object
-
-
----
-## Final project proposal
-
-&lt;br&gt;
-.center[
-Please submit 300~500-word long write-up of the project proposal.   
-]
-&lt;br&gt;
-
-**Purpose**: This proposal is to encourage you to start thinking about the project topic &amp; potential data sources. 
-
-**Ungraded**: Will not affect your grade in any way.  
-
-**Submit by**: Oct 7th (Friday) 11:59 PM.  
-
-**Submit through**: Canvas &gt; Assignment &gt; Final Project Proposal.  
-
----
-## Categories on Yelp API
-
-Error correction!!
-
-* Argument name in business_search should be "categories", not "category".
-* The string you supply must be from the [list that Yelp provides](https://www.yelp.com/developers/documentation/v3/all_category_list).
-
-.footnotesize[
-
-```r
-business_search(api_key = Sys.getenv('yelp_api'), 
-*                       categories = 'restaurants',
-                        latitude = ready_4_yelp$y[which_tract],
-                        longitude = ready_4_yelp$x[which_tract],
-                        offset = 0, 
-                        radius = round(ready_4_yelp$radius[which_tract]), 
-                        limit = 50)
-```
-
-]
- 
-
----
 ## Wide vs. Long forms
 
-.footnotesize[
+.small[
 .pull-left[
 
 with `output="wide"`:
@@ -227,7 +177,7 @@ census_long %&gt;%
 ---
 ## Wide vs. Long forms
 
-.footnotesize[
+.small[
 
 ```r
 longer &lt;- census_wide %&gt;% 
@@ -254,10 +204,11 @@ longer
 ## # ℹ 806 more rows
 ```
 ]
+
 ---
 ## Wide vs. Long forms
 
-.footnotesize[
+.small[
 
 ```r
 wider &lt;- longer %&gt;% 
@@ -288,25 +239,53 @@ wider
 ---
 ## Saving files
 
-### R-Native File formats
-**.RData**: Native data storage format for R. Can store multiple objects.    
-**.RDS**: Short for RData. Can only store one object.  
+### Common formats
+* **.RData**: Native data storage format for R. Can store multiple objects.  
+* **.rds**: Short for *R Data Structure*. Provided by readr package. Can only store one object.  
 
-### Read/write RDS (recommended over RData)
-**write_rds(), read_rds()** from readr package -&gt; Works the same way as write.csv, read.csv.  
+---
+## Saving files
 
-### Read/write RData 
-**save(), save.image()** from base R -&gt; save() function can save multiple objects. save.image() saves the entire environment.  
-**load()** from base R -&gt; The biggest different from .RDS is that you do not use **&lt;-** for load(). It stores the original object name as well.
+### (1) Read/write .rds
+* **`write_rds()`, `read_rds()`**: They work the same way as `write_csv()` and `read_csv()`.
+
+
+```r
+library(tidyverse)
+a &lt;- c(1,2,3)
+
+a %&gt;% write_rds(file = 'data.rds')
+a &lt;- read_rds('data.rds')
+```
+
+---
+## Saving files
+
+### (2) Read/write .RData
+* **`save()`**: Save multiple objects.
+* **`save.image()`**: Save the entire environment.  
+* **`load()`**: Load .RData file. Do not use **`&lt;-`** (as .RData file stores the original object name as well).
+
+
+```r
+a &lt;- c(1,2,3)
+b &lt;- c(3,4,5)
+
+save(a, b, file = 'data.RData') # never use piping for 'save()'
+load('data.RData')
+
+save.image(file = 'data_all.RData')
+load('data_all.RData')
+```
 
 ---
 ## Anonymous function
 
+.small[
 * When using **apply()** or **map()**, you can provide an existing or a custom-made function.
 * Similar to lambda in Python, R has anonymous function. 
 * Anonymous function is a function defined on the fly and disappears after execution.
 
-.footnotesize[
 .pull-left[
 
 ```r
@@ -362,10 +341,13 @@ map(1:5, # input vector
 ]
 
 ---
+## Anonymous function
+
+.small[
 * map() and other variants has a nice syntax that make the code simple. 
 * Instead of declaring `function(x)`, you can use a tilde (~) to indicate that it is anonymous function.
 * `x`s inside the anonymous function needs to be preceded by a period (.). See the example below.
-.footnotesize[
+
 
 ```r
 map(1:5, # input
@@ -396,7 +378,6 @@ map(1:5, # input
 
 * The word 'as' indicates that it converts an *existing* object to sf rather than creating one from scratch.
 
-.footnotesize[
 
 ```r
 # A data frame with XY info
@@ -409,21 +390,14 @@ point_df %&gt;%
   tm_shape(.) + tm_dots()
 ```
 
-&lt;img src="Module1_Tidy_Yelp_Slide_files/figure-html/unnamed-chunk-11-1.png" width="100%" /&gt;
-]
----
-## Extension to the Mini Assignment 1
-
-* Now due next Tuesday (20).
-* Mini-assignment 2 is due next Friday (23).
-* Instructions on mini-assignment 2 can be found [here]() or syllabus.
+&lt;img src="Module1_Tidy_Yelp_Slide_files/figure-html/unnamed-chunk-12-1.png" width="100%" /&gt;
 
 ---
 ## Detecting string - str_detect/grepl
 
-* Some people downloaded two Yelp categories at once.
+* Some may download two Yelp categories at once.
 * Rows for category A and B will be mixed.
-* To count how many As and Bs are there each, you need to be able to search strings.
+* To count how many As and Bs are there respectively, you need to search strings.
 
 grepl(.red[pattern], .blue[string])
 
