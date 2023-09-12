@@ -14,16 +14,6 @@ output:
       countIncrementalSlides: false
       ratio: '4:3' # alternatives '16:9' or '4:3' or others e.g. 13:9
 ---
-class: middle, inverse
-
-# Tidy Data
-
-.font100[
-Subhro Guhathakurta & Uijeong Hwang
-
-9/12/2023
-]
-
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
 style_mono_accent(
@@ -52,7 +42,6 @@ library(kableExtra)
 library(tidycensus)
 ```
 
----
 ## Housekeeping
 * Let's use Piazza for questions and discussions.
 * Mini assignment 1 is due by midnight on Thursday.
@@ -60,6 +49,26 @@ library(tidycensus)
 * Today, we will continue to work on the 'Census & Yelp API'.
   - If you have completed the 'Census & Yelp API', you may proceed to 'Data Wrangling'. 
   - However, questions on 'Data Wrangling' will be addressed on Thursday.
+
+---
+## Debugging 101
+* Understand the problem
+  - Understand the expected behavior vs. the actual behavior.
+* Break it down
+  - Simplify and isolate the problem.
+* Print everything
+  - Insert print() statements (or equivalent in your language) to display the values of variables and the flow of the program.
+
+---
+class: middle, inverse
+
+# Tidy Data
+
+.font100[
+Subhro Guhathakurta & Uijeong Hwang
+
+9/14/2023
+]
 
 ---
 ## Wide vs. Long forms
