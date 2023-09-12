@@ -24,7 +24,7 @@ library(kableExtra)
 
 * **Class room**: Room 358 in Arch-West | TR 5PM - 6:15PM
 * **Office hours**
-  * **Subhro Guhathakurta**: Wednesday 11-noon or by appt.
+  * **Subhro Guhathakurta**: Wednesday 11-noon by [appt](https://sguhathakurta3.youcanbook.me/).
   * **Uijeong Hwang**: Thursday 2PM - 4PM ([link](https://ujhwang.youcanbook.me/))
   * **Location**: The Center for Spatial Planning Analytics and Visualization (760 Spring St NW, suite 217).
 <br>
