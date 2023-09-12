@@ -53,6 +53,15 @@ library(tidycensus)
 ```
 
 ---
+## Housekeeping
+* Let's use Piazza for questions and discussions.
+* Mini assignment 1 is due by midnight on Thursday.
+* Mini assignment 2 will be released after class on Thursday.
+* Today, we will continue to work on the 'Census & Yelp API'.
+  - If you have completed the 'Census & Yelp API', you may proceed to 'Data Wrangling'. 
+  - However, questions on 'Data Wrangling' will be addressed on Thursday.
+
+---
 ## Wide vs. Long forms
 ```{r, include=F, message=F}
 census_api_key(Sys.getenv("census_api"))

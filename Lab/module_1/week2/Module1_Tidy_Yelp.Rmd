@@ -168,7 +168,7 @@ Let's use the data we downloaded last week. Notice in the print out below that `
 
 ```{r}
 # Read a subset of Yelp data we downloaded last week
-yelp_subset <- read_rds(here("Lab", "module_1", "week2", "yelp_subset.rds"))
+yelp_subset <- read_rds('https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_1/week2/yelp_subset.rds')
 # Print to see what's inside
 yelp_subset %>% 
   tibble() %>% 
@@ -260,7 +260,7 @@ We have all the tools we need to clean the Yelp data. Our Yelp data doesn't seem
 We do have many duplicated rows in our data, which is expected. In practice, we normally spend good amount of time on thinking about which column (or a combination of columns) should be used to identify duplicates. Luckily, Yelp data provides a unique ID column for each business.
 ```{r}
 # Read the full data
-my_yelp <- read_rds(here("Lab", "module_1", "week2", "yelp_all.rds"))
+my_yelp <- read_rds('https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_1/week2/yelp_all.rds')
 
 # Issue 2 ------------------------------
 yelp_unique <- my_yelp %>% 
@@ -361,15 +361,18 @@ As we've reviewed last week, spatial join can be done using **st_join()** functi
 
 ```{r}
 # census is currently sfc. Convert it to sf.
-census_sf <- census %>% st_sf()
+census_sf <- census %>% filter(county %in% c("Fulton County", "DeKalb County")) %>% st_sf()
 
 # Spatial join
 census_yelp <- st_join(census_sf, yelp_in, join = st_intersects)
 yelp_census <- st_join(yelp_in, census_sf, join = st_intersects)
 
+# number of rows
+cat('census_yelp: ', nrow(census_yelp))
+cat('yelp_census: ', nrow(yelp_census))
+
 # View
 census_yelp %>% head()
-
 yelp_census %>% head()
 ```
 
