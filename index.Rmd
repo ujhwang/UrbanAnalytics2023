@@ -176,7 +176,7 @@ assignment_col <- c(
   "",# 2
   "[Mini 1](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_1/mini_assignment_1.html) <br> (due Sep14)", # 3
   
-  "Mini 2 <br> (due Sep21)",# 4 # add 
+  "[Mini 2](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_2/mini_assignment_2.html) <br> (due Sep21)",# 4 # add 
   "Mini 3 <br> (due Sep28)",# 5
   "Major 1 <br> (due Oct05)",# 6
   "Mini 4 <br> (due Oct12)",# 7
