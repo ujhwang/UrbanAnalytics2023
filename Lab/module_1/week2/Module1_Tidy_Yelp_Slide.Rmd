@@ -2,7 +2,7 @@
 title: "Tidy Data"
 author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
 institute: "Georgia Institute of Technology"
-date: "2023/9/12"
+date: "2023/9/14"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -40,37 +40,59 @@ library(leaflet)
 library(tmap)
 library(kableExtra)
 library(tidycensus)
+tmap_mode('view')
 ```
 
-## Housekeeping
-* Let's use Piazza for questions and discussions.
-* Mini assignment 1 is due by midnight on Thursday.
-* Mini assignment 2 will be released after class on Thursday.
-* Today, we will continue to work on the 'Census & Yelp API'.
-  - If you have completed the 'Census & Yelp API', you may proceed to 'Data Wrangling'. 
-  - However, questions on 'Data Wrangling' will be addressed on Thursday.
-
----
-## Debugging 101
-* Understand the problem
-  - Understand the expected behavior vs. the actual behavior.
-* Break it down
-  - Simplify and isolate the problem.
-* Print everything
-  - Insert print() statements (or equivalent in your language) to display the values of variables and the flow of the program.
-
----
 class: middle, inverse
 
-# Tidy Data
+# Preparing your Data
+## Data Wrangling
 
 .font100[
 Subhro Guhathakurta & Uijeong Hwang
 
 9/14/2023
 ]
-
 ---
+# Data are messy
+When you read textbooks on statistics or online tutorials on Urban Analytics, they often use data that’s already nice and clean. They often do not show you all the hassle they went through to clean the data
+
+--
+### Unprocessed Data are messy and have all sorts of issues
+
+--
+For example:
+--
+<ol>
+<li> Rows and columns do not represent observations and variables, respectively
+<li> Duplicated or redundant rows/columns
+<li> multiple variables in one column
+<li> Missing data
+<li> Unstructured data
+</ol>
+and the list goes on..
+---
+# Issue 1 - Rows and columns do not represent observations and variables
+
+## The opposite of "messy" data is "tidy" data
+--
+
+.center[
+In tidy data,
+
+“Each variable must have its own column.”
+
+“Each observation must have its own row.”
+
+“Each value must have its own cell.”
+
+(from Chapter 12.2 in R for Data Science)
+]
+--
+
+- <font color=blue>You need to decide what is your "variable" and what is an individual "record"</font>
+---
+# Rearranging columns and rows
 ## Wide vs. Long forms
 ```{r, include=F, message=F}
 census_api_key(Sys.getenv("census_api"))
@@ -131,25 +153,107 @@ wider
 ]
 
 ---
-## Saving files
+# Issue 2 - Duplicated or redundant rows/columns
+<ol>
+<li> Duplicated rows is a common issue when using API to acquire data
+<li> Multiple functions exist in R to deal with duplicates 
+<li> Most frequently used ones include:
+<ol>
+- duplicated() and distinct()
 
-### Common formats
-* **.RData**: Native data storage format for R. Can store multiple objects.  
-* **.rds**: Short for *R Data Structure*. Provided by readr package. Can only store one object.  
+
+```{r}
+dupl_df <- data.frame(name = c("A", "A", "B", "C", "C", "C", "D"),
+                      GPA = c(3.5, 3.5, 4.0, 2.0, 3.0, 3.0, 2.0)) 
+duplicated(dupl_df$name)
+```
+---
+# !duplicated()
+
+```{r}
+# Duplicates in column "name" removed.
+dupl_df[!duplicated(dupl_df$name),]
+```
+---
+# distinct()
+```{r}
+# Returns a vector, not data frame
+dupl_df %>% 
+  distinct(name) # Try adding .keep_all = TRUE argument 
+```
+```{r}
+# Returns a data frame
+dupl_df %>% 
+  distinct(name, GPA)
+```
+---
+# Issue 3 - Multiple variables in one column
+## This issue comes in two broad types.
+
+1. Different variables can be concatenated into a long string
+
+A very common example from Census data: you fill often find something like <b>Census Tract 9501, Appling County, Georgia</b> in a single column
+
+It contains at least three variables: Tract, County, and State
+
+We can break the string down into pieces using <font color=red>separate()</font> from <font color=blue>tidyr</font> package
 
 ---
-## Saving files
-
-### (1) Read/write .rds
-* **`write_rds()`, `read_rds()`**: They work the same way as `write_csv()` and `read_csv()`.
-
-```{r eval=F}
-library(tidyverse)
-a <- c(1,2,3)
-
-a %>% write_rds(file = 'data.rds')
-a <- read_rds('data.rds')
+# separate()
+```{r}
+# A character vector to split
+onecol_df <- data.frame(labels = c('a1','b_2','c_3_2','d_4_1'))
+# split the character at _
+onecol_df %>% separate(col = "labels", sep = "_", into = c("alphabet", "numeric")) 
 ```
+---
+# The second type:
+##One column in a data frame can contain another data frame or a list
+This data structure is frequently found when we convert something like a JSON, which can have nested structure, into a data frame. 
+
+In such cases you need to <font color=blue>flatten</font> the data frame using jsonlite::flatten() which will automatically generate columns that concatenate the name of the column with the nested columns inside
+
+--
+
+Even after flattening, there could be list-columns remaining. These will have to be addressed individually according to your needs 
+---
+# Issue 4 - Missing Values
+In R, NA is used to represent missing data 
+
+Many core functions in R does not work properly when NA is in the vector (e.g., try mean(c(NA, 1, 2, 3)))
+
+```{r}
+avg <- mean(c(NA, 10, 25, 3))
+avg
+```
+So it is imperative that NAs are taken care of
+
+is.na() is a Base R function that returns a logical object (TRUE/FALSE)
+
+drop.na() is part of the tidyr package that drops columns with NAs
+
+If drop.na() is used without specifying columns then only those rows that do not have NAs will be retained
+---
+.small[
+* is.na()
+```{r}
+# This is the same toy_df from above
+toy_df <- data.frame(name = c("John", "Jane", "Mary"), 
+                     treatment_a = c(NA, 16, 3),
+                     treatment_b = c(2, 11, 1),
+                     treatment_c = c(6, 12, NA))
+
+# Dropping NA using is.na()
+toy_df %>% 
+  filter(!is.na(treatment_a))
+```
+* drop.na()
+```{r}
+# This check across all columns and drops all rows that have at least one NA.
+toy_df %>% 
+  drop_na()
+```
+]
 
 ---
 ## Saving files
@@ -213,19 +317,40 @@ map(1:5, # input
 ---
 ## Existing data frame into a sf object
 * You can convert a data frame with lng/lat into a sf object. This can be done using **st_as_sf()**. 
-
 * The word 'as' indicates that it converts an *existing* object to sf rather than creating one from scratch.
 
-```{r, out.width="100%"}
+.pull-left[
+```{r eval=F}
 # A data frame with XY info
-point_df <- data.frame(x = c(-84.3991, -84.4010, -84.3899), 
-                       y = c(33.7770, 33.7748, 33.7777))
+point_df <- data.frame(
+  x = c(-84.3991, -84.4010, -84.3899), 
+  y = c(33.7770, 33.7748, 33.7777))
 
 # st_as_sf
-point_df %>% 
-  st_as_sf(coords = c("x", "y"), crs = 4326) %>% 
-  tm_shape(.) + tm_dots()
+point_sf <- point_df %>% 
+  st_as_sf(coords = c("x", "y"), 
+           crs = 4326)
+
+tm_shape(point_sf) + tm_dots()
 ```
+]
+
+.pull-right[
+```{r, echo=F, out.width="100%"}
+# A data frame with XY info
+point_df <- data.frame(
+  x = c(-84.3991, -84.4010, -84.3899), 
+  y = c(33.7770, 33.7748, 33.7777))
+
+# st_as_sf
+point_sf <- point_df %>% 
+  st_as_sf(coords = c("x", "y"), 
+           crs = 4326)
+
+tm_shape(point_sf) + tm_dots()
+```
+]
+
 
 ---
 ## Detecting string - str_detect/grepl
@@ -244,10 +369,3 @@ str_detect(.blue[string], .red[pattern])
 ```{r}
 str_detect(a, "yoga")
 ```
-
-
-
-
-
-
-
