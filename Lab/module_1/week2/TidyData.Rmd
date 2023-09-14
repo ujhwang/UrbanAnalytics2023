@@ -206,7 +206,7 @@ onecol_df <- data.frame(labels = c('a1','b_2','c_3_2','d_4_1'))
 onecol_df %>% separate(col = "labels", sep = "_", into = c("alphabet", "numeric")) 
 ```
 ---
-#The second type:
+# The second type:
 ##One column in a data frame can contain another data frame or a list
 This data structure is frequently found when we convert something like a JSON, which can have nested structure, into a data frame. 
 
@@ -257,28 +257,12 @@ toy_df %>%
 ---
 ## Saving files
 
-### Common formats
-* **.RData**: Native data storage format for R. Can store multiple objects.  
-* **.rds**: Short for *R Data Structure*. Provided by readr package. Can only store one object.  
-
----
-## Saving files
-
-### (1) Read/write .rds
-* **`write_rds()`, `read_rds()`**: They work the same way as `write_csv()` and `read_csv()`.```{r eval=F}
-library(tidyverse)
-a <- c(1,2,3)
-
-a %>% write_rds(file = 'data.rds')
-a <- read_rds('data.rds')
-
-## Saving files
-
 ### (2) Read/write .RData
 * **`save()`**: Save multiple objects.
 * **`save.image()`**: Save the entire environment.  
 * **`load()`**: Load .RData file. Do not use **`<-`** (as .RData file stores the original object name as well).
 
+```{r eval=F}
 a <- c(1,2,3)
 b <- c(3,4,5)
 
@@ -287,6 +271,7 @@ load('data.RData')
 
 save.image(file = 'data_all.RData')
 load('data_all.RData')
+```
 
 ---
 ## Anonymous function
@@ -297,16 +282,20 @@ load('data_all.RData')
 * Anonymous function is a function defined on the fly and disappears after execution.
 
 .pull-left[
+```{r}
 map(1:5, # input vector
     function(x) x + 1) # anonymous function
+```
 ]
 
 .pull-right[
+```{r}
 map(1:5, # input vector
     function(x){ # anonymous function with {}
       out <- (x + 1)*x
       return(out)
     })
+```
 ]
 ]
 
@@ -318,8 +307,10 @@ map(1:5, # input vector
 * Instead of declaring `function(x)`, you can use a tilde (~) to indicate that it is anonymous function.
 * `x`s inside the anonymous function needs to be preceded by a period (.). See the example below.
 
+```{r}
 map(1:5, # input
     ~(.x + 1)*.x ) # tilde replaces function().  # x is preceded by a period
+```
 ]
 
 ---
