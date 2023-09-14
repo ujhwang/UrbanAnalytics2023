@@ -266,12 +266,12 @@ my_yelp <- read_rds('https://raw.githubusercontent.com/ujhwang/UrbanAnalytics202
 yelp_unique <- my_yelp %>% 
   distinct(id, .keep_all=T)
 
-glue::glue("Before dropping NA, there were {nrow(my_yelp)} rows. After dropping them, there are {nrow(yelp_unique)} rows") %>% 
+glue::glue("Before dropping duplicated rows, there were {nrow(my_yelp)} rows. After dropping them, there are {nrow(yelp_unique)} rows") %>% 
   print()
 ```
 
 
-#### Multiple variables in one column
+#### Issue 3 - Multiple variables in one column
 This is the main issue in Yelp data, caused by the original data format being JSON. 
 ```{r}
 # Issue 3 ------------------------------
@@ -286,7 +286,7 @@ yelp_flat <- yelp_unique %>%
          categories = categories %>% map_chr(concate_list)) # concate_list is the custom function
 ```
 
-#### Missing values
+#### Issue 4 - Missing values
 We first need to identify whether there exists any NA values. 
 ```{r}
 # Issue 4 ------------------------------
