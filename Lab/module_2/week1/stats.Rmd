@@ -1,5 +1,5 @@
 ---
-title: "Intro to Urban Analytics"
+title: "Deriving insights from your data"
 author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
 date: '2023-09-21'
 output:
