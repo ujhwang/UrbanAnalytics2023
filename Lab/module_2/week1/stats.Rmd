@@ -101,20 +101,18 @@ tmap_mode("view")
 RE_Taxes <- tm_shape(FD_tract) + tm_polygons("med_RETaxes")
 HH_exp <- tm_shape(FD_tract) + tm_polygons("Med_HHExp")
 tmap_arrange(RE_Taxes, HH_exp)
-
 ```
-
-# Now download the Yelp data. This has been done for you (given the problems we have been having with Yelp API)
+  
+  
+# Now download the Yelp data. This has been done for you.
 
 **To save time in class, we will use the Yelp data that is already downloaded for today's class.**
 
-The Yelp data can be found on **Canvas > Files > yelp_in.rds.** This data is for Fulton and DeKalb County, GA, and contains Yelp data with categories = "yoga". This data is already cleaned. 
-
-To read the data into R, we will use read_rds() function in readr package. Notice that in the code below, only the name of the .rds file is specified. This works only when the file is in the same folder as your .Rmd file. If not, you will need to provide a full path to the file.
+This data is for Fulton and DeKalb County, GA, and contains Yelp data with categories = "yoga". This data is already cleaned. To read the data into R, we will use read_rds() function in readr package.
 
 ```{r}
 # Reading the yelp data
-yelp_in <- read_rds("yelp_in.rds")
+yelp_in <- read_rds("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_2/week1/yelp_in.rds")
 ```
 
 # I like to constantly check my datasets to see if the results look fine
