@@ -145,8 +145,8 @@ reading_col <- c(
   [R2](https://geocompr.robinlovelace.net/attr.html), [R3](https://geocompr.robinlovelace.net/spatial-operations.html), 
   [R4](https://rmarkdown.rstudio.com/lesson-1.html)",# 2
   
-  "[1](https://dl.acm.org/doi/abs/10.1145/3152178.3152181?casa_token=TKWejCaCUvgAAAAA:B78bsMo0gT6t2GSsl1MQWAIsXs0BCG6usrW5fwpKPYhorO0lKTpXNHUmPQQ0y4xeJYC3U5CF08hjIA), [2](https://www.nber.org/system/files/working_papers/w24952/w24952.pdf), [3](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week1/manuscript.pdf)",# 3
-  "[1](https://www.researchgate.net/publication/215990669_Tidy_data), [2](https://r4ds.had.co.nz/tidy-data.html), [3]()",
+  "[1](https://dl.acm.org/doi/abs/10.1145/3152178.3152181?casa_token=TKWejCaCUvgAAAAA:B78bsMo0gT6t2GSsl1MQWAIsXs0BCG6usrW5fwpKPYhorO0lKTpXNHUmPQQ0y4xeJYC3U5CF08hjIA), [2](https://www.nber.org/system/files/working_papers/w24952/w24952.pdf), [3](https://www.sciencedirect.com/science/article/abs/pii/S0198971523000935)",# 3
+  "[1](https://www.researchgate.net/publication/215990669_Tidy_data), [2](https://r4ds.had.co.nz/tidy-data.html)",
   "[1](https://r4ds.had.co.nz/model-intro.html), [2](https://r4ds.had.co.nz/model-basics.html), [3](https://r4ds.had.co.nz/model-building.html), [4](https://r4ds.had.co.nz/many-models.html)",# 5
   "[1](https://r4ds.had.co.nz/data-visualisation.html), [2](https://r4ds.had.co.nz/graphics-for-communication.html)",# 6
   "",# 7
