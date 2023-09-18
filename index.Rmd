@@ -99,7 +99,7 @@ topic_col <- c(
   "Tidy data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp_Slide.html), <br> Data wrangling ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_1/week2/Module1_Tidy_Yelp.html))",# 4
   
-  "Deriving insights from your data [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureEDA.html#1), <br> 
+  "Deriving insights from your data [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/LectureEDA.html#1), <br> 
   Hands-on ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/stats.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week1/stats.html))",# 5
   
