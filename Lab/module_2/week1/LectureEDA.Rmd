@@ -142,12 +142,21 @@ Ideally you want measures that show:
 ---
 # Measures of Association Commonly Used
 
-###     1. For Nominal to Nominal Associations:
-  - Kendall's Tau B (Kendall's Rank Correlation Tau)
+### 1. For Nominal to Nominal Associations:
+  - Chi-Square test of independence is commonly used (sensitive to size of data) 
+  - Also, Phi coefficient (for 2 x 2 tables) and Cramer's V (for larger tables)
+  
 --
 
 ### 2. For Nominal to Ordinal or Nominal to Nominal Relationships
   - Chi-Square, Goodman & Kruskal's Lambda, Cramer's V
+```{r echo=TRUE}
+#install.packages("GoodmanKruskal", "DescTools")
+library("GoodmanKruskal", "DescTools")
+load(file="cars93.rda")
+GKtau(cars93$type, cars93$drive_train)
+```
+  
 --
 
 ### 3. For ratio variables
@@ -180,7 +189,7 @@ summary(regress_wfh)
 ```
 
 
-```{r, out.width ="400px", out.height="300px", echo=TRUE}
+```{r, out.width ="400px", out.height="400px", echo=TRUE}
 plot (yelp_census4$hhincome, yelp_census4$prop_wfh, main = "Regression for Work from Home and income", xlab="Household Income", ylab="Percent working from home")
 
 abline(lm(prop_wfh~hhincome, data=yelp_census4), col="red")
