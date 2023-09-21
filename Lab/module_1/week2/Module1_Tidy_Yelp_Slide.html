@@ -4,7 +4,7 @@
     <title>Tidy Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="Originally written by Bon Woo Koo &amp; Subhro Guhathakurta; modified by Uijeong Hwang" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.24/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
@@ -460,6 +460,21 @@ toy_df %&gt;%
 ---
 ## Saving files
 
+### (1) Read/write .rds
+* **`write_rds()`, `read_rds()`**: They work the same way as `write_csv()` and `read_csv()`.
+
+
+```r
+library(tidyverse)
+a &lt;- c(1,2,3)
+
+a %&gt;% write_rds(file = 'data.rds')
+a &lt;- read_rds('data.rds')
+```
+
+---
+## saving files
+
 ### (2) Read/write .RData
 * **`save()`**: Save multiple objects.
 * **`save.image()`**: Save the entire environment.  
@@ -594,8 +609,8 @@ tm_shape(point_sf) + tm_dots()
 ]
 
 .pull-right[
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-54ca92d04cf3355f8963" style="width:100%;height:504px;"></div>
-<script type="application/json" data-for="htmlwidget-54ca92d04cf3355f8963">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["tmap401",401]},{"method":"addProviderTiles","args":["Esri.WorldGrayCanvas",null,"Esri.WorldGrayCanvas",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap",null,"OpenStreetMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,"Esri.WorldTopoMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addCircleMarkers","args":[[33.777,33.7748,33.7777],[-84.3991,-84.401,-84.3899],[2.82842712474619,2.82842712474619,2.82842712474619],[null,null,null],"point_sf",{"interactive":true,"className":"","pane":"tmap401","stroke":true,"color":"#666666","weight":1,"opacity":0.5,"fill":true,"fillColor":["#000000","#000000","#000000"],"fillOpacity":[1,1,1]},null,null,null,null,[null,null,null],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["Esri.WorldGrayCanvas","OpenStreetMap","Esri.WorldTopoMap"],"point_sf",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[33.7748,33.7777],"lng":[-84.401,-84.3899]},"fitBounds":[33.7748,-84.401,33.7777,-84.3899,[]]},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-00ebf5bd42838029c7b6" style="width:100%;height:504px;"></div>
+<script type="application/json" data-for="htmlwidget-00ebf5bd42838029c7b6">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["tmap401",401]},{"method":"addProviderTiles","args":["Esri.WorldGrayCanvas",null,"Esri.WorldGrayCanvas",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap",null,"OpenStreetMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,"Esri.WorldTopoMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addCircleMarkers","args":[[33.777,33.7748,33.7777],[-84.3991,-84.401,-84.3899],[2.82842712474619,2.82842712474619,2.82842712474619],[null,null,null],"point_sf",{"interactive":true,"className":"","pane":"tmap401","stroke":true,"color":"#666666","weight":1,"opacity":0.5,"fill":true,"fillColor":["#000000","#000000","#000000"],"fillOpacity":[1,1,1]},null,null,null,null,[null,null,null],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["Esri.WorldGrayCanvas","OpenStreetMap","Esri.WorldTopoMap"],"point_sf",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[33.7748,33.7777],"lng":[-84.401,-84.3899]},"fitBounds":[33.7748,-84.401,33.7777,-84.3899,[]]},"evals":[],"jsHooks":[]}</script>
 ]
 
 

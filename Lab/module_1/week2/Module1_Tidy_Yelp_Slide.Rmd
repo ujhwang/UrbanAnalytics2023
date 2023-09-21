@@ -258,6 +258,20 @@ toy_df %>%
 ---
 ## Saving files
 
+### (1) Read/write .rds
+* **`write_rds()`, `read_rds()`**: They work the same way as `write_csv()` and `read_csv()`.
+
+```{r eval=F}
+library(tidyverse)
+a <- c(1,2,3)
+
+a %>% write_rds(file = 'data.rds')
+a <- read_rds('data.rds')
+```
+
+---
+## saving files
+
 ### (2) Read/write .RData
 * **`save()`**: Save multiple objects.
 * **`save.image()`**: Save the entire environment.  
