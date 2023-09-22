@@ -1702,7 +1702,7 @@ Fulton and DeKalb counties, focusing on commuting.
 <ul>
 <li>You may also need to include other variables.</li>
 <li>You may use older Census boundary (e.g., 2019) to reduce the number
-of Yelp API queries in the step 3.</li>
+of Yelp API queries in Step 3.</li>
 </ul></li>
 <li>Download the City of Atlanta boundary and use it to filter the
 Census Tracts that either fall within or intersect with the City of
@@ -1712,10 +1712,10 @@ Atlanta.
 <ul>
 <li>If you encounter issues with <a href="https://docs.developer.yelp.com/docs/fusion-rate-limiting">Queries-Per-Second</a>
 limit, try Sys.sleep() as you see appropriate.</li>
-<li>Remember to save the downloaded Yelp data (e.g., into <code>.RData</code> format) in your hard drive to
-avoid making excessive API requests. Once you’ve saved the data,
-you can simply read the Yelp data from your hard drive and proceed from
-there.</li>
+<li>Remember to save the downloaded Yelp data (e.g., as
+<code>.RData</code> format) in your hard drive to avoid making excessive
+API requests. Once you’ve saved the data, you can simply read the Yelp
+data from your hard drive and proceed from there.</li>
 <li>However, even when you’ve stopped using the code for downloading
 Yelp data, do not delete them from your RMD; instructors need to see the
 entire code. You can use code chunk option {r, eval=FALSE} to keep the
