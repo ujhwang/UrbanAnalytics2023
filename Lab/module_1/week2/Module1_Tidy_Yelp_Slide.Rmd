@@ -258,15 +258,25 @@ toy_df %>%
 ---
 ## Saving files
 
+R has two native data formats:
+* rds: stores a *single* R object
+* RData: stores *multiple* R objects
+
+---
+## Saving files
+
 ### (1) Read/write .rds
-* **`write_rds()`, `read_rds()`**: They work the same way as `write_csv()` and `read_csv()`.
+* **`write_rds()`, `read_rds()`**: Save and load a single object.
 
 ```{r eval=F}
 library(tidyverse)
 a <- c(1,2,3)
 
-a %>% write_rds(file = 'data.rds')
-a <- read_rds('data.rds')
+a %>% write_rds(file = 'data/a.rds')
+a <- read_rds('data/a.rds')
+
+a %>% write_rds(file = here('data', 'a.rds'))
+a <- read_rds(here('data', 'a.rds'))
 ```
 
 ---
@@ -274,7 +284,7 @@ a <- read_rds('data.rds')
 
 ### (2) Read/write .RData
 * **`save()`**: Save multiple objects.
-* **`save.image()`**: Save the entire environment.  
+* **`save.image()`**: Save all the objects in the environment.  
 * **`load()`**: Load .RData file. Do not use **`<-`** (as .RData file stores the original object name as well).
 
 ```{r eval=F}
@@ -284,7 +294,7 @@ b <- c(3,4,5)
 save(a, b, file = 'data.RData') # never use piping for 'save()'
 load('data.RData')
 
-save.image(file = 'data_all.RData')
+save.image(file = 'data_all.RData') # saves everything
 load('data_all.RData')
 ```
 
