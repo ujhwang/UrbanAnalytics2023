@@ -1,7 +1,7 @@
 ---
 title: "Sampling & Processing GSV Images"
 author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
-date: '2023-10-24'
+date: '2023-10-17'
 output:
   rmdformats::downcute:
     downcute_theme: "chaos"
@@ -30,7 +30,7 @@ library(sf)
 library(tidygraph)
 library(tmap)
 library(here)
-install.packages('nominatimlite')
+if (!require("nominatimlite")) install.packages("nominatimlite")
 ```
 
 # Step 1. Get OSM data and clean it.
@@ -242,6 +242,9 @@ To reduce the number of images you'd be downloading, I pre-filtered the points s
 # Download images 
 edges_as <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_atlantic_station.geojson")
 
+```
+
+```{r eval=F}
 # Loop!
 for (i in seq(1,nrow(edges_as))){
   get_image(edges_as[i,])
@@ -296,57 +299,3 @@ for (i in 1:nrow(point_azi)){
     )
 }
 ```
-
-
-
-# Merging the processed data back to R
-
-```{r}
-# Download the output from the computer vision models
-pspnet <- read.csv(here("Lab", "Module_4", "seg_output.csv"))
-
-# Join them back to the template used to download images
-pspnet_nodes <- edges_as %>% inner_join(pspnet, by="node_id")
-
-# Map!
-tm_shape(pspnet_nodes %>% 
-           mutate(pct_tree = tree/(640*640))) + 
-  tm_dots(col = "pct_tree", style="quantile")
-```
-
-```{r}
-compare_df <- pspnet_nodes %>% 
-  mutate(type = case_when(type %in% c('mid1', 'mid2') ~ "midpoint",
-                          TRUE ~ "intersection"))
-
-compare_df %>% 
-  group_by(type) %>% 
-  summarise(across(c("building", "tree", "road", "sidewalk", "sky"), ~ round(mean(.x)/(640^2), 2)))
-```
-
-```{r}
-compare_df %>% 
-  pivot_longer(cols = c(building, sky, tree, road, sidewalk), names_to = 'variable', values_to = "value") %>% 
-  ggplot() +
-  geom_boxplot(mapping = aes(x = type, y = value/(640^2))) +
-  facet_wrap(~variable, scales = "free_y")
-```
-
-```{r}
-compare_df_summary <- compare_df %>% 
-  select(type, building, sky, tree, road, sidewalk) %>% 
-  mutate(across(c(building, sky, tree, road, sidewalk), ~ .x/(640^2))) %>% 
-  st_drop_geometry() %>% 
-  group_by(type) %>% 
-  summarise(across(c(building, sky, tree, road, sidewalk), list)) %>% 
-  pivot_longer(cols = building:sidewalk) %>% 
-  pivot_wider(names_from=type, values_from=value)
-
-for (i in 1:nrow(compare_df_summary)){
-  cat('#### Comparison: ', compare_df_summary$name[i], ' ####')
-  print(t.test(unlist(compare_df_summary[i, 'midpoint']), unlist(compare_df_summary[i, 'intersection'])))
-  cat('-----------\n\n')
-}
-
-```
-

@@ -54,57 +54,30 @@ library(here)
 ```
 
 ---
-
-```{r, echo=FALSE, message=FALSE, include=FALSE, warning=FALSE}
-pspnet2 <- st_read(here("Lab","module_4","pspnet_4git.geojson")) %>% 
-  mutate(b2s = (p.building + p.house)/(p.sidewalk + p.road + p.car),
-         green = p.tree + p.plant + p.grass,
-         s2s = p.sidewalk/(p.sidewalk + p.road + p.car))
-
-draw_map <- function(var, FUN = colorNumeric){
-  pal <- FUN(palette = "Reds", domain = pspnet2[[var]])
-
-  leaflet() %>% 
-    addProviderTiles(providers$CartoDB.DarkMatterNoLabels) %>% 
-    addPolylines(data = pspnet2, color = ~pal(pspnet2[[var]]), weight = 2) %>% 
-    addLegend(position="bottomright", pal = pal, values = pspnet2[[var]], title = paste0("% ", substr(var,3,nchar(var))))
-}
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, width="100%"}
-draw_map("p.building",colorQuantile)
-```
-
-[More here](https://rpubs.com/bonwoodesign/streetscapes).
-
----
-
 ## Module 4 in a nutshell
 
-1. Download street network data (OSM) and clean it.
-2. Generate points along the edges. These will be where GSV images will be downloaded.
-3. Calculate the heading of the cameras for each point. 
-4. Create a function that takes a point as input and download GSV images.
-5. Apply computer vision to the images
-6. Merge the results back to the points from Step 2.
-
-* Download [this file](https://github.com/ujhwang/UrbanAnalytics2023/raw/main/Lab/module_4/downloaded_image/sample_image.zip), unzip it.
-* Create in the root folder of your Google Drive a folder named demo_image.
-* Drag-drop the unzipped file (four images) in the folder.
+1. Get Google API key.
+2. Download street network data (OSM) and clean it.
+3. Generate points along the edges. These will be where GSV images will be downloaded.
+4. Calculate the heading of the cameras for each point. 
+5. Create a function that takes a point as input and download GSV images.
+6. Apply computer vision to the images.
+7. Merge the results back to the points from Step 2.
+* We will cover Steps 1-5 this week and Steps 6-7 next week.
 
 ---
 ## Why Street View Images
 
-* Measuring street environment is important for numerous reasons - public health, public safety, environmental sustainability, economic vitality, tourism, etc.
-* Residential density, street connectivity, land use mix, Sprawl Walk Score, etc. 
-* In urban environment, street-by-street variation can be huge. E.g., even in areas with the same Walk Score, the quality of the streetscapes can be very different (e.g., [this paper](https://www.mdpi.com/2071-1050/9/7/1233)).
-* Street View Images allow us to examine (e.g., audit) the streetscapes without traveling. 
+* Measuring built environment is important for numerous reasons - public health, public safety, environmental sustainability, economic vitality, tourism, etc.
+* Built environment literature commonly differentiate between the urban form and streetscape.
+  * ***Urban form***: macroscale-built environment which characterizes street connectivity, density, and diversity of land use.
+  * ***Streetscape***: pertains to physical layout and design of the built environment, such as **sidewalk width, enclosure, tree canopy, landscaping, and street furniture**.
+* Street View Images allow us to examine the streetscapes without traveling. 
 
 ---
+## Google Street View Images 
 
-## Street View Images 
-
-* Images taken at roughly 10~20 meter intervals from cameras that are (often but not always) mounted on car roof.
+* Images taken at roughly 10 meter intervals from cameras that are (often but not always) mounted on car roof.
 * 360-degree image in all directions.
 * Have coverage both in US and internationally and can go back in time. 
 
@@ -115,7 +88,7 @@ knitr::include_graphics("street_view_car.png")
 .footnotesize[Source: Google]
 
 ---
-## Street View Images 
+## Google Street View Images
 
 * Around 2010, planning studies started using Google Street View (GSV) images.
 * To audit street environments using GSV images.
@@ -123,13 +96,13 @@ knitr::include_graphics("street_view_car.png")
 * Recent studies are increasingly using computer vision instead of manual audits.
 
 ---
-## Street View Images 
+## Google Street View Images
 
 * Web version of GSV is free but **.red[their API is NOT FREE!]** (7.00 USD per 1000 images)
 * Maximum Queries per Minute (QPM): 30,000. Requests up to 25,000 per day require an API key.
 * Do not distribute images nor use it for commercial purposes.
 * You should **.red[NEVER EXPOSE]** your API key. You can get charged for a lot of money.
-* Get your key [here](https://github.com/ujhwang/UrbanAnalytics2023/blob/main/Lab/module_4/how_to_get_your_key.pptx)
+* Get your key [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/how_to_get_your_key.pptx)
 
 ---
 
@@ -177,18 +150,27 @@ https://maps.googleapis.com/maps/api/streetview?size=640x640>&location=33.776824
 * [Schematic of convolution](https://cs231n.github.io/convolutional-networks/) (source: Stanford CS231n)
 * Common computer vision tasks.
 
-```{r, echo=FALSE, out.width="80%"}
+```{r, echo=FALSE, out.width="100%"}
 knitr::include_graphics("cv_tasks.jpg")
 ```
+  
 .footnotesize[Source: http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture11.pdf]
 
+---
+## Segmentation
+* Semantic, instance, and panoptic segmentations
 
 ---
-## Google Colab
+## Classification
+* category
 
-* Google Colab is a hosted Jupyter notebook service.
-* It requires minimum setup to use. Provide GPU in case you want it.
+---
+## Google Colab(oratory)
+
+* Google Colab is a cloud-based Jupyter notebook service hosted by Google.
 * The free tier has 12 hour limit; after 12 hours of computation, your session will expire.
-* [[Link to Colab 1]](https://colab.research.google.com/drive/1G9m85QNlMqAHNuw854qhZQTFAqetrnYG?usp=sharing)
-* [[Link to Colab 2]](https://colab.research.google.com/drive/16Da-YywiLVS5IY3NXlYWxQbH7TaKsoeW?usp=sharing)
 
+```{r, echo=FALSE, out.width="50%"}
+knitr::include_graphics("colab_option.png")
+```
+  
