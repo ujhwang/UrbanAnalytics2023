@@ -157,12 +157,13 @@ knitr::include_graphics("cv_tasks.jpg")
 .footnotesize[Source: http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture11.pdf]
 
 ---
+## Classification
+* category
+
+---
 ## Segmentation
 * Semantic, instance, and panoptic segmentations
 
----
-## Classification
-* category
 
 ---
 ## Google Colab(oratory)
