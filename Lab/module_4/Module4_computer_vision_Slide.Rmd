@@ -1,5 +1,5 @@
 ---
-title: "Urban Images"
+title: "Urban Images and Computer Vision"
 subtitle: ""
 author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
 institute: "Georgia Institute of Technology"
@@ -17,7 +17,7 @@ output:
 ---
 class: middle, inverse
 
-# Urban Images
+# Urban Images and Computer Vision
 
 .font100[
 Subhro Guhathakurta & Uijeong Hwang
@@ -82,7 +82,7 @@ library(here)
 * Have coverage both in US and internationally and can go back in time. 
 
 ```{r, out.width="50%",echo=FALSE}
-knitr::include_graphics("street_view_car.png")
+knitr::include_graphics("img/street_view_car.png")
 ```
   
 .footnotesize[Source: Google]
@@ -110,14 +110,14 @@ knitr::include_graphics("street_view_car.png")
 .center[
 **GSV from web**
 ]
-![web](gsv_web.JPG)
+![web](img/gsv_web.JPG)
 ]
 
 .pull-right[
 .center[
 **GSV from API**
 ]
-![api](gsv_api.jfif)
+![api](img/gsv_api.jfif)
 ]
 
 ---
@@ -144,26 +144,48 @@ This URL (with your key added) will give you an image at Tech Square.
 https://maps.googleapis.com/maps/api/streetview?size=640x640>&location=33.7768249,-84.388767&heading=224.96&<br>fov=90&pitch=0&key=YOUR_API_KEY
 
 ---
-## Computer Vision
-
-* Image classification: [3D interactive visualization of CNN](https://adamharley.com/nn_vis/cnn/3d.html) (source: adamharley.com)
-* [Schematic of convolution](https://cs231n.github.io/convolutional-networks/) (source: Stanford CS231n)
-* Common computer vision tasks.
-
-```{r, echo=FALSE, out.width="100%"}
-knitr::include_graphics("cv_tasks.jpg")
-```
+## Computer vision
+* Computer vision is the field of AI (particularly, deep learning) that enables computers to interpret and understand visual information.
+* Deep learning is part of a broader family of AI methods based on **artificial neural networks** with representation learning.
+* Example architecture: Convolutional Neural Network (CNN)
+![](img/cnn.jpg)
   
-.footnotesize[Source: http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture11.pdf]
+.footnotesize[
+(source: https://medium.com/@eric.perbos/fast-ai-deep-learning-for-coders-part-1-2017-3db56c1a4cf3)
+]
+
+---
+## Computer vision
+* Deep learning algorithms are stacked in a hierarchy of increasing complexity and abstraction
+  
+![](img/stacked_complexity.png)
+
+.footnotesize[
+(source: https://medium.com/analytics-vidhya/convolutional-neural-network-an-informal-intro-part-1-db9fca86a750)
+]
 
 ---
 ## Classification
-* category
+* Image classification: [3D interactive visualization of CNN](https://adamharley.com/nn_vis/cnn/3d.html) (source: adamharley.com) 
+![](img/digit_classification.png)
+
+---
+## Abstract task
+* Predicting perceptual attribute: visual safety score of street view images
+  
+![](img/visual_safety_score.png)
 
 ---
 ## Segmentation
-* Semantic, instance, and panoptic segmentations
-
+* Semantic Segmentation: Classifies each pixel of an image into a class.
+* Instance Segmentation: Detects objects and distinguishes instances.
+* Panoptic Segmentation: Combines the two methods above.
+```{r, echo=FALSE, out.width="73%"}
+knitr::include_graphics("img/segmentation_types.png")
+```
+.footnotesize[
+(source: https://arxiv.org/pdf/2006.12567.pdf)
+]
 
 ---
 ## Google Colab(oratory)
@@ -171,7 +193,7 @@ knitr::include_graphics("cv_tasks.jpg")
 * Google Colab is a cloud-based Jupyter notebook service hosted by Google.
 * The free tier has 12 hour limit; after 12 hours of computation, your session will expire.
 
-```{r, echo=FALSE, out.width="50%"}
-knitr::include_graphics("colab_option.png")
+```{r, echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/colab_option.png")
 ```
   

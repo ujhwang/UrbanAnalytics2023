@@ -22,9 +22,10 @@ library(sf)
 library(tidygraph)
 library(tmap)
 library(here)
+ttm()
 ```
 
-# Merging the processed data back to R
+# Merging the data processed from Colab back to R
 
 ```{r}
 edges_as <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_atlantic_station.geojson")

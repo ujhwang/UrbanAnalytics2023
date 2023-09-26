@@ -19,7 +19,7 @@ The first thing we need to do to use GSV images for urban analytics is to prepar
 
 **NOTE:** The method for sampling GSV images in this document is a simplified version.
 
-![](GSV_sampling.JPG)
+![](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/img/GSV_sampling.JPG)
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -105,7 +105,7 @@ e %>% st_coordinates() %>%
   )
 ```
 
-![](atan.jpg)
+![](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/img/atan.jpg)
 
 ```{r}
 # -----------------------------------------------------------
@@ -250,6 +250,8 @@ for (i in seq(1,nrow(edges_as))){
   get_image(edges_as[i,])
 } 
 ```
+
+> ZIP THE DOWNLOADED IMAGES AND NAME IT 'gsv_images.zip' FOR THE SUBSEQUENT ANALYSIS.
 
 
 # Another way to sample GSV images
