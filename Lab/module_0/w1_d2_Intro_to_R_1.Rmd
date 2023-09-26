@@ -425,23 +425,25 @@ setwd(paste0(Sys.getenv('USERPROFILE'),
 ## Setting working directory
 ### Option 2: Setting it automatically (recommended)
 
-* Let's say you've created an R project folder called UA_module0. 
-* **Store everything related with module 0 in that folder.** 
+* Let's say you've created an R project folder called CP8883. 
+* **Store everything related with CP8883 in that folder.** 
 * An example folder structure would look like:
 
 ```
-UA_module0
-|--data
-    |--mtcars.csv
-|--rmd
-    |--01_read_data.Rmd
-    |--01_read_data.pdf
-|--scripts
-    |--read_data.R
-|--UA_module0.Rproj
+CP8883
+|--Lab
+    |--module_0
+    |--module_1
+|--Assignment
+    |--mini_1
+    |--mini_2
+        |--assignment.Rmd
+|--Data
+    |--my_data.csv
+|--CP8883.Rproj
 ```
 
-* Opening **UA_module0.Rproj** file will give you a clean R environment. The working directory is where .Rproj file is.
+* Opening **CP8883.Rproj** file will give you a clean R environment. The working directory is where .Rproj file is.
 
 
 ---
@@ -454,23 +456,25 @@ UA_module0
 
 .pull-left[
 ```
-UA_module0
-|--data
-    |--mtcars.csv
-|--rmd
-    |--01_read_data.Rmd
-    |--01_read_data.pdf
-|--scripts
-    |--read_data.R
-|--UA_module0.Rproj 
+CP8883
+|--Lab
+    |--module_0
+    |--module_1
+|--Assignment
+    |--mini_1
+    |--mini_2
+        |--assignment.Rmd
+|--Data
+    |--my_data.csv
+|--CP8883.Rproj
 ```
 ]
 .pull-right[
-Let's say you are working on **/rmd/01_read_data.Rmd** and want to read **/data/mtcars.csv**:
+Let's say you are working on **/Assignment/mini_2/assignment.Rmd** and want to read **/Data/my_data.csv**:
 ```{r eval=F}
 # Reading
 library(here)
-read.csv(here("data", "mtcars.csv"))
+read.csv(here("Data", "my_data.csv"))
 ```
 ]
 
