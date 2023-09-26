@@ -20,7 +20,7 @@ Data visualization is an essential tool for urban analytics. It offers an intuit
 The first thing we analysts do when we get our hands on a dataset is to understand it. The best way to understand any given data is to visualize it. We have a wide variety of maps and charts to choose from, including scatterplots, histograms, boxplots, violin plots, and mapping. We have been doing mapping a lot, so this document will focus more on other charts.
 
 
-```{r, message=FALSE, results='hide'}
+```{r, message=FALSE, results='hide', warning=FALSE}
 library(tidyverse)
 library(sf)
 library(tmap)
@@ -33,7 +33,7 @@ library(tidycensus)
 
 ```{r, results='hide', message=FALSE}
 # Let's prepare data
-yelp <- read_rds("https://github.com/ujhwang/UrbanAnalytics2023/blob/main/Lab/module_1/week4/yelp_in.rds?raw=true")
+yelp <- read_rds("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_2/week2/yelp_in.rds")
 # Census data
 census_api_key(Sys.getenv("census_api"))
 
