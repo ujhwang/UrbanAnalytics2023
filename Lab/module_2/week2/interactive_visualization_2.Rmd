@@ -7,12 +7,13 @@ output:
     downcute_theme: "chaos"
 ---
 
+```{=html}
 <style type="text/css">
   body{
   font-family: Arial;
   }
 </style>
-
+```
 ```{r, message=FALSE, results='hide', warning=FALSE}
 library(tidyverse)
 library(sf)
@@ -21,7 +22,6 @@ library(leaflet)
 library(here)
 library(tidycensus)
 ```
-
 
 ```{r, results='hide', message=FALSE}
 # Let's prepare data
@@ -65,17 +65,21 @@ census_yelp <- census %>%
 ```
 
 # Other plots
+
 Bar chart is also very frequently used. Note that ggplot creates y-axis automatically by examining how many rows there are for each category of x. You can try `yelp %>% group_by(price) %>% tally()` to check the exact Y value for this plot.
+
 ```{r}
 ggplot(data = yelp) +
   geom_bar(mapping = aes(x=price)) 
 
 yelp %>% 
+  st_set_geometry(NULL) %>% 
   group_by(price) %>% 
   tally()
 ```
 
 We can also further break each price level by another categorical variable. We use rating to see the relative frequency of each rating for each price level. This is done by adding `fill=rating` in the mapping.
+
 ```{r}
 ggplot(data = yelp %>% 
          st_set_geometry(NULL) %>% 
@@ -86,6 +90,7 @@ ggplot(data = yelp %>%
 ```
 
 By changing `position="stack"` = `position="fill"`, we convert the Y-axis to the proportion within each level of price and fill it up to the top. This shows more clearly how different rating levels are distributed within each price level.
+
 ```{r}
 ggplot(data = yelp %>% 
          st_set_geometry(NULL) %>% 
@@ -95,6 +100,7 @@ ggplot(data = yelp %>%
 ```
 
 We want rating=5 to be on the top because (I think) it is more intuitive to see higher value on top. We can flip the bar chart vertically by adjusting the `levels` when we declare `rating` variable into a factor.
+
 ```{r}
 ggplot(data = yelp %>% 
          st_set_geometry(NULL) %>% 
@@ -104,8 +110,8 @@ ggplot(data = yelp %>%
   geom_bar(mapping = aes(x=price, fill=rating), position = "fill")
 ```
 
-
 Sometimes we want to see the exact figures on top of the bar chart. So, let's add the percentage within each level of price as labels.
+
 ```{r}
 ggplot(data = yelp %>% 
          st_set_geometry(NULL) %>% 
@@ -115,7 +121,7 @@ ggplot(data = yelp %>%
               # Grouping to calculate % by price and by rating 
               group_by(price, rating) %>% #<<
               # Count rows
-              tally() %>%                 #<<
+              tally() %>%                 #<< 
               # Convert to p
               mutate(p = n / sum(n)) %>%  #<<
               # Re-order to match the order in bar chart
@@ -126,6 +132,7 @@ ggplot(data = yelp %>%
 ```
 
 You can flip it 90-degrees.
+
 ```{r}
 ggplot(data = yelp %>% 
          st_set_geometry(NULL) %>% 
@@ -147,7 +154,9 @@ ggplot(data = yelp %>%
 ```
 
 ## Customization example (Optional)
+
 I saw this beautiful example by CÉDRIC SCHERER and wanted to show you a Yelp version of the code.
+
 ```{r}
 # Code & ideas borrowed heavily from CÉDRIC SCHERER's personal website: 
 # https://www.cedricscherer.com/2021/07/05/a-quick-how-to-on-labelling-bar-graphs-in-ggplot2/
@@ -195,12 +204,9 @@ rest_by_city <- yelp %>%
 rest_by_city
 ```
 
-
-
-
 # Histogram, boxplot, violin
 
-Histogram displays the distribution of a variable. It first assigns observations (i.e., rows) of the given variable (i.e., a column) into bins (0~99, 100~199, 200~299, etc.) and count the number of observations that fall into each bin. So, the taller a bar is, more observations fell into that bin. For example, in the histogram below, the first bar that touches 0 is much taller than other bars because most of the observations had zero or near-zero reviews. 
+Histogram displays the distribution of a variable. It first assigns observations (i.e., rows) of the given variable (i.e., a column) into bins (0\~99, 100\~199, 200\~299, etc.) and count the number of observations that fall into each bin. So, the taller a bar is, more observations fell into that bin. For example, in the histogram below, the first bar that touches 0 is much taller than other bars because most of the observations had zero or near-zero reviews.
 
 ```{r}
 ggplot(census_yelp) +
@@ -212,7 +218,6 @@ ggplot(census_yelp) +
   geom_histogram(mapping = aes(x = review_count), 
                  bins = 60) #<< increase the number of bins from 30 to 50. You get more bars.
 ```
-
 
 ```{r}
 ggplot(census_yelp) +
@@ -228,7 +233,6 @@ ggplot(data = census_yelp) +
                  color="black") +
   scale_x_continuous(breaks=seq(0,1300, by=100))
 ```
-
 
 ```{r}
 ggplot(data = census_yelp) +
@@ -259,7 +263,7 @@ ggplot(data = census_yelp) +
   scale_fill_manual(values=c("#999999", "#E69F00"))
 ```
 
-Although the histogram above allows us to effectively see the distribution, comparing **multiple distributions** are often easier with a boxplot. You need to understand what each component of a boxplot means to read it properly. Plotly::ggplotly() provides a good interactive visualization about how to read the plot. Note that upper fence = Q3 + (1.5\*IQR), where IQR is interquartile range (Q3-Q1). The lower fence is Q1 - (1.5\*IQR).
+Although the histogram above allows us to effectively see the distribution, comparing **multiple distributions** are often easier with a boxplot. You need to understand what each component of a boxplot means to read it properly. plotly::ggplotly() provides a good interactive visualization about how to read the plot. Note that upper fence = Q3 + (1.5\*IQR), where IQR is interquartile range (Q3-Q1). The lower fence is Q1 - (1.5\*IQR).
 
 ```{r}
 bxplot <- ggplot(data = yelp) +
@@ -268,7 +272,6 @@ bxplot <- ggplot(data = yelp) +
 
 plotly::ggplotly(bxplot)
 ```
-
 
 ```{r}
 a <- ggplot(data = yelp) +
@@ -283,6 +286,7 @@ gridExtra::grid.arrange(a, b)
 ```
 
 Of course, you can use `scale_fill_manual()` to use your custom color. To do this, however, you need to have specified `fill` inside `aes()`. If it is not specified at all or is specified outside of `aes()`, custom color won't work.
+
 ```{r}
 ggplot(data = yelp %>%
          st_join(census %>% st_transform(crs = st_crs(yelp))) %>% 
@@ -294,8 +298,6 @@ ggplot(data = yelp %>%
   facet_wrap(~county) +
   scale_fill_brewer(palette = "Blues")
 ```
-
-
 
 Violin plot is yet another plot for visualizing the distribution of variables. While a boxplot allows you to see where the upper/lower fences are and where the median and quartiles are, a violin plot allows you to see the concentration of observations at a certain bins (or range if you will) of values.
 
@@ -313,12 +315,11 @@ vplot <- ggplot(data = yelp %>%
 plotly::ggplotly(vplot)
 ```
 
-
 # So, do restaurants in wealthy neighborhoods get higher Yelp ratings?
+
 As we've seen so far, data visualization is an indispensable tool for urban analysts. If we have some time left in the class, think about socioeconomic/demographic variables in American Community Survey that may associate with review count, rating, and/or price of Yelp data. Then, get the data, plot them, and draw insights from them.
 
-
-```{r}
+```{r warning=F}
 census_yelp %>% 
   mutate(review_count_cut = cut(review_count, breaks = quantile(review_count, prob = c(0,0.5,0.75,1)), include.lowest=TRUE)) %>%
   mutate(pct_white = race.white / race.tot) %>% 
@@ -333,8 +334,7 @@ census_yelp %>%
   ggpubr::stat_cor(method = "pearson", label.x = 160000, label.y = 1.5)
 ```
 
-
-```{r}
+```{r warning=F}
 census_yelp %>% 
   mutate(review_count_cut = cut(review_count, breaks = quantile(review_count, prob = c(0,0.5,0.75,1)), include.lowest=TRUE)) %>%
   mutate(pct_white = race.white / race.tot) %>% 
@@ -346,6 +346,5 @@ census_yelp %>%
   
   # ------------------------------------------------------------------
   # This line of code adds the correlation analysis result to the plot
-  ggpubr::stat_cor(method = "pearson", label.x = 0.7, label.y = 1.5) 
+  ggpubr::stat_cor(method = "pearson", label.x = 0.6, label.y = 1.5) 
 ```
-

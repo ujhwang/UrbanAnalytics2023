@@ -7,18 +7,18 @@ output:
     downcute_theme: "chaos"
 ---
 
+```{=html}
 <style type="text/css">
   body{
   font-family: Arial;
   }
 </style>
-
+```
 # Why visualization?
 
 Data visualization is an essential tool for urban analytics. It offers an intuitive and quick way to understand the characteristics and relationships embedded in your data. Sometimes a good data visualization can deliver a message more effectively than any other medium and exercise transformative power that shapes people's perception [see this example](https://www.cnn.com/interactive/2021/us/census-race-ethnicity-map/). And not to mention that cool visualizations are cool.
 
 The first thing we analysts do when we get our hands on a dataset is to understand it. The best way to understand any given data is to visualize it. We have a wide variety of maps and charts to choose from, including scatterplots, histograms, boxplots, violin plots, and mapping. We have been doing mapping a lot, so this document will focus more on other charts.
-
 
 ```{r, message=FALSE, results='hide', warning=FALSE}
 library(tidyverse)
@@ -28,8 +28,6 @@ library(leaflet)
 library(here)
 library(tidycensus)
 ```
-
-
 
 ```{r, results='hide', message=FALSE}
 # Let's prepare data
@@ -74,7 +72,7 @@ census_yelp <- census %>%
 
 As usual, using tmap to visualize the data.
 
-```{r}
+```{r warning=F}
 tmap_mode("view");
 a <- tm_shape(census_yelp) + 
   tm_polygons(col = "review_count", style = "quantile")
@@ -87,7 +85,7 @@ tmap_arrange(a,b, sync = TRUE)
 
 Or we can use leaflet() package for mapping.
 
-```{r}
+```{r warning=F}
  library(leaflet)
  library(htmlwidgets)
  library(htmltools)
@@ -156,21 +154,23 @@ leaflet() %>%
   addControl(title, position="topleft",className="map_title")
 ```
 
-<br><br>
-For static maps with a lot of customizeability - ggplot2 can also create maps. See [this example](https://github.com/grssnbchr/bivariate-maps-ggplot2-sf) for an inspiration.
+<br><br> For static maps with a lot of customizeability - ggplot2 can also create maps. See [this example](https://github.com/grssnbchr/bivariate-maps-ggplot2-sf) for an inspiration.
 
-```{r, include=FALSE}
+```{r}
 library(viridis)
 
 ggplot(data = yelp) +
-  geom_point(mapping = aes(color = log(review_count+1), x = st_coordinates(yelp)[,1], y = st_coordinates(yelp)[,2]), 
+  geom_point(mapping = aes(color = log(review_count+1), 
+                           x = st_coordinates(yelp)[,1], 
+                           y = st_coordinates(yelp)[,2]), 
              size=2, alpha=0.9) +
   theme_void() +
   scale_color_viridis(trans = "log",  
-                      name="Review Count (logged)", guide = guide_legend(keyheight = unit(3, units = "mm"),
-                                                               keywidth=unit(12, units = "mm"), 
-                                                               label.position = "bottom", 
-                                                               title.position = 'top', nrow=1)) +
+                      name="Review Count (logged)", 
+                      guide = guide_legend(keyheight = unit(3, units = "mm"),
+                                           keywidth=unit(12, units = "mm"), 
+                                           label.position = "bottom", 
+                                           title.position = 'top', nrow=1)) +
   labs(
     title = "Restaurant Distribution in Fulton & DeKalb Counties, GA",
     subtitle = "Review Count from Yelp API"
@@ -192,36 +192,32 @@ ggplot(data = yelp) +
 
 ```
 
+# Creating plots
 
-# Creating a ggplot
 In tmap package, two functions always go hand-in-hand, namely tm_shape() and tm_polygons() (or tm_lines, tm_dots, etc.). The tm_shape() function declares the data object to be displayed. Then, the tm_polygons() function defines the geometry shape and other associated characteristics.
 
 A similar structure is used in ggplot2 package. Creating a plot needs at least two functions that are connected by +: ggplot() function and geom_point() (or other geometry types, such as geom_line, geom_boxplot, etc.). In the example below, `ggplot(data = yelp)` indicates that we are drawing ggplot using yelp data. Then, `geom_point(aes(x = review_count, y = rating))` shows that we are going to draw a scatterplot using `review_count` and `rating` columns.
 
-```{r}
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x = review_count, y = rating))
 ```
 
+We can add additional information to this plot using a few different strategies, including colors, sizes, and shapes inside the `aes()` -- 'Aesthetic mappings' which describe how variables in the data are mapped to visual properties (aesthetics) of geoms. For example, we can add `price` information using color.
 
-We can add additional information to this plot using a few different strategies, including colors, sizes, and shapes inside the `aes()` part of the code. For example, we can add `price` information using color.
-
-```{r}
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, 
                            color=price)) #<<
 ```
 
-```{r}
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, 
                           size=price)) #<<
 ```
 
-
-
-
-```{r}
+```{r warning=F}
 fig1 <- ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, 
                            alpha=price)) #<<
@@ -234,8 +230,9 @@ fig2 <- ggplot(data = census_yelp) +
 gridExtra::grid.arrange(fig1, fig2, ncol= 1)
 ```
 
-If you put, for example, color and size arguments outside of `aes()`, the visual property from those arguments are not mapped to your data; it is applied direct to the plot. 
-```{r}
+If you put, for example, color and size arguments outside of `aes()`, the visual property from those arguments are not based on your data.
+
+```{r warning=F}
 fig2 <- ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating), 
              color = "orange") #<<
@@ -247,16 +244,15 @@ fig3 <- ggplot(data = census_yelp) +
 gridExtra::grid.arrange(fig2, fig3, ncol = 1)
 ```
 
-Remember that if you use `facet_wrap` with a continuous data, it will generate as many plots as the unique values in the continuous data. Avoid writing such codes! 
+Remember that if you use `facet_wrap` with a continuous data, it will generate as many plots as the unique values in the continuous data. Avoid writing such codes!
 
-```{r}
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating)) +
   facet_wrap(~county) #<<
 ```
 
-
-```{r}
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating)) +
   facet_grid(price~county) #<<
@@ -264,34 +260,38 @@ ggplot(data = census_yelp) +
 # try swapping price and county
 ```
 
-```{r}
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_smooth(mapping = aes(x=review_count, y=rating), method = "lm")
 ```
 
-```{r}
+```{r warning=F}
 # More than one layers
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating)) + 
   geom_smooth(mapping = aes(x=review_count, y=rating), method = "lm")
 ```
-In the code above, we are repeating `aes(x=review_count, y=rating)` twice. If we know that mapping will be the same in multiple layers, we can define it in `ggplot()`. 
-```{r}
+
+In the code above, we are repeating `aes(x=review_count, y=rating)` twice. If we know that mapping will be the same in multiple layers, we can define it in `ggplot()`.
+
+```{r warning=F}
 ggplot(data = census_yelp, mapping = aes(x=review_count, y=rating)) + #<<
   geom_point() + 
   geom_smooth(method = "lm")
 ```
 
-If you want to add a specific mapping to a layer, you provide additional mapping to individual layers. 
+If you want to add a specific mapping to a layer, you provide additional mapping to individual layers.
 
-```{r}
+```{r warning=F}
 ggplot(data = census_yelp, mapping = aes(x=review_count, y=rating)) +
   geom_point() + 
   geom_smooth(mapping = aes(color = county), #<<
               method = "lm")
 ```
-You can append `labs()` to specify labels. 
-```{r}
+
+You can append `labs()` to specify labels.
+
+```{r warning=F}
 ggplot(data = census_yelp, mapping = aes(x=review_count, y=rating)) +
   geom_point() + 
   geom_smooth(mapping = aes(color = county), method = "lm") +
@@ -302,8 +302,10 @@ ggplot(data = census_yelp, mapping = aes(x=review_count, y=rating)) +
 ```
 
 ## Aesthetic options
+
 We can change the overall theme of the plot using `theme_<...>`.
-```{r}
+
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, color = county)) + 
   labs(x = "Review Count in Yelp",
@@ -314,7 +316,8 @@ ggplot(data = census_yelp) +
 ```
 
 Of course, dark is always cooler.
-```{r}
+
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, color = county)) + 
   labs(x = "Review Count in Yelp",
@@ -322,10 +325,12 @@ ggplot(data = census_yelp) +
        color = "County in Census",
        title = "Do better rated restaurants have more reviews?") +
   ggdark::dark_theme_gray()
+  
 ```
 
 If you want to use your custom color choices - for a discrete variable.
-```{r}
+
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, color = county)) + 
   labs(x = "Review Count in Yelp",
@@ -335,8 +340,10 @@ ggplot(data = census_yelp) +
   scale_color_manual(values = c("green", "darkblue")) + #<<
   theme_bw()
 ```
+
 If you want to use your custom color choices - for a continuous variable.
-```{r}
+
+```{r warning=F}
 ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, color = hhincome)) + 
   labs(x = "Review Count in Yelp",
@@ -347,7 +354,7 @@ ggplot(data = census_yelp) +
   theme_bw()
 ```
 
-```{r}
+```{r warning=F}
 outliers <- census_yelp %>% 
   arrange(desc(review_count)) %>% 
   slice(1:4)
@@ -364,3 +371,5 @@ ggplot(data = census_yelp,
   scale_color_gradient(low="darkblue", high="red") + #<<
   theme_light()
 ```
+
+Wait, but these plots are not interactive?
