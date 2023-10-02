@@ -15,8 +15,8 @@ output:
 
 ```{r load-packages, include=FALSE}
 # Package names
-packages <- c("RedditExtractoR", "tidytext", "tidyverse", "textdata", "magrittr",
-              "gofastr", "termco", "syuzhet", "sentimentr", "lubridate", "here")
+packages <- c("RedditExtractoR", "tidytext", "tidyverse", "textdata", "anytime", "magrittr",
+              "ggdark","gofastr", "termco", "syuzhet", "sentimentr", "lubridate", "here")
 
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
@@ -88,7 +88,7 @@ sentiment_attributes(texts_2[2])$Attributes
   
 ## 1-3. State-of-the-art model
 
-> In this section, we will employ a deep learning model; unfortunately, R is not the most conducive environment for training or testing such models. As expected, Python is the preferred option when it comes to deep learning due to its extensive libraries and community support. Similar to our approach in the computer vision module, we will utilize Google Colab ([link](https://colab.research.google.com/drive/1rynmZRcvB052PFaVQ2DsHrMYD1vyPN4Y?usp=sharing)). Upload (i.e., drag and drop) your Reddit data in csv format to your Colab session. You might as well use [this data](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_5/sample_reddit.csv).
+> In this section, we will employ a deep learning model; unfortunately, R is not the most conducive environment for training or testing such models. As expected, Python is the preferred option when it comes to deep learning due to its extensive libraries and community support. Similar to our approach in the computer vision module, we will utilize Google Colab ([link](https://colab.research.google.com/drive/1rynmZRcvB052PFaVQ2DsHrMYD1vyPN4Y?usp=sharing)). Upload (i.e., drag and drop) your Reddit data in csv format to your Colab session. You might as well use [this data](https://github.com/ujhwang/UrbanAnalytics2023/blob/main/Lab/module_5/sample_reddit.csv?raw=true).
 
 In NLP, the state-of-the-art model architecture is undoubtedly **Transformer** (Check out the benchmark [here](https://paperswithcode.com/sota/sentiment-analysis-on-sst-2-binary)). The architecture was introduced in 2017 and has since become a foundation for many NLP models. The Transformer architecture has been highly influential in NLP due to its ability to handle long-range dependencies in text and its scalability, allowing the training of large models that capture intricate language patterns and semantics.
 
@@ -118,8 +118,10 @@ reddit_sentiment %<>%
          text = replace_na(text, ""),
          title_text = str_c(title, text, sep = ". "))
 
-reddit_sentiment$sentimentr <- sentiment_by(reddit_sentiment$title_text) %>% 
-  pull(ave_sentiment)
+temp <- sentiment_by(reddit_sentiment$title_text)
+
+reddit_sentiment$sentimentr <- temp %>% pull(ave_sentiment)
+reddit_sentiment$word_count <- temp %>% pull(word_count)
 ```
 
 Check the correlation between the sentiment values from two different methods. 0.28 implies a mild positive correlation.
@@ -131,7 +133,9 @@ cor(reddit_sentiment$bert_label_numeric, reddit_sentiment$sentimentr)
 A scatter plot indicates that they are not very similar.
 ```{r}
 ggplot(data = reddit_sentiment, aes(x = bert_label_numeric, y = sentimentr)) +
-  geom_jitter(width = 0.1, height = 0)
+  geom_jitter(width = 0.1, height = 0) +
+  geom_line(aes(y = 0), color = '#FFD700', lwd = 1, linetype='dashed') + 
+  dark_theme_grey()
 ```
 Two texts (with highest prediction scores) for each of the five categories.
 
@@ -166,11 +170,99 @@ sentimentr_example[, c('sentimentr','title_text', 'subreddit')] %>% print()
 
 Let's visualize the sentiment analysis result from the BERT model.
 
+## 3-1: 
+
+word count
+```{r}
+
+```
+
+wordclouds
+```{r}
+
+```
+
+```{r}
+reddit_sentiment_clean <- reddit_sentiment %>%
+  group_by(bert_label) %>%
+  filter(
+    between(
+      comments, 
+      quantile(comments, 0.25) - 1.5 * IQR(comments), 
+      quantile(comments, 0.75) + 1.5 * IQR(comments)
+    )
+  )
+
+cor.test(reddit_sentiment_clean$comments, reddit_sentiment_clean$bert_label_numeric)
+
+reddit_sentiment_clean %>% 
+  ggplot(aes(x = bert_label_numeric, y = comments)) +
+  geom_jitter(height = 0, width = 0.05) +
+  geom_smooth(method = 'loess', span = 0.75) +
+  dark_theme_gray()
+
+```
+
+## 3-2: Temporal analysis
 
 
+```{r}
+# create new columns: date, year, day_of_week, is_weekend, time
+reddit_sentiment %<>% 
+  mutate(date = as.POSIXct(date_utc)) %>%
+  filter(!is.na(date)) %>% 
+  mutate(year = year(date),
+         day_of_week = wday(date, label = TRUE),
+         is_weekend = ifelse(day_of_week %in% c("Sat", "Sun"), "Weekend", "Weekday"),
+         time = timestamp %>% 
+           anytime(tz = anytime:::getTZ()) %>% 
+           str_split('-| |:') %>% 
+           sapply(function(x) as.numeric(x[4])))
+```
 
+year
 
+```{r}
+# sentiment by year
+reddit_sentiment %>% 
+  ggplot(aes(x = date, y = bert_label_numeric)) +
+  geom_jitter(width = 0, height = 0.05) +
+  scale_x_datetime(date_labels = "%b %y",
+                   breaks = seq(min(reddit_sentiment$date, na.rm = T), 
+                                max(reddit_sentiment$date, na.rm = T), 
+                                by = "1 year")) +
+  dark_theme_grey()
+```
 
+```{r}
+# sentiment by year
+reddit_sentiment %>% 
+  ggplot(aes(x = year, fill = bert_label)) +
+  geom_bar(position = 'stack') +
+  scale_x_continuous(breaks = seq(min(reddit_sentiment$year), 
+                                  max(reddit_sentiment$year), 
+                                  by = 1)) +
+  scale_fill_brewer(palette = 'PuRd', direction = -1) + 
+  dark_theme_grey()
+```
+day of week
+```{r}
+# sentiment by day
+reddit_sentiment %>% 
+  ggplot(aes(x = day_of_week, fill = bert_label)) +
+  geom_bar(position = 'fill') +
+  scale_fill_brewer(palette = 'PuRd', direction = -1) +
+  dark_theme_grey()
+```
+time of day
+```{r}
+reddit_sentiment %>% 
+  ggplot(aes(x = time, fill = bert_label)) +
+  geom_histogram(bins = 24, position = 'stack', color = 'black', lwd = 0.2) +
+  scale_x_continuous(breaks = seq(0, 24, by=1)) + 
+  scale_fill_manual(values = c('#bc5090', '#bc5090', '#ff6361', '#ffa600', '#ffa600')) + 
+  dark_theme_grey()
+```
 
 
 
