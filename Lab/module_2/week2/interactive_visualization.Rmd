@@ -344,14 +344,17 @@ ggplot(data = census_yelp) +
 If you want to use your custom color choices - for a continuous variable.
 
 ```{r warning=F}
-ggplot(data = census_yelp) +
+(ggplot(data = census_yelp) +
   geom_point(mapping = aes(x=review_count, y=rating, color = hhincome)) + 
   labs(x = "Review Count in Yelp",
        y = "Rating in Yelp",
        color = "Annual Household Income",
        title = "Do better rated restaurants have more reviews?") +
   scale_color_gradient(low="darkblue", high="red") + #<<
-  theme_bw()
+  theme_bw()) %>% 
+  plotly::ggplotly()
+
+
 ```
 
 ```{r warning=F}
@@ -363,7 +366,7 @@ ggplot(data = census_yelp,
        aes(x=review_count, y=rating)) + # moved aes() to here
   geom_point(mapping = aes(color = hhincome)) + # Colored ones
   geom_point(data = outliers, size = 3, shape = 1, color = "black") + # Black circles
-  ggrepel::geom_label_repel(data = outliers, mapping = aes(label = county)) + 
+  ggrepel::geom_label_repel(data = census_yelp, mapping = aes(label = county)) + 
   labs(x = "Review Count in Yelp",
        y = "Rating in Yelp",
        color = "Annual Household Income",

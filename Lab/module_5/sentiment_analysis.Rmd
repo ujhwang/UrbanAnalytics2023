@@ -1,0 +1,124 @@
+---
+title: "Sentiment Analysis"
+author: "Uijeong Hwang"
+date: '2022-11-8'
+output:
+  rmdformats::downcute:
+    downcute_theme: "chaos"
+---
+
+<style type="text/css">
+  body{
+  font-family: Arial;
+  }
+</style>
+
+```{r load-packages, include=FALSE}
+# Package names
+packages <- c("RedditExtractoR", "tidytext", "tidyverse", "textdata", "magrittr",
+              "syuzhet", "sentimentr", "gofastr", "lubridate", "here")
+
+# Install packages not yet installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+install.packages(packages[!installed_packages])
+}
+
+# Load packages
+invisible(lapply(packages, library, character.only = TRUE))
+```
+  
+# 1. Sentiment analysis  
+  
+Sentiment analysis involves utilizing Natural Language Processing (NLP), along with other related techniques, to identify and quantify affective states, typically from text data. Similar to advancements we've observed in computer vision, recent developments have introduced well-packaged models that are user-friendly and can be readily implemented out of the box. In this chapter, we will explore a range of models, from rudimentary to more advanced ones, to practice their application in diverse scenarios.
+
+## 1-1. Bag-of-Words model: `syuzhet` package  
+
+The Bag-of-Words (BoW) model is one of the simplest techniques used in NLP and text mining to represent and analyze text data. In BoW, a text (such as a sentence or document) is represented as an unordered set or "bag" of its words, disregarding grammar, word order, and any structural elements in the text. 
+
+```{r}
+texts_1 <- c("R is a very powerful tool for data analysis.",
+           "I hate bugs in the code. They are so annoying.",
+           "I love programming in R! It’s so fun.")
+
+# syuzhet package
+get_sentiment(texts_1, method='nrc')
+get_sentiment(texts_1, method='afinn')
+get_sentiment(texts_1, method='syuzhet')
+get_sentiment(texts_1, method='bing')
+
+get_nrc_sentiment(texts_1)
+```
+
+Notice that, if the models think 'hate' is a negative word and 'love' is a positive word, then how about negations? Do models consider 'not love' positive or negative?  Let's see the next example.
+
+```{r}
+texts_2 <- c("I love programming in R! It’s so fun.",
+             "I don't love programming in R! It’s not fun.")
+
+# syuzhet package
+get_sentiment(texts_2, method='nrc')
+get_sentiment(texts_2, method='afinn')
+get_sentiment(texts_2, method='syuzhet')
+get_sentiment(texts_2, method='bing')
+```
+
+This example above demonstrates that sentiment analysis is challenging because it involves understanding not only individual words but also the context in which they are used. When you run basic sentiment analysis that only uses a bag-of-words model, it can't understand the context and treats every word independently. So, the words "love" and "fun" in both sentences are contributing to the positive score, and the model doesn't consider the "not" which changes the meaning of those words.
+  
+## 1-2. Negation handling model: `sentimentr` package  
+
+Handling negation in NLP is crucial, as negation can entirely change the sentiment or meaning of a sentence. In sentiment analysis, the presence of a negation can reverse the polarity of a sentence.
+
+```{r warning=F}
+texts_2 <- c("I love programming in R! It’s so fun.",
+             "I don't love programming in R! It’s not fun.")
+
+# by sentence
+sentiment(texts_2)
+
+# by string (a group of sentences)
+sentiment_by(texts_2)
+```
+
+```{r warning=F}
+# attributes
+sentiment_attributes(texts_2[1])$Attributes
+sentiment_attributes(texts_2[2])$Attributes
+```
+  
+## 1-3. State-of-the-art model
+
+> In this section, we will employ a deep learning model; unfortunately, R is not the most conducive environment for training or testing such models. As expected, Python is the preferred option when it comes to deep learning due to its extensive libraries and community support. Similar to our approach in the computer vision module, we will utilize Google Colab ([link](https://colab.research.google.com/drive/1rynmZRcvB052PFaVQ2DsHrMYD1vyPN4Y?usp=sharing)). Upload (i.e., drag and drop) your Reddit data in csv format to your Colab session. You might as well use [this data](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_5/sample_reddit.csv).
+
+In NLP, the state-of-the-art model architecture is undoubtedly **Transformer**. The architecture was introduced in 2017 and has since become a foundation for many NLP models. The Transformer architecture has been highly influential in NLP due to its ability to handle long-range dependencies in text and its scalability, allowing the training of large models that capture intricate language patterns and semantics.
+
+Timeline of popular Transformer model releases ([source](https://huggingface.co/blog/bert-101#1-what-is-bert-used-for)):
+![](transformer_timeline.png)
+
+The script in Colab will demonstrate how to leverage a pre-trained **BERT** (Bidirectional Encoder Representations from Transformers) model to predict the sentiment of a given string. Developed by Google, BERT is a powerful language processing AI model designed for a range of NLP tasks.
+
+BERT reads texts and pays attention to the surrounding words to understand the context of each word. This is the “bidirectional” part, as it learns about the word based on the words that come before and after it, unlike older models which typically read text in one direction (left to right).
+
+Thus, BERT helps computers better understand the **meaning of words** ***in a sentence***. Imagine you’re learning a new language. When you hear or see a sentence, you don’t just look at each word in isolation—you look at the words around it to understand its meaning and context. If someone says, “It’s raining cats and dogs,” you understand that it’s an expression meaning it’s raining heavily, not that pets are falling from the sky.
+
+Let's proceed to the [Colab](https://colab.research.google.com/drive/1rynmZRcvB052PFaVQ2DsHrMYD1vyPN4Y?usp=sharing) and analyze the sentiment of Reddit threads using the BERT model.
+
+# 2. Visualization
+
+Import the sentiment data predicted in the Colab.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

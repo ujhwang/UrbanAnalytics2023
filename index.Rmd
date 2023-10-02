@@ -121,11 +121,11 @@ topic_col <- c(
   
   "Computer vision ([Colab](https://colab.research.google.com/drive/1RuJeY5EjPJ6ArAxhpeqd3exK881ORmkC?usp=sharing), [RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.Rmd), [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.html))",# 10
   
-  "Getting & Processing Reddit data in R ([RMD](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg),
-  [html](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg))",# 11
+  "Getting & Processing Reddit data in R ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.Rmd),
+  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.html))",# 11
   
   "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis ([RMD](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg),
-  [html](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg))",# 12
+  [html](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg), [Colab](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg))",# 12
   
   "Data ethics [(Slide)](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg)",# 13
   
