@@ -124,8 +124,8 @@ topic_col <- c(
   "Getting & Processing Reddit data in R ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.html))",# 11
   
-  "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis ([RMD](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg),
-  [html](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg), [Colab](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg))",# 12
+  "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/sentiment_analysis.Rmd),
+  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/sentiment_analysis.html), [Colab](https://colab.research.google.com/drive/1rynmZRcvB052PFaVQ2DsHrMYD1vyPN4Y?usp=sharing))",# 12
   
   "Data ethics [(Slide)](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg)",# 13
   
