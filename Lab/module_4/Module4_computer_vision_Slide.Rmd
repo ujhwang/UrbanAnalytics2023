@@ -3,7 +3,7 @@ title: "Urban Images and Computer Vision"
 subtitle: ""
 author: "Originally written by Bon Woo Koo & Subhro Guhathakurta; modified by Uijeong Hwang"
 institute: "Georgia Institute of Technology"
-date: "2023/10/17"
+date: "2023/10/19"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -22,7 +22,7 @@ class: middle, inverse
 .font100[
 Subhro Guhathakurta & Uijeong Hwang
 
-10/17/2023
+10/19/2023
 ]
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}

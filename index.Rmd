@@ -63,8 +63,9 @@ weeks <- tibble(
     rep("Preparation", 2),
     rep("Module 1: <br> POI & Census", 2), # 2 days, 4 weeks
     rep("Module 2: <br> Graphic communication and storytelling", 2),
+    "",
     rep("Module 3: <br> Transportation", 2),
-    rep("Module 4: <br> Image & computer vision", 2),
+    "Module 4: <br> Image & computer vision",
     rep("Module 5: <br> Social media", 2),
     rep("Module 6: <br> Data ethics", 1),
     rep("Final Project Lab", 1),
@@ -109,17 +110,18 @@ topic_col <- c(
   ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/interactive_visualization_2.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/interactive_visualization_2.html))",# 6
   
-  "<b> Student presentation of final project idea and review of literature/ examples (Oct 3) </b> <br> General Transit Feed Specification ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/1_GTFS_v2.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/1_GTFS_v2.html))",# 7 # [GTFS and equity (RMD)](./Lab/module_2/1_GTFS.html)
+  "<b> Student presentation of final project idea and review of literature/ examples (Oct 3) </b>",# 7
+  
+  "General Transit Feed Specification ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/1_GTFS_v2.Rmd),
+  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/1_GTFS_v2.html))", # 8
   
   "Open Street Map ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/2_OSM.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/2_OSM.html))",# 8 # [OSM as a graph (RMD)](./Lab/module_2/2_OSM.html)
+  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/2_OSM.html)) <br>
+  Urban images & computer vision [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision_Slide.html)",# 9
   
-  "Urban images & computer vision [(Slide)](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision_Slide.html), <br> 
-  Sampling & processing images ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_getting_GSV_images.Rmd),
-  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_getting_GSV_images.html))",# 9
-  
-  "Computer vision ([Colab](https://colab.research.google.com/drive/1RuJeY5EjPJ6ArAxhpeqd3exK881ORmkC?usp=sharing), [RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.Rmd), [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.html))",# 10
+  "Sampling & processing images ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_getting_GSV_images.Rmd),
+  [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_getting_GSV_images.html)) <br>
+  Computer vision ([Colab](https://colab.research.google.com/drive/1RuJeY5EjPJ6ArAxhpeqd3exK881ORmkC?usp=sharing), [RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.Rmd), [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.html))",# 10
   
   "Getting & Processing Reddit data in R ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.html))",# 11
@@ -131,7 +133,7 @@ topic_col <- c(
   
   "Assistance with final project related issues",# 14
   
-  "<b>Student presentations of final projects</b>",# 15
+  "<b>Student presentations of final projects (Nov 30)</b>",# 15
   
   "Wrap up"# 16
 )
