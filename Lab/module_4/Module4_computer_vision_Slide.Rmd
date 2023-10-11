@@ -63,7 +63,8 @@ library(here)
 5. Create a function that takes a point as input and download GSV images.
 6. Apply computer vision to the images.
 7. Merge the results back to the points from Step 2.
-* We will cover Steps 1-5 this week and Steps 6-7 next week.
+* Your Google API key should be ready by next Tuesday.
+* We will cover Steps 2-5 next Tuesday and Steps 6-7 next Thursday.
 
 ---
 ## Why Street View Images
