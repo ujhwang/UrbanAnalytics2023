@@ -574,7 +574,7 @@ plotly::ggplotly(departure_count)
 ```
 
   
-## (Optional) Calculate travel times from one station to all other stations 
+# (Optional) Calculate travel times from one station to all other stations 
 
 The tidytransit package offers a very convenient function that calculates the shortest travel times from a stop to all other stops. Try `?tidytransit::travel_times` to see what this function does and what arguments it takes. Notice that only two out of nine arguments are required arguments, and the rest are optional. The required arguments are 'filtered_stop_times' and 'stop_name.' If you do not provide the optional arguments, the function will use the pre-populated values for the calculation.
 
