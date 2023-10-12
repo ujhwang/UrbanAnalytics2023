@@ -405,7 +405,11 @@ leaflet() %>%
 
 # Statistical testing for equity implications
 
-Now that the data is ready, we can use various methods to examine whether transit service area is equitably distributed. We will 1) draw scatter plots and 2) perform a correlation analysis to evaluate the equity. Let's first draw scatter plots to visualize the relationship between % service area and various socioeconomic/demographic variables. These variables are by no means complete; feel free to test other variables that represent population characteristics that you are interested in.
+Now that the data is ready, we can use various methods to examine whether transit service area is ***equitably distributed***.  
+
+![](equity_equality.png)
+
+We will 1) draw scatter plots and 2) perform a correlation analysis to evaluate the equity. Let's first draw scatter plots to visualize the relationship between % service area and various socioeconomic/demographic variables. These variables are by no means complete; feel free to test other variables that represent population characteristics that you are interested in.
 
 ## Scatter plots
 Here we will draw multiple scatter plots **automatically** by using **facet_wrap()** in ggplot2 package. To use this function, ggplot requires that the input data is in a long-form where one column shows the variable name and the other column shows the data value. Then, ggplot draws multiple scatter plots by grouping the rows by variable names. Also notice the labeller; we provide formatted titles for each variable name so that the plots get proper titles.
