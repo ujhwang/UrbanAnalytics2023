@@ -211,6 +211,9 @@ route.shape %>%
                  popup = paste0("Route type: ", route.shape$route_type))
   
 ```
+```{r}
+table(route.shape$route_type)
+```
 
 ## Step 2: Drawing buffers
 
