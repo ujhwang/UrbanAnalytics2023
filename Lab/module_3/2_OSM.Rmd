@@ -547,7 +547,7 @@ acs2020c <- acs2020 %>%
 
 ## Spatial join the Census data with our network
 
-Before we do the join, let's use centrality measures that were calculated on the entire network. It takes time, so I calculated it and saved it. You can download it [here]("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_3/network_char.RData").
+Before we do the join, let's use centrality measures that were calculated on the entire network. It takes time, so I calculated it and saved it. You can download it [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_3/network_char.RData).
 
 ```{r warning=F, message=F}
 load(here("Lab", "module_3", "network_char.RData"))
