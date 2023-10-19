@@ -247,7 +247,7 @@ osm <- osm %>%
 ```{r}
 
 # =========== NO MODIFICATION ZONE STARTS HERE ===============================
-# Extract the first row from `home` object and store it `home_1`
+# Extract the first row from `home` object and store it as `origin`
 origin <- home[1,]
 # =========== NO MODIFY ZONE ENDS HERE ========================================
 
@@ -261,7 +261,7 @@ closest_station <-
 
 
 # TASK ////////////////////////////////////////////////////////////////////////
-# Find the shortest path from home_1 to station
+# Find the shortest path from origin to station
 # using st_network_paths() function.
 paths <- 
 # //TASK //////////////////////////////////////////////////////////////////////
@@ -286,7 +286,7 @@ if (closest_dist == set_units(0, m)){
 
 # Calculate how to long it takes to traverse `closest_dist` 
 # assuming we drive at 30 miles/hour speed.
-# Store the output in trvt_osm_m.
+# Store the output in `trvt_osm_m`.
 car_speed <- set_units(30, mile/h)
 trvt_osm_m <- closest_dist/set_units(car_speed, m/min) %>%  # Distance divided by 30 mile/h
   as.vector(.)
@@ -335,8 +335,6 @@ total_trvt <- drop_units(trvt_osm_m) + trvt_gtfs_m
 ```{r}
 # Function definition (do not modify other parts of the code in this code chunk except for those inside the TASK section)
 
-# NOTE: If you have trouble converting the code for Step 4 to a function and 
-# your code runs fine up to Step 4, you can seek help from Bonwoo on Step 5.
 get_trvt <- function(home, osm, station, midtown){
   
   # TASK ////////////////////////////////////////
