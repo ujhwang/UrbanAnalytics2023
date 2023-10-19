@@ -60,7 +60,10 @@ This document will walk to you through:
 
 ## Downloading the data
 
-We will first define the bounding box within which we will get OSM data using `nominatimlite` package. It uses the free Nominatim API provided by OpenStreetMap. Of course, you can create your own bounding box - we do it a few code chunks below.
+We will first define the bounding box within which we will get OSM data
+using `nominatimlite` package. It uses the free Nominatim API provided
+by OpenStreetMap. Of course, you can create your own bounding box - we
+do it a few code chunks below.
 
 ```{r}
 # Get bounding box coordinates for Atlanta
@@ -74,19 +77,44 @@ tmap_mode('view')
 tm_shape(bb_sf) + tm_borders()
 ```
 
-[OSM wiki](https://wiki.openstreetmap.org/wiki/Map_features) states that OMS represents physical features on the ground using **tags** attached to its basic data structures (i.e., nodes, ways, and relations). Although there can be infinite number of attributes (i.e., tags) describing each feature, there are some **key-value** pairs that are agreed upon by the community and are widely used. Although it might not be accurate description, but thinking the **key** as a category and **value** as entries within the category would be reasonably accurate description. Some of the widely used keys include Amenity, Buildings, Highway, and Shop. Then there are values attached to each of the key. For Amenity, there are education, transportation, financial, healthcare, and entertainment, etc.
+[OSM wiki](https://wiki.openstreetmap.org/wiki/Map_features) states that
+OMS represents physical features on the ground using **tags** attached
+to its basic data structures (i.e., nodes, ways, and relations).
+Although there can be infinite number of attributes (i.e., tags)
+describing each feature, there are some **key-value** pairs that are
+agreed upon by the community and are widely used. Although it might not
+be accurate description, but thinking the **key** as a category and
+**value** as entries within the category would be reasonably accurate
+description. Some of the widely used keys include Amenity, Buildings,
+Highway, and Shop. Then there are values attached to each of the key.
+For Amenity, there are education, transportation, financial, healthcare,
+and entertainment, etc.
 
-For Highway (which means road in OSM), the followings are some examples of the values: 
+For Highway (which means road in OSM), the followings are some examples
+of the values:
 
-* motorway 
-* trunk 
-* primary 
-* secondary 
-* tertiary
-* residential 
-* various links, including motorway_link, trunk_link, primary_link, etc.
+-   motorway
+-   trunk
+-   primary
+-   secondary
+-   tertiary
+-   residential
+-   various links, including motorway_link, trunk_link, primary_link,
+    etc.
 
-For the full list of the key-pair values, please refer to [OSMwiki](https://wiki.openstreetmap.org/). To download all possible key:value pairs for highway, you can insert `available_tags("highway")` instead of manually specifying a list of values. One caveat is that, using all available tags will generate a large data, significantly slowing down the processing speed. Here, we download seven values under key = 'highway' and convert it into sf format. The last function in the code below, `osm_poly2line()` is added because "Street networks downloaded with add_osm_object(key ="highway") will store any circular highways in osm_polygons. this function combines those with the osm_lines component to yield a single sf data.frame of all highways, whether polygonal or not" ([source](https://rdrr.io/cran/osmdata/man/osm_poly2line.html)).
+For the full list of the key-pair values, please refer to
+[OSMwiki](https://wiki.openstreetmap.org/). To download all possible
+key:value pairs for highway, you can insert `available_tags("highway")`
+instead of manually specifying a list of values. One caveat is that,
+using all available tags will generate a large data, significantly
+slowing down the processing speed. Here, we download seven values under
+key = 'highway' and convert it into sf format. The last function in the
+code below, `osm_poly2line()` is added because "Street networks
+downloaded with add_osm_object(key ="highway") will store any circular
+highways in osm_polygons. this function combines those with the
+osm_lines component to yield a single sf data.frame of all highways,
+whether polygonal or not"
+([source](https://rdrr.io/cran/osmdata/man/osm_poly2line.html)).
 
 ```{r}
 # Get OSM road data
@@ -101,8 +129,10 @@ osm_road <- opq(bbox = bb) %>%
 names(osm_road)
 ```
 
-This object `osm_road` is a list that has multiple elements, including bbox, osm_points, osm_lines, osm_polygons, etc. We can extract
-`osm_lines` and see what it looks like. The `prop.table()` function below shows that 'residential' tag is roughly 70%.
+This object `osm_road` is a list that has multiple elements, including
+bbox, osm_points, osm_lines, osm_polygons, etc. We can extract
+`osm_lines` and see what it looks like. The `prop.table()` function
+below shows that 'residential' tag is roughly 70%.
 
 ```{r}
 ## Plot--
@@ -117,11 +147,19 @@ round(prop.table(table(osm_road$osm_lines$highway)) * 100, 1)
 
 ## Defining a custom bounding box
 
-Displaying the entire network we just downloaded can slow down R environment. For class exercise (for students to be able to follow along), we will limit the bounding box to a smaller area. We will create a custom bbox using coordinates of our selection. This technique of generating your own bounding box can also be useful if you have a specific area of interest that doesn't overlap well with commonly
-used boundaries.
+Displaying the entire network we just downloaded can slow down R
+environment. For class exercise (for students to be able to follow
+along), we will limit the bounding box to a smaller area. We will create
+a custom bbox using coordinates of our selection. This technique of
+generating your own bounding box can also be useful if you have a
+specific area of interest that doesn't overlap well with commonly used
+boundaries.
 
-You need to define two points for bounding box, one point at the lower left corner and the other at the upper right corner. You can go to
-Google Maps, right-click on a point on map, and copy the XY coordinate. Let's store them in `p1` and `p2`. Notice that Google Maps will give you YX coords, but we need `p1` and `p2` in XY format.
+You need to define two points for bounding box, one point at the lower
+left corner and the other at the upper right corner. You can go to
+Google Maps, right-click on a point on map, and copy the XY coordinate.
+Let's store them in `p1` and `p2`. Notice that Google Maps will give you
+YX coords, but we need `p1` and `p2` in XY format.
 
 ```{r}
 # p1 is lower left corner, p2 is the upper right corner
@@ -129,7 +167,8 @@ p1 <- c(-84.40851957882589, 33.746217847959734)
 p2 <- c(-84.36354430149285, 33.785889694219634)
 ```
 
-You will then need to format the two coordinates into the following format. Then, let's convert it into sf object.
+You will then need to format the two coordinates into the following
+format. Then, let's convert it into sf object.
 
 ```{r}
 # Custom BB
@@ -152,10 +191,21 @@ tm_shape(bb_sf) + tm_borders(col = "black") +  # Black = larger bbox
 
 # Converting OSM data into network using `sfnetworks` package
 
-Now we have OSM network geometry. This network geometry, however, has many issues that need to be resolved before it can be used for analysis. We will use `sfnetworks` package to do both cleaning and analysis. We can pass `osm_small` to **as_sfnetwork()** to convert it to sfnetwork object. It is important to note that the sf object you pass to **as_sfnetwork()** function should be *LINESTRING*. When using **as_sfnetwork()**, it creates a directed network by default. For simplicity, we will set this to FALSE.
+Now we have OSM network geometry. This network geometry, however, has
+many issues that need to be resolved before it can be used for analysis.
+We will use `sfnetworks` package to do both cleaning and analysis. We
+can pass `osm_small` to **as_sfnetwork()** to convert it to sfnetwork
+object. It is important to note that the sf object you pass to
+**as_sfnetwork()** function should be *LINESTRING*. When using
+**as_sfnetwork()**, it creates a directed network by default. For
+simplicity, we will set this to FALSE.
 
-In the print out, you can see that there are two parts in `net` object: Node Data and Edge Data. Also notice that Node Data is denoted as
-'active'. The sfnetworks objects is made of nodes and edges that connect the nodes. When you do data manipulation using, for example, dplyr verbs such as mutate, you can choose whether to apply it to nodes or edges by **activating** the one that you want to modify.
+In the print out, you can see that there are two parts in `net` object:
+Node Data and Edge Data. Also notice that Node Data is denoted as
+'active'. The sfnetworks objects is made of nodes and edges that connect
+the nodes. When you do data manipulation using, for example, dplyr verbs
+such as mutate, you can choose whether to apply it to nodes or edges by
+**activating** the one that you want to modify.
 
 ```{r}
 # Converting the line component of OSM data into a network
@@ -163,9 +213,14 @@ net <- sfnetworks::as_sfnetwork(osm_small, directed = FALSE)
 print(net)
 ```
 
-You can also extract nodes and edges as separate sf objects using **st_as_sf()** function. To extract sf objects representing edges and
-nodes and store them separately, you can do (1) `net %>% activate("nodes") %>% st_as_sf()` or, equivalently, (2) `net %>% st_as_sf("nodes")`. The result is the same. In the leaflet() function below which takes `sf` objects but not `sfnetworks` objects, you
-need to extract nodes and edges separately and pass the extraction. The yellow points are nodes and gray lines are edges.
+You can also extract nodes and edges as separate sf objects using
+**st_as_sf()** function. To extract sf objects representing edges and
+nodes and store them separately, you can do (1)
+`net %>% activate("nodes") %>% st_as_sf()` or, equivalently, (2)
+`net %>% st_as_sf("nodes")`. The result is the same. In the leaflet()
+function below which takes `sf` objects but not `sfnetworks` objects,
+you need to extract nodes and edges separately and pass the extraction.
+The yellow points are nodes and gray lines are edges.
 
 ```{r}
 ## Plot--
@@ -190,11 +245,24 @@ leaflet() %>%
 
 | This content is heavily based on [this sfnetwork tutorial](https://luukvdmeer.github.io/sfnetworks/articles/sfn02_preprocess_clean.html)
 
-A network data may contain edges that connect the same pair of nodes, called *multiple edges*. There can also be loops that starts and ends at the same node (e.g., think of a cul-de-sac). The former case can be detected using `edge_is_multiple()` and the latter using `edge_is_loop()`.
+A network data may contain edges that connect the same pair of nodes,
+called *multiple edges*. There can also be loops that starts and ends at
+the same node (e.g., think of a cul-de-sac). The former case can be
+detected using `edge_is_multiple()` and the latter using
+`edge_is_loop()`.
 
-When removing a set of multiple edges using functions shown below, they always keep the first edge and discard others. By arranging the order of edges for each set of multiple edges, you can specify which edge you want to preserve.
+When removing a set of multiple edges using functions shown below, they
+always keep the first edge and discard others. By arranging the order of
+edges for each set of multiple edges, you can specify which edge you
+want to preserve.
 
-This way of simplification means that, when the multiple edges within a set have different attributes, all attribute information except for the preserved one would be lost. In such cases, you can *merge* those edges. Then, the output would have the geometry of the first edge in the set, but the attributes would be some summary of all the edges in the set. `to_spatial_simple()` function does this work (but not used in this document).
+This way of simplification means that, when the multiple edges within a
+set have different attributes, all attribute information except for the
+preserved one would be lost. In such cases, you can *merge* those edges.
+Then, the output would have the geometry of the first edge in the set,
+but the attributes would be some summary of all the edges in the set.
+`to_spatial_simple()` function does this work (but not used in this
+document).
 
 ```{r}
 # Let's simplify our network
@@ -212,16 +280,43 @@ message(str_c("Before simplification, there were ", net %>% st_as_sf("edges") %>
 
 **Why subdivide?**
 
-When `as_sfnetwork()` function converts an sf linestrings, the nodes are defined as the *endpoints* of each linestring. If you zoom into Midtown in the map above, there are many edges that crosses (i.e., intersections) but do not have nodes. The absence of nodes at what
-appears to be intersections would be legitimate data if the two crossing roads are, for example, bridges that have different elevations. However, we anecdotally know that there aren't that many such overhead bridges in our study area.
+When `as_sfnetwork()` function converts an sf linestrings, the nodes are
+defined as the *endpoints* of each linestring. If you zoom into Midtown
+in the map above, there are many edges that crosses (i.e.,
+intersections) but do not have nodes. The absence of nodes at what
+appears to be intersections would be legitimate data if the two crossing
+roads are, for example, bridges that have different elevations. However,
+we anecdotally know that there aren't that many such overhead bridges in
+our study area.
 
-We can use `to_spatial_subdivision` predicate to create points at the intersections and cut the edges accordingly.
+We can use `to_spatial_subdivision` predicate to create points at the
+intersections and cut the edges accordingly.
 
-> "Construct a subdivision of the network by subdividing edges at each interior point that is equal to any other interior or boundary point in the edges table. Interior points in this sense are those points that are included in their linestring geometry feature but are not endpoints of it, while boundary points are the endpoints of the linestrings. The network is reconstructed after subdivision such that edges are connected at the points of subdivision." ([source](https://luukvdmeer.github.io/sfnetworks/reference/spatial_morphers.html))
+> "Construct a subdivision of the network by subdividing edges at each
+> interior point that is equal to any other interior or boundary point
+> in the edges table. Interior points in this sense are those points
+> that are included in their linestring geometry feature but are not
+> endpoints of it, while boundary points are the endpoints of the
+> linestrings. The network is reconstructed after subdivision such that
+> edges are connected at the points of subdivision."
+> ([source](https://luukvdmeer.github.io/sfnetworks/reference/spatial_morphers.html))
 
-This `to_spatial_subdivision` function is a part of functions called [spatial morphers](https://luukvdmeer.github.io/sfnetworks/reference/spatial_morphers.html). Morphers are rooted in tidygraph, which allows you to temporarily morph the topology of the original network, do some work to the "morphed state" of the network, and merge the results back to the original network using unmorph() (See [this document](https://cran.r-project.org/web/packages/sfnetworks/vignettes/sfn05_morphers.html) from which I borrowed heavily). <font color=pink> It is by design that morphers are used not directly but by passing them to `morph()` function. </font>
+This `to_spatial_subdivision` function is a part of functions called
+[spatial
+morphers](https://luukvdmeer.github.io/sfnetworks/reference/spatial_morphers.html).
+Morphers are rooted in tidygraph, which allows you to temporarily morph
+the topology of the original network, do some work to the "morphed
+state" of the network, and merge the results back to the original
+network using unmorph() (See [this
+document](https://cran.r-project.org/web/packages/sfnetworks/vignettes/sfn05_morphers.html)
+from which I borrowed heavily). <font color=pink> It is by design that
+morphers are used not directly but by passing them to `morph()`
+function. </font>
 
-Although morphing is meant to be temporary, we can also make the changes **permanent** by passing them to `convert()` function instead of `morph()` function because we want to make permanent changes to our network (i.e., create nodes at intersections), we will use `convert()`.
+Although morphing is meant to be temporary, we can also make the changes
+**permanent** by passing them to `convert()` function instead of
+`morph()` function because we want to make permanent changes to our
+network (i.e., create nodes at intersections), we will use `convert()`.
 
 ```{r}
 # # Using spatial morpher
@@ -284,14 +379,24 @@ smooth_map
 
 # Calculate centrality
 
-One of the most common ways for analyzing the characteristics of networks are centrality measures. These algorithms assigns some numbers to nodes within a graph based on their position in the given network. There are many centrality measures, each with their own characteristics, as illustrated in the images below. We will try betweenness centrality and degree centrality. Betweenness centrality measures "the percentage of shortest paths that must go through the specific node ([Golbeck 2005, p.229](https://www.sciencedirect.com/science/article/pii/B9780128016565000214))". Degree centrality is the simplest centrality measure to compute: it is a count of how many connections a node has ([Golbeck 2005, p.226](https://www.sciencedirect.com/science/article/pii/B9780128016565000214)). 
-
+One of the most common ways for analyzing the characteristics of
+networks are centrality measures. These algorithms assigns some numbers
+to nodes within a graph based on their position in the given network.
+There are many centrality measures, each with their own characteristics,
+as illustrated in the images below. We will try betweenness centrality
+and degree centrality. Betweenness centrality measures "the percentage
+of shortest paths that must go through the specific node ([Golbeck 2005,
+p.229](https://www.sciencedirect.com/science/article/pii/B9780128016565000214))".
+Degree centrality is the simplest centrality measure to compute: it is a
+count of how many connections a node has ([Golbeck 2005,
+p.226](https://www.sciencedirect.com/science/article/pii/B9780128016565000214)).
 
 ![](Wp-01.png)
 
 (Source: [wikipedia](https://en.wikipedia.org/wiki/Centrality))
 
-![](centrality.jpg) (Source: Figure 1 in [Cordeiro et al. (2018)](https://arxiv.org/abs/1808.02960v1))
+![](centrality.jpg) (Source: Figure 1 in [Cordeiro et al.
+(2018)](https://arxiv.org/abs/1808.02960v1))
 
 ## Betweenness centrality
 
@@ -324,9 +429,21 @@ leaflet() %>%
 
 ## Shortest path
 
-One of the most widely performed task with road networks is to find a route between A and B, often the shortest path. IT can be easily done using `sfnetworks` package's `st_network_paths()`.
+One of the most widely performed task with road networks is to find a
+route between A and B, often the shortest path. IT can be easily done
+using `sfnetworks` package's `st_network_paths()`.
 
-First, you need to create sf objects with POINT geometry that represent origin and destination. These points do not need to be ON the network - the `sf_network_paths()` will find the nearest node and use them for the calculation. You can also supply multiple destinations to a single call of `st_network_paths()`, but the origin has to be the same. Then, you can pass them to `st_network_paths()` along with the network. The output is a data frame (a tibble to be more specific) with two columns, node_paths and edge_paths. This data frame will have as many rows as the number of origin-destination pairs. Opening up the content of the data frame, you will notice that it is just a sequence of nodes and edges through which the shortest path runs.
+First, you need to create sf objects with POINT geometry that represent
+origin and destination. These points do not need to be ON the network -
+the `sf_network_paths()` will find the nearest node and use them for the
+calculation. You can also supply multiple destinations to a single call
+of `st_network_paths()`, but the origin has to be the same. Then, you
+can pass them to `st_network_paths()` along with the network. The output
+is a data frame (a tibble to be more specific) with two columns,
+node_paths and edge_paths. This data frame will have as many rows as the
+number of origin-destination pairs. Opening up the content of the data
+frame, you will notice that it is just a sequence of nodes and edges
+through which the shortest path runs.
 
 ```{r}
 # Change crs for convenience
@@ -375,7 +492,16 @@ leaflet() %>%
 
 ## Degree centrality
 
-Intersections are used in various measures of the built environment. For example, intersection density (number of intersections divided by the area) is used to calculate a walkability index ([Frank et al., 2005](https://www.sciencedirect.com/science/article/pii/S0749379704003253?casa_token=kHCOrJaK25UAAAAA:KQqIuoVNIpubIKO8q8cGSzkHSGZK_b-LYi6qd5wvcXxG3cftTdhgPZ6tpLV-1yxWKCla2_F0QA)) as well as in the well-known 5D framework ([Ewing and Cervero, 2010](https://www.tandfonline.com/doi/full/10.1080/01944361003766766)). Remember that (unweighted) degree centrality simply means the number of edges each node has. Because we have cleaned the network by dropping pseudo nodes, the intersection would be those nodes with degree centrality greater than 1.
+Intersections are used in various measures of the built environment. For
+example, intersection density (number of intersections divided by the
+area) is used to calculate a walkability index ([Frank et al.,
+2005](https://www.sciencedirect.com/science/article/pii/S0749379704003253?casa_token=kHCOrJaK25UAAAAA:KQqIuoVNIpubIKO8q8cGSzkHSGZK_b-LYi6qd5wvcXxG3cftTdhgPZ6tpLV-1yxWKCla2_F0QA))
+as well as in the well-known 5D framework ([Ewing and Cervero,
+2010](https://www.tandfonline.com/doi/full/10.1080/01944361003766766)).
+Remember that (unweighted) degree centrality simply means the number of
+edges each node has. Because we have cleaned the network by dropping
+pseudo nodes, the intersection would be those nodes with degree
+centrality greater than 1.
 
 ```{r}
 
@@ -403,14 +529,25 @@ leaflet() %>%
 
 # Using GTFS and OSM together
 
-Although GTFS and OSM are different data sources and may seem to reside in totally separate world, people in the real world frequently mix the two as they navigate in a city. For example, one might drive from home to the nearest MARTA rail transit station, park their car there, and ride transit to their work. To analyze such movement, we need to be able to somehow connect the two datasets.
+Although GTFS and OSM are different data sources and may seem to reside
+in totally separate world, people in the real world frequently mix the
+two as they navigate in a city. For example, one might drive from home
+to the nearest MARTA rail transit station, park their car there, and
+ride transit to their work. To analyze such movement, we need to be able
+to somehow connect the two datasets.
 
-For exercise, let's examine how to compute the shortest path from one location to MARTA rail stations. 
-Since we are only interested in rail stations, we first need to extract transit stops for rail. As we discussed last week, GTFS is a relational table. The information on whether a transit facility is for bus or rail is contained in `routes` table, but it is not possible to link `stops` table and `routes` table directly. We will join routes -> trips -> stop_times -> stops. Then, we will extract the *stop_id* of rail stations.
+For exercise, let's examine how to compute the shortest path from one
+location to MARTA rail stations. Since we are only interested in rail
+stations, we first need to extract transit stops for rail. As we
+discussed last week, GTFS is a relational table. The information on
+whether a transit facility is for bus or rail is contained in `routes`
+table, but it is not possible to link `stops` table and `routes` table
+directly. We will join routes -\> trips -\> stop_times -\> stops. Then,
+we will extract the *stop_id* of rail stations.
 
 ```{r}
 # Read GTFS
-transit <- tidytransit::read_gtfs(here("Lab", "module_3", 'MARTA_GTFS_Latest_Feed.zip')) %>% 
+transit <- tidytransit::read_gtfs("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_3/MARTA_GTFS_Latest_Feed.zip") %>% 
   tidytransit::gtfs_as_sf()
 
 # Get stop_id for rails
@@ -426,7 +563,8 @@ rail_stops <- transit$routes %>%
 tm_shape(transit$stops %>% filter(stop_id %in% rail_stops)) + tm_dots(col = "red")
 ```
 
-Now, we need the city-wide OSM network that we downloaded at the beginning.
+Now, we need the city-wide OSM network that we downloaded at the
+beginning.
 
 ```{r}
 # Using the full network file 
@@ -444,7 +582,8 @@ Next, the remaining steps are:
 
 1.  Define the starting point.
 2.  Define the ending points (which are MARTA rail stations).
-3.  Fine the shortest paths from the starting point to all ending points.
+3.  Fine the shortest paths from the starting point to all ending
+    points.
 4.  Calculate the distance of each route between the starting point to
     each MARTA rail stations.
 5.  Replace those with 0 distances with some large number (e.g., maximum
@@ -547,7 +686,10 @@ acs2020c <- acs2020 %>%
 
 ## Spatial join the Census data with our network
 
-Before we do the join, let's use centrality measures that were calculated on the entire network. It takes time, so I calculated it and saved it. You can download it [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_3/network_char.RData).
+Before we do the join, let's use centrality measures that were
+calculated on the entire network. It takes time, so I calculated it and
+saved it. You can download it
+[here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_3/network_char.RData).
 
 ```{r warning=F, message=F}
 load(here("Lab", "module_3", "network_char.RData"))

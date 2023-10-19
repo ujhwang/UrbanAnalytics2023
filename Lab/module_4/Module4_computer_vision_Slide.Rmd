@@ -65,6 +65,22 @@ library(here)
 7. Merge the results back to the points from Step 2.
 * Your Google API key should be ready by next Tuesday.
 * We will cover Steps 2-5 next Tuesday and Steps 6-7 next Thursday.
+* We will use Google Colab for the computer vision part (Steps 6-7).
+
+---
+## Google Colab(oratory)
+
+* Google Colab is a cloud-based Jupyter notebook service hosted by Google.
+* The free tier has 12 hour limit; after 12 hours of computation, your session will expire.
+
+```{r, echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/colab_option.png")
+```
+  
+---
+class: inverse, middle, center
+
+# Street View Images
 
 ---
 ## Why Street View Images
@@ -74,6 +90,14 @@ library(here)
   * ***Urban form***: macroscale-built environment which characterizes street connectivity, density, and diversity of land use.
   * ***Streetscape***: pertains to physical layout and design of the built environment, such as **sidewalk width, enclosure, tree canopy, landscaping, and street furniture**.
 * Street View Images allow us to examine the streetscapes without traveling. 
+
+---
+## Street View Images API
+
+* Google Street View
+* Bing Maps Streetside View
+* Mapillary: platform for sharing crowdsourced geotagged street view images; acquired by Meta in 2020.
+> Compare [Google](https://maps.app.goo.gl/Vc9kw9WNnWC6QywN9), [Bing](https://www.bing.com/maps?cp=33.776839%7E-84.389371&lvl=15.4&pi=6.8&style=x&mo=om.1&dir=85.1), and [Mapillary](https://www.mapillary.com/app/?lat=33.776851232857&lng=-84.389502582857&z=17&pKey=908091313101146&focus=photo&x=0.494875692639787&y=0.6273840659246637&zoom=0) street view images.
 
 ---
 ## Google Street View Images 
@@ -100,10 +124,12 @@ knitr::include_graphics("img/street_view_car.png")
 ## Google Street View Images
 
 * Web version of GSV is free but **.red[their API is NOT FREE!]** (7.00 USD per 1000 images)
+* You get $200 credit every month, so you can get about 28,000 street view images per month.
 * Maximum Queries per Minute (QPM): 30,000. Requests up to 25,000 per day require an API key.
 * Do not distribute images nor use it for commercial purposes.
 * You should **.red[NEVER EXPOSE]** your API key. You can get charged for a lot of money.
-* Get your key [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/how_to_get_your_key.pptx)
+* Follow the instruction [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/how_to_get_your_key.pptx) to get your Google API key.
+* Once you complete getting the key, I highly recommend setting up a budget alert (Billing --> Budgets & alerts --> create budget).
 
 ---
 
@@ -128,12 +154,11 @@ knitr::include_graphics("img/street_view_car.png")
 https://maps.googleapis.com/maps/api/streetview?.red[size=600x300].blue[&location=46.414382,10.013988]<br>.orange[&heading=151.78].pink[&pitch=-0.76].green[&key=YOUR_API_KEY]
 ]
 
-* **Size**: Cappted at 640x 640 pixels.
-* **Location**: Coordinates in 4326.
+* **Size**: Capped at 640x 640 pixels.
+* **Location**: latitude and longitude.
 * **Heading**: Heading of the camera <br>.small[.gray[(0=North, 90=East, 180=South, 270=West, 360=North)]]
 * **Pitch** (default 0): Specified up or down angle of the camera.
-* **Source**:  limits Street View searches to selected sources. Either default or outdoor.
-* **fov**: (default 90): determines the horizontal field of view of the image.
+* **fov**: (default 90): determines the field of view of the image.
 * **key**: Your API key.
 
 ---
@@ -143,6 +168,11 @@ https://maps.googleapis.com/maps/api/streetview?.red[size=600x300].blue[&locatio
 This URL (with your key added) will give you an image at Tech Square.
 
 https://maps.googleapis.com/maps/api/streetview?size=640x640>&location=33.7768249,-84.388767&heading=224.96&<br>fov=90&pitch=0&key=YOUR_API_KEY
+
+---
+class: inverse, middle, center
+
+# Computer Vision
 
 ---
 ## Computer vision
@@ -171,16 +201,24 @@ https://maps.googleapis.com/maps/api/streetview?size=640x640>&location=33.776824
 ![](img/digit_classification.png)
 
 ---
-## Abstract task
-* Predicting perceptual attribute: visual safety score of street view images
-  
-![](img/visual_safety_score.png)
+## Segmentation
+* Segmentation models detect 'Things' and 'Stuff' from an image.
+* Things: countable objects such as person, bike, and car.
+* Stuff: uncountable region of identical texture, such as sky and road.
+
+```{r, echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/stuff_things.png")
+```
+.footnotesize[
+(source: https://viso.ai/deep-learning/image-segmentation-using-deep-learning/)
+]
 
 ---
 ## Segmentation
 * Semantic Segmentation: Classifies each pixel of an image into a class.
 * Instance Segmentation: Detects objects and distinguishes instances.
 * Panoptic Segmentation: Combines the two methods above.
+
 ```{r, echo=FALSE, out.width="73%"}
 knitr::include_graphics("img/segmentation_types.png")
 ```
@@ -188,13 +226,63 @@ knitr::include_graphics("img/segmentation_types.png")
 (source: https://arxiv.org/pdf/2006.12567.pdf)
 ]
 
+
 ---
-## Google Colab(oratory)
+class: inverse, middle, center
 
-* Google Colab is a cloud-based Jupyter notebook service hosted by Google.
-* The free tier has 12 hour limit; after 12 hours of computation, your session will expire.
+# Levaraging Street View Images and Computer Vision in Urban Studies
 
-```{r, echo=FALSE, out.width="70%"}
-knitr::include_graphics("img/colab_option.png")
+---
+## Perception of streetscape and bike lanes
+
+* Research question: **“Do bike lanes in low-income neighborhoods—which are often perceived as less safe and unappealing—yield the same results as those in safer, more affluent neighborhoods?”**
+
+* In other words, **"Does the impact of bike lanes on encouraging biking differ by the perception of streetscapes?"**
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/good_bad_streetscape.png")
+```
+
+---
+## Operational approach
+
+1. **Train** a Deep Learning model that predicts a “perception” (value) from a given “streetscape” (image).
+
+2. **Infer** perception scores of street images for an entire city using the trained model.
+
+3. **Model** the associations between perception of streetscape, bike lanes, and biking behaviors.
+
+---
+## Training data: Place Pulse 2.0
+* Online crowdsourced dataset of perceptual attributes – **safe**, lively, beautiful, wealthy, depressing, and boring – of street view images collected by researchers at the MIT Media Lab.
+
+![](img/place_pulse.png)
+
+---
+## Training: transfer learning
+* Transfer learning leverages the knowledge of a pre-trained model, instead of training from scratch
+
+![](img/transfer_learning_1.png)
+
+---
+## Training: transfer learning
+* Transfer learning leverages the knowledge of a pre-trained model, instead of training from scratch
+
+![](img/transfer_learning_2.png)
+
+---
+## Training result
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/training_result.png")
 ```
   
+---
+## Inference data: Mapillary
+* There are 7.4 million Mapillary street view image in Berlin, Germany.
+
+![](img/mapillary_berlin.png)
+
+---
+## Inference result
+
+![](img/visual_safety_score.png)
