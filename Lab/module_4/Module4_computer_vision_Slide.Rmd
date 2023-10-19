@@ -62,10 +62,13 @@ library(here)
 4. Calculate the heading of the cameras for each point. 
 5. Create a function that takes a point as input and download GSV images.
 6. Apply computer vision to the images.
-7. Merge the results back to the points from Step 2.
+7. Merge the results back to the points from Step 2.  
+  
+.small[
 * Your Google API key should be ready by next Tuesday.
 * We will cover Steps 2-5 next Tuesday and Steps 6-7 next Thursday.
 * We will use Google Colab for the computer vision part (Steps 6-7).
+]
 
 ---
 ## Google Colab(oratory)
@@ -89,7 +92,18 @@ class: inverse, middle, center
 * Built environment literature commonly differentiate between the urban form and streetscape.
   * ***Urban form***: macroscale-built environment which characterizes street connectivity, density, and diversity of land use.
   * ***Streetscape***: pertains to physical layout and design of the built environment, such as **sidewalk width, enclosure, tree canopy, landscaping, and street furniture**.
-* Street View Images allow us to examine the streetscapes without traveling. 
+
+---
+## Why Street View Images
+
+* Researchers and practitioners had to conduct a field survey to collect information on streetscapes.
+* Street view images can replace some parts of the field survey.
+
+![](img/walking_audit.png)
+.footnotesize[
+(source: https://www.times-standard.com/2023/07/17/humboldt-county-cities-to-see-a-walk-audit/; https://www.clintonherald.com/news/local_news/groups-perform-walking-audit/article_29242512-f757-58b3-b1e8-7450509367c7.html)
+]
+
 
 ---
 ## Street View Images API
@@ -115,9 +129,8 @@ knitr::include_graphics("img/street_view_car.png")
 ---
 ## Google Street View Images
 
-* Around 2010, planning studies started using Google Street View (GSV) images.
-* To audit street environments using GSV images.
-* In early studies, still human auditors were looking at GSV and did manual audits.
+* Around 2010, planning studies started using Google Street View (GSV) images to audit street environments.
+* In early studies, human auditors were looking at GSV and did manual audits.
 * Recent studies are increasingly using computer vision instead of manual audits.
 
 ---
@@ -126,10 +139,8 @@ knitr::include_graphics("img/street_view_car.png")
 * Web version of GSV is free but **.red[their API is NOT FREE!]** (7.00 USD per 1000 images)
 * You get $200 credit every month, so you can get about 28,000 street view images per month.
 * Maximum Queries per Minute (QPM): 30,000. Requests up to 25,000 per day require an API key.
-* Do not distribute images nor use it for commercial purposes.
+* Do not distribute images.
 * You should **.red[NEVER EXPOSE]** your API key. You can get charged for a lot of money.
-* Follow the instruction [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/how_to_get_your_key.pptx) to get your Google API key.
-* Once you complete getting the key, I highly recommend setting up a budget alert (Billing --> Budgets & alerts --> create budget).
 
 ---
 
@@ -162,14 +173,6 @@ https://maps.googleapis.com/maps/api/streetview?.red[size=600x300].blue[&locatio
 * **key**: Your API key.
 
 ---
-
-## Try it
-
-This URL (with your key added) will give you an image at Tech Square.
-
-https://maps.googleapis.com/maps/api/streetview?size=640x640>&location=33.7768249,-84.388767&heading=224.96&<br>fov=90&pitch=0&key=YOUR_API_KEY
-
----
 class: inverse, middle, center
 
 # Computer Vision
@@ -177,7 +180,7 @@ class: inverse, middle, center
 ---
 ## Computer vision
 * Computer vision is the field of AI (particularly, deep learning) that enables computers to interpret and understand visual information.
-* Deep learning is part of a broader family of AI methods based on **artificial neural networks** with representation learning.
+* Deep learning is part of a broader family of AI methods based on **artificial neural networks**.
 * Example architecture: Convolutional Neural Network (CNN)
 ![](img/cnn.jpg)
   
@@ -232,8 +235,73 @@ class: inverse, middle, center
 
 # Levaraging Street View Images and Computer Vision in Urban Studies
 
+
 ---
-## Perception of streetscape and bike lanes
+## Case 1: Street view images to aerial image
+
+
+* Aerial images are often unsuitable for examining road infrastructure.
+
+```{r, echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/aerial_issue.png")
+```
+
+---
+## Case 1: Street view images to aerial image
+
+* "If I have street view images from four directions and transform somehow, I may be able to recreate aerial image?"
+
+
+```{r, echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/four_street_view_images.png")
+```
+
+
+---
+### Inverse perspective transformation
+
+![](img/inverse_perspective.jpg)
+
+---
+### Comparison between aerial image and recreated aerial image
+
+![](img/aerial_street_view.png)
+
+---
+### Examples of recreated aerial image
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/example_1.png")
+```
+
+---
+### Examples of recreated aerial image
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/example_2.png")
+```
+
+---
+### Examples of recreated aerial image
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/example_3.png")
+```
+
+---
+## Case 2: Streetscape and servicescape
+.small[
+* Research question: **"Can walkable streetscapes make local businesses more attractive?"**
+* Method: Customer satisfaction (from Yelp review rating) ~ streetscape elements (from semantic & instance segmentation models)
+* Findings: Greenness, building-to-street ratio, and sidewalk buffer have a positive impact on customer satisfaction of nearby restaurants.
+]
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/streetscape-servicescape.gif")
+```
+
+---
+## Case 3: Perception of streetscape and bike lanes
 
 * Research question: **“Do bike lanes in low-income neighborhoods—which are often perceived as less safe and unappealing—yield the same results as those in safer, more affluent neighborhoods?”**
 
@@ -244,7 +312,7 @@ knitr::include_graphics("img/good_bad_streetscape.png")
 ```
 
 ---
-## Operational approach
+### Operational approach
 
 1. **Train** a Deep Learning model that predicts a “perception” (value) from a given “streetscape” (image).
 
@@ -253,36 +321,63 @@ knitr::include_graphics("img/good_bad_streetscape.png")
 3. **Model** the associations between perception of streetscape, bike lanes, and biking behaviors.
 
 ---
-## Training data: Place Pulse 2.0
+### Training data: Place Pulse 2.0
 * Online crowdsourced dataset of perceptual attributes – **safe**, lively, beautiful, wealthy, depressing, and boring – of street view images collected by researchers at the MIT Media Lab.
 
 ![](img/place_pulse.png)
 
 ---
-## Training: transfer learning
+### Training: transfer learning
 * Transfer learning leverages the knowledge of a pre-trained model, instead of training from scratch
 
 ![](img/transfer_learning_1.png)
 
 ---
-## Training: transfer learning
+### Training: transfer learning
 * Transfer learning leverages the knowledge of a pre-trained model, instead of training from scratch
 
 ![](img/transfer_learning_2.png)
 
 ---
-## Training result
+### Training result
 ```{r, echo=FALSE, out.width="80%"}
 knitr::include_graphics("img/training_result.png")
 ```
   
 ---
-## Inference data: Mapillary
+### Inference data: Mapillary
 * There are 7.4 million Mapillary street view image in Berlin, Germany.
+* I sampled 380,000 images and applied the trained model.
 
 ![](img/mapillary_berlin.png)
 
 ---
-## Inference result
+### Inference result
 
 ![](img/visual_safety_score.png)
+
+---
+### Inference result
+
+![](img/visual_safety_score_map.png)
+
+---
+## Google API key
+
+* Follow the instruction [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/how_to_get_your_key.pptx) to get your Google API key.
+* Once you complete getting the key, I highly recommend setting up a budget alert (Billing --> Budgets & alerts --> create budget).
+* Add your Google API key to the system environment variable.
+  - You can follow the same steps we used for the Census API and Yelp API keys.
+  - If you are using Docker, you will need to create a new container.
+
+---
+
+## Try it
+
+This URL (with your key added) will give you an image at Tech Square.
+
+
+https://maps.googleapis.com/maps/api/streetview?size=640x640&location=33.7768249,-84.388767&heading=224.96&<br>fov=90&pitch=0&key=YOUR_API_KEY
+
+
+* Try different heading, fov, and pitch.
