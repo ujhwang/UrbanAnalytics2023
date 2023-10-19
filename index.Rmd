@@ -184,7 +184,7 @@ assignment_col <- c(
   "[Major 1](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_2/week2/LectureStorytelling-w-data.html#28) <br> (due Oct05)",# 6
   "[Mini 4](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/mini_4/mini_assignment_4.html) <br> (due Oct12)",# 7
   "", # 8
-  "Major 2 <br> (due Nov02)",# 9 
+  "[Major 2](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_2/major_assignment_2.html) <br> (due Nov02)",# 9 
         # Chicago GTFS feed http://www.transitchicago.com/downloads/sch_data/google_transit.zip
   "",# 10
   "Major 3 <br> (due Nov16)",# 11
