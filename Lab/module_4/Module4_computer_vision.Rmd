@@ -25,16 +25,17 @@ library(here)
 ttm()
 ```
 
-# Merging the data processed from Colab back to R
+# Merging the data processed from Colab back to R.
 
 ```{r}
-edges <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_chamblee.geojson")
+# Load the sampled points. Change the following command if you use your own data.
+endp <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_chamblee.geojson")
 
-# Download the output from the computer vision models
+# Download the output from the computer vision models.
 seg_output <- read.csv(here("Lab", "Module_4", "seg_output.csv"))
 
-# Join them back to the template used to download images
-seg_output_nodes <- edges %>% inner_join(seg_output, by="node_id")
+# Join them back to the template used to download images.
+seg_output_nodes <- endp %>% inner_join(seg_output, by=c("node_id"="img_id"))
 
 # Map!
 tm_shape(seg_output_nodes %>% 
