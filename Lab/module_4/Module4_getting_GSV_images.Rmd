@@ -30,20 +30,46 @@ library(sf)
 library(tidygraph)
 library(tmap)
 library(here)
+library(progress)
 if (!require("nominatimlite")) install.packages("nominatimlite")
+ttm()
 ```
 
-# Step 1. Get OSM data and clean it.
+# Step 1. Select a study area.
+
+Let's find a small city that is suitable for the exercise. You can choose a city you like. I chose Chamblee.
+```{r, message=FALSE, warning=FALSE, results='hide'}
+cities_ga <- tigris::places('GA', year = 2021) %>% 
+  filter(LSAD == 25)
+
+metro_atl <- tigris::core_based_statistical_areas(year = 2021) %>% 
+  filter(str_detect(NAME, 'Atlanta'))
+
+cities_atl <- cities_ga[metro_atl,] %>% 
+  mutate(temp_id = sample(1:n(), n()))
+```
+```{r}
+tm_shape(metro_atl) + tm_borders(lwd = 3) + 
+  tm_shape(cities_atl) + tm_polygons(col = 'temp_id', palette = 'inferno', 
+                                     alpha = 0.5, lwd = 1.5) +
+  tm_shape(cities_atl) + tm_text('NAME') +
+  tm_view(set.view = c(-84.37, 33.75, 10))
+```
+
+
+# Step 2. Get OSM data and clean it.
+
+## 2-1. Download OSM.
 
 Download OSM data, convert it to sfnetworks object, and clean it. Detailed descriptions can be found in the previous week's material ([link](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_3/2_OSM.html)).
 
 ```{r}
-# Bounding Box for Atlanta.
-bb_atl <- nominatimlite::geo_lite_sf('Atlanta, GA', points_only = F) %>% 
+# Bounding Box for Chamblee.
+my_bb <- nominatimlite::geo_lite_sf('Chamblee, GA', points_only = F) %>% 
   st_bbox()
 
 # Get OSM data.
-osm_road <- opq(bbox = bb_atl) %>%
+osm_road <- opq(bbox = my_bb) %>%
   add_osm_feature(key = 'highway', 
                   value = c("motorway", "trunk", "primary", 
                             "secondary", "tertiary", "unclassified",
@@ -63,7 +89,7 @@ net <- osm_road$osm_lines %>%
   mutate(legnth = edge_length())
 ```
 
-# Step 2. Further cleaning specific to GSV
+## 2-2. Extract edges.
 
 Extract "edges" from the cleaned network, add length column. Then delete segments that are too short (< 100m). Finally, add a unique ID for each edge.
 ```{r}
@@ -75,43 +101,45 @@ edges <- net %>%
   # Add length column
   mutate(length = st_length(.) %>% unclass()) %>% 
   # Drop segments that are too short (100m)
-  filter(length > 50) %>% 
+  filter(length > 100) %>% 
   # Add a unique ID for each edge
   mutate(edge_id = seq(1,nrow(.)))
 
-# nodes <- net %>% 
-#   st_as_sf("nodes") %>% 
-#   mutate(node_id = seq(1,nrow(.)))
 ```
 
-# Step 3. Extract start, mid, and end points of each segment. For those points, calculate the azimuth.
+# Step 3. Get coordinates and headings.
 
 We will download four images for street segment, one at the start of a segment, two in the middle of a segment (each looking opposite to the other), and one at the end of a segment. The code below, we will extract a street segment (i.e., `e` below) and demonstrate how to calculate azimuth for the start point, end point, and mid point.
 
 ```{r}
 # Select an edge for demo
-test_edge = 23126
-e <- edges %>% filter(edge_id == test_edge)
+test_edge_n <- 12
+test_edge <- edges %>% filter(edge_id == test_edge_n) %>% 
+  st_geometry()
 
 # View it
-tmap_mode('view')
-e %>% st_coordinates() %>% 
+test_edge %>% st_coordinates() %>% 
   as.data.frame() %>% 
   st_as_sf(coords = c("X", "Y"), crs = 4326) %>% 
   with(
-    tm_shape(.) + tm_dots() +
-    tm_shape(.[1,]) + tm_dots(col = "red") +  # Start = red
+    tm_basemap("OpenStreetMap") +
+      tm_shape(.) + tm_dots() +
+      tm_shape(.[1,]) + tm_dots(col = "red") +  # Start = red
       tm_shape(.[nrow(.),]) + tm_dots(col = "yellow")  # End = yellow
   )
 ```
 
 ![](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/img/atan.jpg)
+  
+## 3-1. Sample points and get azimuth.
+
+Extract start, mid, and end points of each segment. For those points, calculate the azimuth.
 
 ```{r}
 # -----------------------------------------------------------
 # First intersection
 # First two points from a line
-start_p <- e %>% 
+start_p <- test_edge %>% 
   st_coordinates() %>% 
   .[1:2,1:2]
 
@@ -122,7 +150,7 @@ start_azi <- atan2(start_p[2,"X"] - start_p[1, "X"],
 # -----------------------------------------------------------
 # The other intersection
 # Last two points from a line
-end_p <- e %>% 
+end_p <- test_edge %>% 
   st_coordinates() %>% 
   .[(nrow(.)-1):nrow(.),1:2]
 
@@ -135,27 +163,26 @@ end_azi <- if (end_azi < 180) {end_azi + 180} else {end_azi - 180}
 
 # ----------------------------------------------------------
 # mid point
-mid_p <- e %>% 
-  st_geometry() %>% 
+mid_p3 <- test_edge %>% 
   .[[1]] %>% 
-  st_line_sample(sample = c(0.45, 0.55)) %>% 
+  st_line_sample(sample = c(0.45, 0.5, 0.55)) %>% 
   st_cast("POINT") %>% 
   st_coordinates()
 
-mid_azi <- atan2(mid_p[2,"X"] - mid_p[1, "X"],
-                 mid_p[2,"Y"] - mid_p[1, "Y"])*180/pi
+mid_p <- mid_p3[2,]
 
-mid_p <- e %>% 
-  st_geometry() %>% 
-  .[[1]] %>% 
-  st_line_sample(sample = 0.5) %>% 
-  st_coordinates() %>% 
-  .[1,1:2]
+mid_azi <- atan2(mid_p3[3,"X"] - mid_p3[1, "X"],
+                 mid_p3[3,"Y"] - mid_p3[1, "Y"])*180/pi
+
+mid_azi2 <- ifelse(mid_azi < 180, mid_azi + 180, mid_azi - 180)
+
 ```
 
-# Step 4. Define a function that performs Step 3.
+## 3-2. Define a function.
+
+Define a function that performs Step 3-1.
 ```{r}
-get_azi <- function(line){
+getAzimuth <- function(line){
   # end point 1 ----------------------------------------------
   start_p <- line %>% 
   st_coordinates() %>% 
@@ -175,41 +202,40 @@ get_azi <- function(line){
   end_azi <- if (end_azi < 180) {end_azi + 180} else {end_azi - 180}
   
   # mid point 1 ---------------------------------------------
-  mid_p <- line %>% 
-    st_line_sample(sample = c(0.45, 0.55)) %>% 
+  mid_p3 <- line %>% 
+    st_line_sample(sample = c(0.45, 0.5, 0.55)) %>% 
     st_cast("POINT") %>% 
     st_coordinates()
   
-  mid_azi <- atan2(mid_p[2,"X"] - mid_p[1, "X"],
-                   mid_p[2,"Y"] - mid_p[1, "Y"])*180/pi
+  mid_p <- mid_p3[2,]
   
-  mid_p <- line %>% 
-    st_line_sample(sample = 0.5) %>% 
-    st_coordinates() %>% 
-    .[1,1:2]
+  mid_azi <- atan2(mid_p3[3,"X"] - mid_p3[1, "X"],
+                   mid_p3[3,"Y"] - mid_p3[1, "Y"])*180/pi
     
+  mid_azi2 <- ifelse(mid_azi < 180, mid_azi + 180, mid_azi - 180)
   
   # return in data frame ------------------------------------
   return(tribble(
     ~type,    ~X,            ~Y,             ~azi,
     "start",   start_p[1,"X"], start_p[1,"Y"], start_azi,
     "mid1",    mid_p["X"],   mid_p["Y"],   mid_azi,
-    "mid2",    mid_p["X"],   mid_p["Y"],   ifelse(mid_azi < 180, mid_azi + 180, mid_azi - 180),
+    "mid2",    mid_p["X"],   mid_p["Y"],   mid_azi2,
     "end",     end_p[2,"X"],   end_p[2,"Y"],   end_azi))
 }
 ```
 
+## 3-3. Apply the function to edges.
 
-# Step 5. Apply the function to all street segments 
+Apply the function to all street segments.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 endp_azi <- edges %>% 
   st_geometry() %>% 
-  map_df(get_azi) 
+  map_df(getAzimuth, .progress = T)
 
 endp <- endp_azi %>% 
   bind_cols(edges %>% 
-              st_drop_geometry() %>% 
+              st_drop_geometry() %>% # same as `st_set_geometry(NULL)`
               slice(rep(1:nrow(edges),each=4))) %>% 
   st_as_sf(coords = c("X", "Y"), crs = 4326, remove=FALSE) %>% 
   mutate(node_id = seq(1, nrow(.)))
@@ -218,11 +244,24 @@ endp
 
 ```
 
-# Step 6. Define a function that formats request URL and download images.
+> Export the result `endp` to a geojson file (e.g., ***endp_{city_name}.geojson***) using `st_write()`. We will need this data later.
+
+You may as well use the 
+<a href="https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_chamblee.geojson" download>Chamblee data</a> I created.
+```{r eval=F}
+# Download images 
+endp <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_chamblee.geojson")
+```
+
+# Step 4. Get GSV images.
+
+## 4-1. Define a function.
+
+Define a function that formats request URL and download images.
 ```{r}
-get_image <- function(iterrow){
+getImage <- function(iterrow){
   type = iterrow$type
-  location <- paste0(iterrow$Y %>% round(4), ",", iterrow$X %>% round(4))
+  location <- paste0(iterrow$Y %>% round(5), ",", iterrow$X %>% round(5))
   heading <- iterrow$azi %>% round(1)
   edge_id <- iterrow$edge_id
   node_id <- iterrow$node_id
@@ -231,39 +270,34 @@ get_image <- function(iterrow){
   
   furl <- glue::glue("https://maps.googleapis.com/maps/api/streetview?size=640x640&location={location}&heading={heading}&fov=90&pitch=0&key={key}")
   fname <- glue::glue("GSV-nid_{node_id}-eid_{edge_id}-type_{type}-Location_{location}-heading_{heading}-highway_{highway}.jpg")
-  fpath <- here("Lab", "module_4", "downloaded_image", fname)
+  fpath <- here("Lab", "module_4", "downloaded_image", fname) # you may need to change this
   download.file(furl, fpath, mode = 'wb')
 }
 ```
 
-To reduce the number of images you'd be downloading, I pre-filtered the points so that it includes only Atlantic Station. Download endp_atlantic_station.geojson from [here](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_atlantic_station.geojson). 
+## 4-2. Download the images.
 
-```{r}
-# Download images 
-edges_as <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_atlantic_station.geojson")
-
-```
-
-```{r eval=F}
+Download the images using the custom function `getImage()`.
+```{r eval=F, message=F}
 # Loop!
-for (i in seq(1,nrow(edges_as))){
-  get_image(edges_as[i,])
+for (i in seq(1,nrow(endp))){
+  getImage(endp[i,])
 } 
 ```
 
 > ZIP THE DOWNLOADED IMAGES AND NAME IT 'gsv_images.zip' FOR THE SUBSEQUENT ANALYSIS.
 
 
-# Another way to sample GSV images
+# (Optional) Another way to sample points.
 
 Previously, we sampled four points per street segment. However, other studies have used different methods of sampling GSV images. One of the most widely used sampling method is to download one panoramic image at some fixed distance interval, such as 20 meters. This can be easily achieved by a small change to the code shown above.
 
-Here, two sets of points are generated, (1) for actual location of points and (2) for the azimuth calculation. Notice that the points for azimuth calculation (i.e., 2) are twice as many as the points for actual location (i.e., 1). 
+Here, two sets of points are generated, (1) for actual location of points and (2) for the azimuth calculation. Notice that the points for azimuth calculation are twice as many as the points for actual location. 
 
 ```{r}
 # Extract a curvy line
-z <- edges %>% filter(edge_id == test_edge)
-tm_shape(z) + tm_lines()
+z <- edges %>% filter(edge_id == test_edge_n)
+tm_basemap("OpenStreetMap") + tm_shape(z) + tm_lines()
 
 # calculate what proportion equals 40 in the given segment
 prop <- 40/z$length
@@ -275,10 +309,11 @@ sample_actual <- c(seq(0, 1, by=prop),1)
 sample_azi <- c(sample_actual-0.02, sample_actual+0.02) %>% sort()
 
 # Sample points
-sampled_actual <- z %>% st_transform(26967) %>% st_line_sample(sample = sample_actual) %>% st_cast("POINT")
-sampled_azi <- z %>% st_transform(26967) %>% st_line_sample(sample = sample_azi) %>% st_cast("POINT")
+sampled_actual <- z %>% st_transform(32616) %>% st_line_sample(sample = sample_actual) %>% st_cast("POINT")
+sampled_azi <- z %>% st_transform(32616) %>% st_line_sample(sample = sample_azi) %>% st_cast("POINT")
 # View them
-tm_shape(sampled_actual) + tm_dots(col = "red", size=0.07) +
+tm_basemap("OpenStreetMap") + 
+  tm_shape(sampled_actual) + tm_dots(col = "red", size=0.07) +
   tm_shape(sampled_azi) + tm_dots(col = "blue", alpha = 0.5)
 
 # Calculate azimuth
