@@ -15,6 +15,7 @@ output:
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(magrittr)
 library(osmdata)
 library(sfnetworks)
 library(units)
@@ -25,57 +26,84 @@ library(here)
 ttm()
 ```
 
-# Merging the data processed from Colab back to R.
+## Merge the data processed from Colab back to R. 
 
 ```{r}
-# Load the sampled points. Change the following command if you use your own data.
-endp <- st_read("https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/Lab/module_4/endp_chamblee.geojson")
+# Load the sampled points. You need to change the following command.
+endp <- st_read(here("Lab", "Module_4", "endp_chamblee.geojson"))
 
-# Download the output from the computer vision models.
+# Download the output from the computer vision models. You may need to change the following command.
 seg_output <- read.csv(here("Lab", "Module_4", "seg_output.csv"))
 
-# Join them back to the template used to download images.
+# Join them back to the `endp` object that was used to download images.
 seg_output_nodes <- endp %>% inner_join(seg_output, by=c("node_id"="img_id"))
 
+seg_output_nodes
+```
+
+## Calculate Greenness.
+```{r}
+seg_output_nodes %<>% 
+  mutate(greenness = tree + grass + plant,
+         pct_greenness = greenness/(640*640))
+
 # Map!
-tm_shape(seg_output_nodes %>% 
-           mutate(pct_tree = tree/(640*640))) + 
-  tm_dots(col = "pct_tree", style="quantile")
+t1 <- tm_basemap("OpenStreetMap")+
+  tm_shape(seg_output_nodes) + 
+  tm_dots(col = "pct_greenness", style="quantile", palette = 'viridis')
+
+t2 <- tm_basemap(leaflet::providers$Esri.WorldImagery) +
+  tm_shape(seg_output_nodes %>% st_bbox() %>% st_as_sfc()) + 
+  tm_borders(alpha = 0)
+
+tmap_arrange(t1, t2, sync = T)
 ```
 
+## Calculate Building-to-street Ratio.
 ```{r}
-compare_df <- seg_output_nodes %>% 
-  mutate(type = case_when(type %in% c('mid1', 'mid2') ~ "midpoint",
-                          TRUE ~ "intersection"))
+seg_output_nodes %<>% 
+  mutate(b2s_ratio = (building + house)/(sidewalk + road + car)) %>% 
+  mutate(b2s_ratio = case_when(
+    is.infinite(b2s_ratio) ~ 0,
+    TRUE ~ b2s_ratio))
 
-compare_df %>% 
-  group_by(type) %>% 
-  summarise(across(c("building", "tree", "road", "sidewalk", "sky"), ~ round(mean(.x)/(640^2), 2)))
+tm_shape(seg_output_nodes) + 
+  tm_dots(col = "b2s_ratio", style="quantile", palette = 'viridis')
 ```
 
+## Are there any differences by type of road?
 ```{r}
-compare_df %>% 
-  pivot_longer(cols = c(building, sky, tree, road, sidewalk), names_to = 'variable', values_to = "value") %>% 
+seg_output_road_type <- seg_output_nodes %>% 
+  st_drop_geometry() %>% 
+  mutate(highway = case_when(
+    highway == 'trunk' ~ 'trunk',
+    highway == 'primary' ~ 'pri',
+    highway == 'secondary' ~ 'sec',
+    highway == 'tertiary' ~ 'ter',
+    highway == 'residential' ~ 'res',
+    highway == 'unclassified' ~ 'unc',
+    TRUE ~ NA_character_)) %>% 
+  filter(!is.na(highway)) %>% 
+  mutate(highway = factor(highway, levels = c('trunk','pri','sec','ter','res','unc'))) %>% 
+  group_by(highway) %>% 
+  summarise(across(c("building", "greenness", "road", "sidewalk", "sky", "car"), ~ round(mean(.x)/(640^2), 4)))
+
+seg_output_road_type %>% 
+  pivot_longer(cols = c(building, sky, greenness, road, sidewalk, car), 
+               names_to = 'variable', 
+               values_to = "value") %>% 
   ggplot() +
-  geom_boxplot(mapping = aes(x = type, y = value/(640^2))) +
+  geom_boxplot(mapping = aes(x = highway, y = value)) +
+  theme_bw() +
   facet_wrap(~variable, scales = "free_y")
 ```
 
-```{r}
-compare_df_summary <- compare_df %>% 
-  select(type, building, sky, tree, road, sidewalk) %>% 
-  mutate(across(c(building, sky, tree, road, sidewalk), ~ .x/(640^2))) %>% 
-  st_drop_geometry() %>% 
-  group_by(type) %>% 
-  summarise(across(c(building, sky, tree, road, sidewalk), list)) %>% 
-  pivot_longer(cols = building:sidewalk) %>% 
-  pivot_wider(names_from=type, values_from=value)
 
-for (i in 1:nrow(compare_df_summary)){
-  cat('#### Comparison: ', compare_df_summary$name[i], ' ####')
-  print(t.test(unlist(compare_df_summary[i, 'midpoint']), unlist(compare_df_summary[i, 'intersection'])))
-  cat('-----------\n\n')
-}
 
-```
+
+
+
+
+
+
 
