@@ -619,9 +619,10 @@ am_stop_time <- filter_stop_times(gtfs_obj = gtfs,
                                   max_arrival_time = 3600*10)  # similarly, this is 10AM 
 
 # travel_times
-trvt <- travel_times(filtered_stop_times = am_stop_time,
+trvt2 <- travel_times(filtered_stop_times = am_stop_time,
                      stop_name = "MIDTOWN STATION",
-                     return_coords = TRUE)
+                     return_coords = TRUE,
+                     max_transfers = 0)
 ```
 
 ```{r}

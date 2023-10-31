@@ -123,7 +123,7 @@ topic_col <- c(
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_getting_GSV_images.html)) <br>
   Computer vision ([Colab](https://colab.research.google.com/drive/1RuJeY5EjPJ6ArAxhpeqd3exK881ORmkC?usp=sharing), [RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.Rmd), [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_4/Module4_computer_vision.html))",# 10
   
-  "Getting & Processing Reddit data in R ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.Rmd),
+  "Social Media Analysis ([slide](https://ujhwang.github.io/UrbanAnalytics2023/Lecture_Slides/SocialMedia.html)) <br> Getting & Processing Reddit data in R ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/Reddit_text_analysis.html))",# 11
   
   "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/sentiment_analysis.Rmd),
