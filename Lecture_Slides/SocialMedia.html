@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Social Media Analytics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Subhro Guhathakurta and Uijeong Hwang" />
+    <meta name="date" content="2023-10-31" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/nhsr.css" type="text/css" />
+    <link rel="stylesheet" href="css/nhsr-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide, left, bottom
+
+# Social Media Analytics
+----
+## **Some use cases and techniques**
+### Subhro Guhathakurta and Uijeong Hwang
+### 2023-10-31
+
+---
+# What Qualifies as "Social Media"? 
+- Social media is digital technology that allows the sharing of ideas, information, events, and experiences through text and visuals within virtual networks and communities.
+--
+
+
+- It typically features user-generated content that usually seeks to engage of a wider group of individuals via likes, shares, comments, and discussion.
+--
+
+
+- &lt;font color="red"&gt;Social media can be divided into six categories:
+.pull-right[
+- Social networking
+- Social bookmarking
+- Social news
+- Media sharing
+- Microblogging
+- Online forums
+  ]&lt;/font&gt;
+  
+
+---
+## These were the most widely used social media providers as of January 2023 (DataReportal)
+
+-Facebook (2.96 billion users)
+
+-YouTube (2.51 billion users)
+
+-WhatsApp (2 billion users)
+
+-Instagram (2 billion users)
+
+-WeChat (1.31 billion users)
+
+-TikTok (1.05 billion users)
+
+-Facebook Messenger (931 million users)
+
+-Douyin (715 million users)
+
+-Telegram (700 million users)
+
+-Snapchat (635 million users)
+
+---
+class: inverse, left, top
+# How influential is Social Media in our Society?
+
+
+Percentage of internet users age 16 to 64 who visited a social networking site in the past month
+
+.pull-center[
+#94.6%
+]
+
+##Internet users age 16 to 64 worldwide spent a daily average of &lt;font color="yellow"&gt;2 hours and 31 minutes &lt;/font&gt; on social media as of late 2022
+---
+
+#Social Media Analytics begin with &lt;font color="red"&gt;Text Mining&lt;/font&gt; 
+
+&lt;em&gt;Text mining is the process of examining large collections of unstructured textual resources in order to generate new information, typically using specialized computer software&lt;/em&gt;
+
+&lt;img src="img/TextMiningProcess.png" alt="Types of Data" style="width:800px;height:450px;"&gt;
+
+---
+# Characteristics of "Texts"
+
+- High dimensionality with tens of thousands of words 
+- Noisy data
+- Erroneous data or misleading data
+- Unstructured text
+- Written resources, chat room conversations, or normal speech
+- Ambiguity
+- Word ambiguity or sentence ambiguity
+
+
+
+
+&lt;font size="3"&gt;adapted from Anthony Yang&lt;/font&gt;
+---
+#Text Preprocessing
+
+- Text Cleanup
+Normalize texts converted from binary formats (programs, media, images, and most compressed files)
+Deal with tables, figures, and formulas
+
+- Tokenization
+Process of breaking a stream of text up into words, phrases, symbols, or other meaningful elements called tokens
+
+---
+#Attribute Generation
+
+### Two Approaches
+
+- Bag of Words Model, used in methods of document classification, where the &lt;font color="red"&gt;frequency of occurrence of each word &lt;/font&gt; is used as a feature
+
+- Vector Space Model, used cosine similarity to calculate a number that describes the similarity among documents
+
+---
+#Attribute Selection
+
+- Reduction of high dimensionality
+
+- Select just a subset of the features to represent a document
+
+- Remove stop words
+
+Can be viewed as creating an improved document representation
+
+---
+#Levels of text representations
+
+###Lexical
+- Character (character n-grams and sequences)
+- Words (stop-words, stemming, lemmatization)
+- Phrases (word n-grams, proximity features)
+- Part-of-speech tags
+- Taxonomies / thesauri
+###Syntactic
+- Vector-space model
+- Language models
+- Full-parsing
+- Cross-modality
+
+---
+#Data Mining
+
+### Traditional Data Mining Techniques:
+- Classification
+- Clustering
+- Associations
+- Sequential Patterns
+- Extract information from the processed text data via data modeling and data visualization (visual maps)
+### Data Visualization
+- Communicate information clearly and efficiently to users via the statistical graphics, plots, information graphics, tables, and charts selected
+- makes complex data more accessible, understandable and usable
+
+---
+#Interpretation
+
+- What story is the data telling?
+
+- What is actionable in the information + knowledge gained?
+
+- Is this an accurate picture (validation)?
+
+- Are their hidden biases that needs to be explored?
+
+##Sentiment Analysis
+- It is a category of text classification tasks where you are supplied with a phrase, or a list of phrases and your classifier is supposed to tell if the sentiment behind that is positive, negative or neutral
+
+---
+
+#On to the actual tasks (RMDs)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "googlecode",
+"highlightLines": true,
+"highlightLanguage": "r",
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<!--Hat-tip: https://www.garrickadenbuie.com/blog/xaringan-tip-logo-all-slides/-->
+<style>
+.logo {
+  background-image: url(img/CSPAVnewlogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 220px;
+  height: 256px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

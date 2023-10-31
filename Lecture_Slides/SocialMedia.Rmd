@@ -1,0 +1,203 @@
+---
+title: "Social Media Analytics"
+subtitle: "Some use cases and techniques"
+author: "Subhro Guhathakurta and Uijeong Hwang"
+institute: "School of City and Regional Planning"
+date: "2023-10-31"
+output:
+  xaringan::moon_reader:
+    css: 
+      - default
+      - css/nhsr.css
+      - css/nhsr-fonts.css
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: googlecode
+      highlightLines: true
+      highlightLanguage: ["r"]
+      countIncrementalSlides: false
+      ratio: "16:9"
+    includes:
+      after_body: [css/insert-logo.html]
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(tidyverse)
+library(NHSRtheme)
+# set default options
+opts_chunk$set(echo = FALSE,
+               fig.width = 10.252,
+               fig.height = 10,
+               dpi = 300)
+
+# uncomment the following lines if you want to use the NHS-R theme colours by default
+# scale_fill_continuous <- partial(scale_fill_nhs, discrete = FALSE)
+# scale_fill_discrete <- partial(scale_fill_nhs, discrete = TRUE)
+# scale_colour_continuous <- partial(scale_colour_nhs, discrete = FALSE)
+# scale_colour_discrete <- partial(scale_colour_nhs, discrete = TRUE)
+```
+
+class: title-slide, left, bottom
+
+# `r rmarkdown::metadata$title`
+----
+## **`r rmarkdown::metadata$subtitle`**
+### `r rmarkdown::metadata$author`
+### `r rmarkdown::metadata$date`
+
+---
+# What Qualifies as "Social Media"? 
+- Social media is digital technology that allows the sharing of ideas, information, events, and experiences through text and visuals within virtual networks and communities.
+--
+
+
+- It typically features user-generated content that usually seeks to engage of a wider group of individuals via likes, shares, comments, and discussion.
+--
+
+
+- <font color="red">Social media can be divided into six categories:
+.pull-right[
+- Social networking
+- Social bookmarking
+- Social news
+- Media sharing
+- Microblogging
+- Online forums
+  ]</font>
+  
+
+---
+## These were the most widely used social media providers as of January 2023 (DataReportal)
+
+-Facebook (2.96 billion users)
+
+-YouTube (2.51 billion users)
+
+-WhatsApp (2 billion users)
+
+-Instagram (2 billion users)
+
+-WeChat (1.31 billion users)
+
+-TikTok (1.05 billion users)
+
+-Facebook Messenger (931 million users)
+
+-Douyin (715 million users)
+
+-Telegram (700 million users)
+
+-Snapchat (635 million users)
+
+---
+class: inverse, left, top
+# How influential is Social Media in our Society?
+
+
+Percentage of internet users age 16 to 64 who visited a social networking site in the past month
+
+.pull-center[
+#94.6%
+]
+
+##Internet users age 16 to 64 worldwide spent a daily average of <font color="yellow">2 hours and 31 minutes </font> on social media as of late 2022
+---
+
+#Social Media Analytics begin with <font color="red">Text Mining</font> 
+
+<em>Text mining is the process of examining large collections of unstructured textual resources in order to generate new information, typically using specialized computer software</em>
+
+<img src="img/TextMiningProcess.png" alt="Types of Data" style="width:800px;height:450px;">
+
+---
+# Characteristics of "Texts"
+
+- High dimensionality with tens of thousands of words 
+- Noisy data
+- Erroneous data or misleading data
+- Unstructured text
+- Written resources, chat room conversations, or normal speech
+- Ambiguity
+- Word ambiguity or sentence ambiguity
+
+
+
+
+<font size="3">adapted from Anthony Yang</font>
+---
+#Text Preprocessing
+
+- Text Cleanup
+Normalize texts converted from binary formats (programs, media, images, and most compressed files)
+Deal with tables, figures, and formulas
+
+- Tokenization
+Process of breaking a stream of text up into words, phrases, symbols, or other meaningful elements called tokens
+
+---
+#Attribute Generation
+
+### Two Approaches
+
+- Bag of Words Model, used in methods of document classification, where the <font color="red">frequency of occurrence of each word </font> is used as a feature
+
+- Vector Space Model, used cosine similarity to calculate a number that describes the similarity among documents
+
+---
+#Attribute Selection
+
+- Reduction of high dimensionality
+
+- Select just a subset of the features to represent a document
+
+- Remove stop words
+
+Can be viewed as creating an improved document representation
+
+---
+#Levels of text representations
+
+###Lexical
+- Character (character n-grams and sequences)
+- Words (stop-words, stemming, lemmatization)
+- Phrases (word n-grams, proximity features)
+- Part-of-speech tags
+- Taxonomies / thesauri
+###Syntactic
+- Vector-space model
+- Language models
+- Full-parsing
+- Cross-modality
+
+---
+#Data Mining
+
+### Traditional Data Mining Techniques:
+- Classification
+- Clustering
+- Associations
+- Sequential Patterns
+- Extract information from the processed text data via data modeling and data visualization (visual maps)
+### Data Visualization
+- Communicate information clearly and efficiently to users via the statistical graphics, plots, information graphics, tables, and charts selected
+- makes complex data more accessible, understandable and usable
+
+---
+#Interpretation
+
+- What story is the data telling?
+
+- What is actionable in the information + knowledge gained?
+
+- Is this an accurate picture (validation)?
+
+- Are their hidden biases that needs to be explored?
+
+##Sentiment Analysis
+- It is a category of text classification tasks where you are supplied with a phrase, or a list of phrases and your classifier is supposed to tell if the sentiment behind that is positive, negative or neutral
+
+---
+
+#On to the actual tasks (RMDs)
