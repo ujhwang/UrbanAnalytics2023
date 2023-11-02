@@ -261,7 +261,7 @@ closest_station <-
 
 
 # TASK ////////////////////////////////////////////////////////////////////////
-# Find the shortest path from origin to station
+# Find the shortest path from origin to the closest station
 # using st_network_paths() function.
 paths <- 
 # //TASK //////////////////////////////////////////////////////////////////////
@@ -284,20 +284,13 @@ if (closest_dist == set_units(0, m)){
   closest_dist <- dist_to_stations[which.min(dist_to_stations)] * 1.5
 }
 
-# Calculate how to long it takes to traverse `closest_dist` 
+# Calculate how long it takes to traverse `closest_dist` 
 # assuming we drive at 30 miles/hour speed.
 # Store the output in `trvt_osm_m`.
 car_speed <- set_units(30, mile/h)
 trvt_osm_m <- closest_dist/set_units(car_speed, m/min) %>%  # Distance divided by 30 mile/h
   as.vector(.)
 # =========== NO MODIFY ZONE ENDS HERE ========================================
-
-
-# TASK ////////////////////////////////////////////////////////////////////////
-# 1. From `osm` object, activate nodes part and
-# 2. use `closest_index` to extract the selected path
-paths_closest <- # **YOUR CODE HERE..**
-# //TASK //////////////////////////////////////////////////////////////////////
 
 
 # TASK ////////////////////////////////////////////////////////////////////////
@@ -386,13 +379,22 @@ tm_shape(census[census$GEOID %in% home$GEOID,] %>% mutate(pct_white = r_whE/r_to
   tm_shape(home_done) + 
   tm_dots(col = "trvt", palette = 'Reds', size = 0.1)
 
-  # ggplot!
+# ggplot!
 inc <- ggplot(data = home_done %>% 
          mutate(hhinc = hhincE),
        aes(x = hhinc, y = trvt)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Median Annual Household Income",
+       y = "Travel Time from Home to Midtown Station") +
+  theme_bw()
+
+wh <- ggplot(data = home_done %>%
+               mutate(pct_white = r_whE/r_totE),
+             aes(x = pct_white, y = trvt)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Percent White",
        y = "Travel Time from Home to Midtown Station") +
   theme_bw()
 

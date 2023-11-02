@@ -61,7 +61,7 @@ We can search for a list of subreddits related to the keyword of interest.
 ```{r}
 # search for subreddits
 subreddit_list <- RedditExtractoR::find_subreddits('flu shot')
-subreddit_list[1:25,c('subreddit','title','subscribers')] %>% knitr::kable()
+subreddit_list[1:25,c('subreddit','title','subscribers')] # %>% knitr::kable()
 ```
 
 We can also check the number of threads found by the keyword per subreddit.
@@ -98,7 +98,7 @@ threads_2_content <- get_thread_content(threads_2$url[1:5])
 names(threads_2_content)
 ```
 
-The output object `beltline_content` consists of two data frames: `threads` and `comments`. The `threads` data frame contains information that was not provided by the `find_thread_urls` function, such as username, up votes, and down votes.
+The output object `threads_2_content` consists of two data frames: `threads` and `comments`. The `threads` data frame contains information that was not provided by the `find_thread_urls` function, such as username, up votes, and down votes.
 
 > `downvotes` column appears to be always zero; but fortunately, `up_ratio` column provides an insight on how positively or negatively users reacted to that thread.
 

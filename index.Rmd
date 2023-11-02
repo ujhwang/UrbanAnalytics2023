@@ -129,7 +129,8 @@ topic_col <- c(
   "<b>Student presentation of final project data, methods, & preliminary results (Nov 7)</b> <br> Sentiment analysis ([RMD](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/sentiment_analysis.Rmd),
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/sentiment_analysis.html), [Colab](https://colab.research.google.com/drive/1rynmZRcvB052PFaVQ2DsHrMYD1vyPN4Y?usp=sharing))",# 12
   
-  "Data ethics [(Slide)](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg)",# 13
+  "Guest lecture<br>
+  Data ethics [(Slide)](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg)",# 13
   
   "Assistance with final project related issues",# 14
   
