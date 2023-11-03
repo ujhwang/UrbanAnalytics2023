@@ -202,7 +202,7 @@ edges_1 <- net1 %>%
   select(osm_id, highway, length) %>% 
   # Drop segments that are too short (100m)
   mutate(length = as.vector(length)) %>% 
-  filter(length > 50) %>% 
+  filter(length > 100) %>% 
   # Add a unique ID for each edge
   mutate(edge_id = seq(1,nrow(.)),
          is_walkable = "walkable")
@@ -215,7 +215,7 @@ edges_2 <- net2 %>%
   select(osm_id, highway, length) %>% 
   # Drop segments that are too short (100m)
   mutate(length = as.vector(length)) %>% 
-  filter(length > 50) %>% 
+  filter(length > 100) %>% 
   # Add a unique ID for each edge
   mutate(edge_id = seq(1,nrow(.)),
          is_walkable = "unwalkable")
@@ -304,9 +304,8 @@ We can apply `getAzi()` function to the edges object. We finally append `edges` 
 
 ```{r}
 # TASK ////////////////////////////////////////////////////////////////////////
-# Apply get_azi() function to all edges.
-# Remember that you need to pass edges object to st_geometry() 
-# before you apply getAzi()
+# Apply getAzi() function to all edges.
+# Remember that you need to pass edges object to st_geometry() before you apply getAzi()
 endp_azi <- edges %>% # **YOUR CODE HERE..**
 
 # //TASK //////////////////////////////////////////////////////////////////////
