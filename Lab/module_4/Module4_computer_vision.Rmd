@@ -88,12 +88,12 @@ seg_output_road_type <- seg_output_nodes %>%
   group_by(highway) %>% 
   summarise(across(c("building", "greenness", "road", "sidewalk", "sky", "car"), ~ round(mean(.x)/(640^2), 4)))
 
-seg_output_road_type %>% 
+seg_output_nodes %>% 
   pivot_longer(cols = c(building, sky, greenness, road, sidewalk, car), 
                names_to = 'variable', 
                values_to = "value") %>% 
   ggplot() +
-  geom_boxplot(mapping = aes(x = highway, y = value)) +
+  geom_boxplot(mapping = aes(x = highway, y = value), outlier.shape = NA) +
   theme_bw() +
   facet_wrap(~variable, scales = "free_y")
 ```
