@@ -190,7 +190,7 @@ assignment_col <- c(
   "",# 10
   "[Major 3](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_3/major_assignment_3.html) <br> (due Nov16)",# 11
   "",# 12
-  "Major 4 <br> (due Nov30)",# 13
+  "[Major 4](https://ujhwang.github.io/UrbanAnalytics2023/Assignment/major_4/major_assignment_4.html) <br> (due Nov30)",# 13
   "",# 14
   "",# 15
   "Project Report <br> (due Dec05)"# 16
