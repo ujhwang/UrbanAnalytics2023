@@ -130,7 +130,7 @@ topic_col <- c(
   [html](https://ujhwang.github.io/UrbanAnalytics2023/Lab/module_5/sentiment_analysis.html), [Colab](https://colab.research.google.com/drive/1rynmZRcvB052PFaVQ2DsHrMYD1vyPN4Y?usp=sharing))",# 12
   
   "Guest lecture: Dr. Florina Dutt ([Zoom link](https://gatech.zoom.us/j/93015268825))<br>
-  Data ethics [(Slide)](https://raw.githubusercontent.com/ujhwang/UrbanAnalytics2023/main/uc.jpg)",# 13
+  Data ethics [(Slide)](https://github.gatech.edu/pages/sguhathakurta3/UA-Lectures/Lecture-2/LectureTWO.html#1)",# 13
   
   "Assistance with final project related issues",# 14
   
